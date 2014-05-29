@@ -1,0 +1,340 @@
+body {
+	font-family: "Trebuchet MS", sans-serif; 
+	line-height: 1.5;
+	font-size: 14px;
+	background: #36393D;
+	margin: 0;
+	padding: 0;
+}
+
+img {
+	border: 0;
+}
+
+#top {
+	background: #2C2D2F;
+	height: 107px;
+	border-bottom: 3px solid #CF4D4F;
+}
+#top h1{
+	color: #eee;
+	font-size: 30px;
+	margin: 0;
+	padding-top: 15px;
+	float: left;
+	text-shadow: 1px 1px 1px #000;
+}
+#top .right {
+	float: right;
+	color: #eee;
+	margin-top: 20px;
+	font-size: 12px;
+}
+#top .right a.button {
+	background: #356AA0;
+	border-radius: 3px;
+	padding: 3px 5px;
+	color: #eee;
+	text-decoration: none;
+	margin-left: 10px;
+}
+#top .right a.button:hover {
+	background: #CF4D4F;
+}
+#top ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	margin-top: 20px;
+}
+#top ul li {
+	float: left;
+	margin-right: 10px;
+	font-size: 14px;
+}
+#top ul li a {
+	background: #356AA0;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+	padding: 8px 8px;
+	color: #eee;
+	text-decoration: none;
+	font-weight: bold;
+}
+#top ul li a:hover {
+	background: #CF4D4F;
+}
+#top ul li.active a {
+	background: #CF4D4F;
+}
+
+#wrap {
+	width: 930px;
+	margin: 0 auto;
+}
+
+#wrap .footer {
+	font-size: 11px;
+	color: #e8e7e7;
+	text-shadow: 1px 1px 1px #000;
+}
+#wrap .footer a {
+	color: #e8e7e7;
+	text-decoration: none;
+	font-style: italic;
+}
+
+/* BOX Z TRESCIA */
+.box {
+	background: #eee;
+	border-radius: 8px;
+	box-shadow: 1px 5px 8px #2c2d2f;
+	margin-top: 20px;
+}
+.box h2 {
+	background: #356AA0;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+	padding: 8px 8px;
+	color: #eee;
+	font-size: 16px;
+	text-shadow: 1px 1px 1px #0d3258;
+	margin-bottom: 0px;
+}
+.box h2 .right {
+	float: right;
+	margin-right: 1px;
+}
+.box h2 .right a {
+	background: rgba(0, 0, 0, 0.15);
+	border-radius: 3px;
+	text-decoration: none;
+	color: #fff;
+	font-size: 12px;
+	padding: 3px 5px;
+}
+.box h2 .right a:hover{
+	background: rgba(0, 0, 0, 0.3);
+}
+.box .content {
+	padding: 10px;
+}
+
+.box input[type="submit"] {
+	background: -webkit-linear-gradient(bottom, #356aa0, #357ec8);
+	background: -moz-linear-gradient(bottom, #356aa0, #357ec8);
+	background: -ms-linear-gradient(bottom, #356aa0, #357ec8);
+	background: -o-linear-gradient(bottom, #356aa0, #357ec8);
+	border: 0;
+	border-radius: 5px;
+	color: #eee;
+	font-size: 14px;
+	padding: 5px 8px;
+	margin-top: 10px;
+}
+.box input[type="submit"]:active {
+	background: -webkit-linear-gradient(top, #356aa0, #357ec8);
+	background: -moz-linear-gradient(top, #356aa0, #357ec8);
+	background: -ms-linear-gradient(top, #356aa0, #357ec8);
+	background: -o-linear-gradient(top, #356aa0, #357ec8);
+}
+.box textarea {
+	width: 99%;
+	height: 370px;
+	background: #fff;
+	border: 1px solid #ddd;
+	font-size: 14px;
+	color: #545455;
+	outline: 0;
+	margin-top: 10px;
+	-moz-tab-size: 4;
+    -o-tab-size: 4;
+	tab-size: 4;
+}
+.box select {
+	border: 1px solid #ddd;
+	color: #545455;
+}
+
+/* TABELE */
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+table a{
+	color: #545455;
+	text-decoration: none;
+}
+table thead td {
+	border-bottom: 2px solid #cdcdcd;
+	background: #e5e5e5;
+	font-size: 12px;
+	text-align: center;
+}
+table thead td:first-child {
+	text-align: left;
+}
+table tbody tr td {
+	border-bottom: 1px solid #ddd;
+	text-align: center;
+	color: #545455;
+	font-size: 14px;
+	height: 32px;
+}
+table tbody tr td:first-child {
+	text-align: left;
+	/* background: url('img/icon_star.gif') left no-repeat; 
+	padding-left: 28px; */
+}
+table tbody tr:hover td, table tbody tr:hover td a {
+	color: #000;
+}
+
+table.settings thead tr td {
+	text-align: left;
+}
+table.settings tbody tr td {
+	text-align: left;
+}
+table.settings tbody tr td:nth-child(3) {
+	font-size: 12px;
+}
+table.settings input[type="text"], table.settings input[type="password"] {
+	width: 200px;
+	background: #fff;
+	border: 1px solid #ddd;
+	font-size: 12px;
+	color: #545455;
+	padding: 2px 3px;
+}
+table.settings select {
+	width: 208px;
+}
+table.new_page thead tr td {
+	text-align: left;
+}
+table.new_page tbody tr td {
+	text-align: left;
+}
+table.new_page tbody tr td:nth-child(3) {
+	font-size: 12px;
+}
+table.new_page input[type="text"], table.new_page input[type="password"] {
+	width: 60%;
+	background: #fff;
+	border: 1px solid #ddd;
+	font-size: 12px;
+	color: #545455;
+	padding: 2px 3px;
+}
+table.new_page textarea {
+	width: 98%;
+	height: 250px;
+	background: #fff;
+	border: 1px solid #ddd;
+	font-size: 12px;
+	color: #545455;
+	padding: 2px 3px;
+}
+
+/* WIADOMOSCI SYSTEMOWE */
+.msg {
+	text-shadow: 1px 1px 0px #4A4A4A;
+	color: #EFEFEF;
+	border-radius: 6px;
+	padding: 6px 10px;
+	margin: 15px 0px;
+}
+.error {
+	background: #965959;
+}
+.success {
+	background: #7C9A00;
+}
+
+/* LOGOWANIE */
+#login {
+	margin: 0 auto;
+	width: 360px;
+	margin-top: 300px;
+}
+#login h1 {
+	color: #eee;
+	text-shadow: 1px 1px 1px #2C2D2F;
+	text-align: center;
+}
+#login .box {
+	background: #2C2D2F;
+	padding: 30px 30px;
+	color: #3275b9;
+	text-shadow: 1px 1px 1px #000;
+	box-shadow: none;
+}
+#login .box input[type="text"], #login .box input[type="password"] {
+	width: 300px;
+	height: 20px;
+	background: #eeeeee;
+	border: 1px solid #cdcdcd;
+	margin-top: 4px;
+	margin-bottom: 10px;
+	display: block;
+	border-radius: 5px;
+}
+#login .box input[type="submit"] {
+	background: -webkit-linear-gradient(bottom, #356aa0, #357ec8);
+	background: -moz-linear-gradient(bottom, #356aa0, #357ec8);
+	background: -ms-linear-gradient(bottom, #356aa0, #357ec8);
+	background: -o-linear-gradient(bottom, #356aa0, #357ec8);
+	border: 0;
+	border-radius: 5px;
+	color: #eee;
+	font-size: 14px;
+	padding: 5px 7px;
+}
+#login .box input[type="submit"]:active {
+	background: -webkit-linear-gradient(top, #356aa0, #357ec8);
+	background: -moz-linear-gradient(top, #356aa0, #357ec8);
+	background: -ms-linear-gradient(top, #356aa0, #357ec8);
+	background: -o-linear-gradient(top, #356aa0, #357ec8);
+}
+#login a{
+    color: #545455;
+    float: right;
+    text-decoration: none;
+}
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.fadeIn {
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+}
+#password{display:none;opacity: 1;}
+#login a:hover>#password.box.animated {
+    opacity: 1;
+}
+ #password > #login a:hover{
+opacity: 1;
+    animation-name: fadeIn;
+    animation-duration: 5s;
+    animation-fill-mode: both;
+}
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}

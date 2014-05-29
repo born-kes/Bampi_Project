@@ -1,0 +1,1 @@
+a:4:{s:5:"title";s:4:"home";s:7:"content";s:27:"dom słodki dom strona home";s:5:"f-cja";i:0;s:5:"order";i:1;}

@@ -1,0 +1,1 @@
+a:8:{s:3:"url";s:4:"true";s:5:"title";s:13:"Tytuł Strony";s:11:"description";s:11:"Opis Strony";s:8:"keywords";s:15:"Slowa, Kluczowe";s:5:"theme";s:7:"default";s:5:"email";s:16:"test@niepodam.pl";s:6:"footer";s:22:"{{widget:hello_world}}";s:6:"submit";s:6:"Zapisz";}

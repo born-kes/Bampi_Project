@@ -1,0 +1,3 @@
+a:4:{s:5:"title";s:12:"Podstrona #2";s:7:"content";s:439:"<p>Nulla ultricies dignissim metus id dignissim. Praesent et lacus at leo laoreet lacinia. Maecenas sit amet enim sapien, interdum scelerisque nisl. Nunc justo elit, pharetra in convallis ac, aliquam eu mauris. Suspendisse vel urna elit, eu ultrices tortor. Sed imperdiet malesuada interdum. Aliquam nisi turpis, convallis id dapibus sed, viverra rhoncus leo.</p>
+<p>Widget: {{widget:hello_world}}</p>
+<p>Wgo: {{widget:clinTemplate}}</p>";s:5:"f-cja";N;s:5:"order";i:8;}
