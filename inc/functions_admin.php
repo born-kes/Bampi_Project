@@ -109,6 +109,50 @@ function fileLoad($path, $file) {
 }
 
 /**
+ * Pobranie Array z pliku ,
+ * zapisanego w postaci tabeli asocjacyjnej
+ *
+ * @param $path - pełna nazwa pliku np{'../pages/'.$_GET['file'].'.php'}
+ * @return array|void - unserialize($plik)<br> - header('Location: index.php');
+ */
+function fileLoadData($path) {
+    global  $inc;
+    if (! is_null($inc[$path]) ) {
+        return $inc[$path];
+    } elseif (file_exists($path)) {
+        if( file_exists($path) ) {
+            $inc[$path] = unserialize(file_get_contents($path));
+            return $inc[$path];
+        }
+    }
+}
+
+/**
+ * Zmienia nazwe pliku
+ *
+ * @param $path - pełna scieszka do pliku
+ * @param $file - $_GET[file].'php'
+ * @param $nev_file - nowa nazwa pliku
+ * @return bool
+ */
+function fileReName($path, $file, $nev_file) {
+    if($file === $nev_file) {
+        return FALSE;
+    }
+    if (is_file($path.$file) ) {
+        if (file_exists($path.$nev_file) ) {
+            error('Nie mogę zmienić nazwy. Taki Plik już istnieje.');
+            return FALSE;
+        }
+        if(rename($path.$file, $path.$nev_file)) {
+            success('Nazwa została zmieniona.');
+        } else {
+            error('Nazwa nie została zmieniona.');
+        }
+    }
+}
+
+/**
  * Zapisywanie pliku
  *
  * @param $path - scieszka dostępu
@@ -117,12 +161,44 @@ function fileLoad($path, $file) {
  * @param $save_content - deHtml(), serialize()- tresc html deHtml przed zapisem
  */
 function fileSave($path_file, $save_content) {
+    $new = file_exists($path_file);
     if (isset($path_file) && isset($save_content) ) {
         if(file_put_contents($path_file, $save_content) ) {
+            if(!$new) {
+                chmod($path_file,0777);
+            }
             success('Plik został pomyślnie zaktualizowany.');
         } else {
             error('Nie udało się zapisać zmian. Sprawdź czy plik posiada odpowiednie uprawnienia.');
         }
+    }
+}
+
+/**
+ * Zapisuje informacji Array do pliku
+ * w postaci serializowanej tabeli asocjacyjnej
+ *
+ * @param $path - scieszka dostępu
+ * @param $file - nazwa pliku {bez <b>PHP</b> na końcu}
+ * @param $save_array - tabela do zapisania
+ * @param $_GET $_GET['file'] - istnieje jesli plik jest edytowany
+ * @return void
+ */
+function fileSaveData($path, $file, $save_array ,$new_file=null) {
+
+    if (isset($file) || file_exists($path. $file)) {
+        // zmiana nazwy
+        if (isset($_GET['file']) && $_GET['file'].'php' != $file) {
+            fileReName($path, $_GET['file'].'php', $file);
+        }
+        fileSave($path. $file, serialize($save_array) );
+
+    } elseif (!file_exists($path.$file) ) {
+        // Tworze nowy plik
+        fileSave($path. $file, serialize($save_array) );
+            header('Location: index.php?go='.autPhp($file) );
+    } else {
+        error('Podstrona o takim adresie już istnieje! i nie moge jej stworzyć ani zaktualizować.');
     }
 }
 
@@ -172,66 +248,6 @@ function fileInclude($path, $plik=NULL) {
     } else {
         error('<b>Ten Katalog jest pusty</b>');
         getMsg();
-    }
-}
-
-/**
- * Pobranie Array z pliku ,
- * zapisanego w postaci tabeli asocjacyjnej
- *
- * @param $path - pełna nazwa pliku np{'../pages/'.$_GET['file'].'.php'}
- * @return array|void - unserialize($plik)<br> - header('Location: index.php');
- */
-function fileGetData($path) {
-  global  $inc;
-    if (! is_null($inc[$path]) ) {
-        return $inc[$path];
-    } elseif (file_exists($path)) {
-        if( file_exists($path) ) {
-            $inc[$path] = unserialize(file_get_contents($path));
-            return $inc[$path];
-        }
-    }
-}
-
-/**
- * Zapisuje informacji Array do pliku
- * w postaci serializowanej tabeli asocjacyjnej
- *
- * @param $path - scieszka dostępu
- * @param $file - nazwa pliku {bez <b>PHP</b> na końcu}
- * @param $save_array - tabela do zapisania
- * @param $_GET $_GET['file'] - istnieje jesli plik jest edytowany
- * @return void
- */
-function fileSaveData($path, $file, $save_array) {
-
-    if (isset($_GET['file']) || file_exists($path.'/'.$file.'.php')) {
-        // zmiana nazwy
-        if (isset($_GET['file']) && $_GET['file'] != $file && '.menu' != $file) {
-            if (file_exists($path.'/'.$file.'.php') ) {
-                error('Plik o nowej nazwie już istnieje.');
-                $file = $_GET['file'];
-            } else {
-                rename($path.'/'.$_GET['file'].'.php', $path.'/'.$file.'.php');
-                success('Nazwa podstrony została pomyślnie zaktualizowana.');
-            }
-        }
-        if (file_put_contents($path.'/'.$file.'.php', serialize($save_array) ) ) {
-            success('Podstrona została pomyślnie zaktualizowana.');
-        } else {
-            error('Nie udało się zapisać podstrony. Sprawdź uprawnienia pliku.');
-        }
-    } elseif (!file_exists($path.'/'.$file.'.php') ) {
-        // Tworze nowy plik
-        if (file_put_contents($path.'/'.$file.'.php', serialize($save_array) ) ) {
-            chmod($path.'/'.$file.'.php',0777);
-            header('Location: index.php?go='.$file);
-        } else {
-            error('Nie udało się utworzyć nowej podstrony.');
-        }
-    } else {
-        error('Podstrona o takim adresie już istnieje! i nie moge jej stworzyć ani zaktualizować.');
     }
 }
 
@@ -790,17 +806,16 @@ error('Nie udało się zapisać zmian. Sprawdź czy plik posiada odpowiednie upr
 /**
  * Zapisanie ustawien
  *
- * @param $post = potwierdzenie submit
  * @param $file = nazwa Pliku
+ * @param $post = potwierdzenie submit
  */
-function postSave($post,$file='config') {
+function postSave($file='config', $post) {
     if(isset($post) ) {
-        //$config = getData('../inc/config.php');
         $save_conf = array();
-        foreach ($_POST as $name => $val) {
+        foreach ($post as $name => $val) {
             $save_conf[$name]=$val;
         }
-        fileSaveData('../inc/', $file, $save_conf);
+        fileSaveData('../inc/'.$file , $save_conf);
     }
 }
 
