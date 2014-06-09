@@ -109,15 +109,16 @@ function fileLoad($path, $file) {
 }
 
 /**
- * Zapisanie edytowanego pliku
+ * Zapisywanie pliku
  *
  * @param $path - scieszka dostępu
  * @param $file - nazwa pliku {<b>rozszerzenie wymagane</b>} *.php,*.html,*.css
- * @param $save_content - tresc html
+ * @param $path_file - scieszka + nazwa pliku + rozszerzenie *.php,*.html,*.css
+ * @param $save_content - deHtml(), serialize()- tresc html deHtml przed zapisem
  */
-function fileSave($path, $file, $save_content) {
-    if (isset($path) && isset($file) && isset($save_content) ) {
-        if(file_put_contents($path.$file.'.php', deHtml($save_content)) ) {
+function fileSave($path_file, $save_content) {
+    if (isset($path_file) && isset($save_content) ) {
+        if(file_put_contents($path_file, $save_content) ) {
             success('Plik został pomyślnie zaktualizowany.');
         } else {
             error('Nie udało się zapisać zmian. Sprawdź czy plik posiada odpowiednie uprawnienia.');
@@ -186,8 +187,10 @@ function fileGetData($path) {
     if (! is_null($inc[$path]) ) {
         return $inc[$path];
     } elseif (file_exists($path)) {
-        $inc[$path] = unserialize(file_get_contents($path));
-        return $inc[$path];
+        if( file_exists($path) ) {
+            $inc[$path] = unserialize(file_get_contents($path));
+            return $inc[$path];
+        }
     }
 }
 
@@ -270,7 +273,7 @@ function menuLoad() {
 }
 
 function menuSave($list) {
-    saveData('../inc/', '.menu', $list);
+    filesaveData('../inc/', '.menu', $list);
 }
 
 function menuSystem($nr, $str) {
