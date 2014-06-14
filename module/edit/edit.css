@@ -1,0 +1,11 @@
+@import url("module/edit/page-write-php.css");
+@import url("module/edit/codemirror.css");
+.CodeMirror { border: 1px solid #dfd; }
+body .CodeMirror-scroll { background:#efe !important; }
+/* .activeline {background: #e8f2ff !important; margin: -1px -7px !important; padding: 1px 7px !important;} */
+.CodeMirror { font-size: 14px;border-color:#dfd;width:752px;margin-left:-32px; }
+.CodeMirror-scroll { background:#fff !important;height:260px; }
+.CodeMirror-lines { padding:0.4em 0.6em !important; }
+.CodeMirror-gutter { border-right:1px solid #dfd !important; background:white;}
+.CodeMirror .CodeMirror-lines span.cm-comment { color:#999 !important; }
+textarea.textarea-for-code { background:#efe !important;border-color:#999 !important; }
