@@ -30,6 +30,10 @@ $(function(){
  }
 #div_Global_Menu .ui-state-active {
     background: none repeat scroll 0 0 #403D32;
+}
+#div_Global_Menu div{
+    color: #cacaca;
+}
 </style>
 
 	<div id="div_Global_Menu">
@@ -69,6 +73,6 @@ $(function(){
         <div id="Global_files"><?php echo echo_r($_FILES); ?></div>
         <div id="Global_server"><?php echo echo_r($_SERVER); ?></div>
         <div id="Global_request"><?php echo echo_r($_REQUEST); ?></div>
-        <div id="Global_config"><?php echo echo_r(fileGetData('../inc/config.php')); ?></div>
+        <div id="Global_config"><?php echo echo_r(fileLoadData('../inc/config.php')); ?></div>
 	</div>
 

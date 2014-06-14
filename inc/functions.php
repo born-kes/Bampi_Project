@@ -79,7 +79,7 @@ function array_conect($array_global, $array_conect){
 }
 
 function temple($get){
-    global $config;
+    global $config, $TEMPLE;
     if(!isset($config))
     $config = fileLoad('inc/config.php');
     $Temple = fileLoad('themes/'.$config['theme'].'/template.html', false);
@@ -94,5 +94,41 @@ function temple($get){
     $TempleBlok = fileLoad('themes/'.$config['theme'].'/block.php');
     $TempleBlok = array_conect($TempleBlok, $page);
 
-    return array('theme'=>$Temple,'blok'=> $TempleBlok);
+    $TEMPLE = array('theme'=>$Temple,'bloki'=> $TempleBlok);
+}
+/*
+ * $Hook = array(
+ *   'loading'=>'',
+ *   'loading_go'=>'',
+ *   'loading_validacja'=>'',
+ *   'loadink_fin'=>'',
+ *
+ *   'weryfikation'=>'',
+ *   'weryfikation_go'=>'',
+ *   'weryfikation_validacja'=>'',
+ *   'weryfikation_fin'=>'',
+ *
+ *   'conection'=>'',
+ *   'conection_go'=>'',
+ *   'conection_validacja'=>'',
+ *   'conection_fin'=>'',
+ *
+ *   'final'=>'',
+ *   'final_go'=>'',
+ *   'final_validacja'=>'',
+ *   'final_fin'=>'',
+);*/
+$Hook = fileLoad('inc/.hook.php');
+//$Hook['loading'][]=
+$TEMPLE = temple(@$_GET['page']);
+
+$TEMPLE['bloki'] = array_conect($Temple['bloki'], $config);
+
+$STRONA =  stringSwap($TEMPLE['theme'], $TEMPLE['bloki']);
+
+function Loading(){
+    global $Hook,$TEMPLE;
+    foreach($Hook as $hak => $function){
+        $function($TEMPLE['bloki']);
+    }
 }
