@@ -258,7 +258,7 @@ function fileInclude($path, $plik=NULL) {
  * @return array tablica elementow menu
  */
 function menuLoad() {
-    $listaMenu = fileGetData('../inc/.menu.php');
+    $listaMenu = fileLoadData('../inc/.menu.php');
     $listaMenu = array_flip($listaMenu);
     $lista = autPhp(fileList('../pages/') ) ;
     $lista = array_flip($lista);
@@ -390,6 +390,23 @@ function verifyLogin() {
     }
 
     if (! $_SESSION['user'] > 0) {
+        include('login.php');exit();
+    }
+
+    if(isset($_GET['go']) && $_GET['go']=='logout') {
+        session_destroy();
+        header('Location: index.php');
+        /* problemy z htaccess
+        session_destroy();
+        header('Location: login.php');
+    */}
+}
+/*function verifyLogin() {
+    if (! isset($_SESSION['user']) ){
+        $_SESSION['user'] = 0;
+    }
+
+    if (! $_SESSION['user'] > 0) {
         header('Location: login.php');
     }
 
@@ -397,9 +414,33 @@ function verifyLogin() {
         session_destroy();
         header('Location: login.php');
     }
-}
+}*/
 
 /*** PODSTRONY **************************************************************/
+
+function stringSwapArray($string, $separator , $array) {
+    $end_String='';
+    if(is_array($array) ){
+        if(is_array($separator)) {
+            foreach($array as $element => $val){
+                if(is_array($val)&& count($val)>1 ){
+                    $end_String .=stringSwapArray($string, $separator , $val);
+                }else{
+                    $end_String .= str_replace($separator[1], $val,
+                        str_replace($separator[0], $element, $string)
+                    );
+                }
+            }
+        } else {
+            foreach($array as $element){
+                $end_String .= str_replace($separator, $element, $string);
+            }
+        }
+
+        return $end_String;
+    }
+
+}
 
 /**
  * Podmiana fragmentów tekstu,
@@ -410,11 +451,11 @@ function verifyLogin() {
  * @param string $separator = [opcionalny] przedrostek np.<b>{{page:config}}</b>
  * @return string Przetworzony z Tagami
  */
-function swapString($string, $array, $separator = '') {
+function stringSwap($string, $array, $separator = '') {
 
     foreach ($array as $name => $value) {
         if (is_array($value) ) {
-            $string = swapString($string, $value, $name.':');
+            $string = stringSwap($string, $value, $name.':');
         }
         if (strpos($string, "{{".$separator.$name."}}") ) {
             $string = str_replace("{{".$separator.$name."}}", $value, $string);
@@ -423,267 +464,37 @@ function swapString($string, $array, $separator = '') {
     return $string;
 }
 
-/**
- * Lista stron z katalogu pages <br>
- * pobiera ciąg znaków i wstawia w tagi słowa pobrane z plików w pętli
- *
- * @param string $pattern - kod html z " {{page:url}} "
- * @param string $path - scieszka katalogu
- * @return -tablica wszystkich plików {z ../pages} nałożona na html
- */
-function pagesList($pattern, $path = '../pages') {
-    $config = fileGetData('../inc/config.php');
-    $menu =  menuLoad();
-
-    $dir = opendir($path);
-
-    $i = 0;
-    while ($file = readdir($dir)) {
-        if (is_file($path.'/'.$file) && $file != "." && $file != "..") {
-            $page = fileGetData($path.'/'.$file);
-            $ex = autPhp($file);
-
-            $page['url']    =(@$config['url']?$ex.'.html':'?page='.$ex);
-            $page['name']   = @$ex;
-            $page['order']  = @$menu[$ex];
-
-            $new_pattern[@$menu[@$page['name']]] = swapString($pattern, $page, 'page:');
-            unset($page);
-            $i++;
-        }
-    }
-    if ($i>0) {
-        ksort($new_pattern);
-        $result=implode($new_pattern);
-    } else{
-        $result = 'Brak podstron';
-    }
-    echo $result;
-}
-
-/**
- * Przeglada katalog PAGES i zwraca nr|nazwe pliku
- *
- * @link function_admin.php
- * @class
- * @param $type - 'MIN_MAX'|'SEARCH'
- * @param $whot - 'MAX'|'MIN'
- * @internal
- * @return a intiger 1) MIN_MAX - nr Pierwszy|Ostatni  plik<br>
- *         string 2) SEARCH - nazwa pliku nr $whot
- */
-function pageOrder($type, $what) {
-    $path = '../pages';
-    $dir = opendir($path);
-    $page_order = NULL;
-
-    if ($type == 'MIN_MAX') {
-        while ($file = readdir($dir)) {
-            if (is_file($path.'/'.$file) && $file[0] != ".") {
-                $page = fileGetData($path.'/'.$file);
-                $order[] = $page['order'];
-            }
-        }
-        if ($what == 'MAX') {
-            $page_order = max($order);
-        } elseif ($what == 'MIN') {
-            $page_order = min($order);
-        }
-    } //end of 'MIN_MAX' type
-
-    else if($type == 'SEARCH') {
-        while (($file = readdir($dir)) && (!$page_order)) {
-            if (is_file($path.'/'.$file) && $file[0] != ".") {
-                $page = fileGetData($path.'/'.$file);
-
-                if ($what == $page['order']) {
-                    $page_order = $file;
-                } else{
-                    $page_order = false;
-                }
-            }
-        }
-    } //end of 'SEARCH' type
-
-    return $page_order;
-}
-
-/**
- * Zmiana kolejnosci podstrony
- *
- * @link  admin/pages/page.php
- * @class page_order('MIN_MAX','MAX');
- * @param string $get_a - 'up'|'down'
- * @param string $get_b - nazwa pliku
- * @internal
- * @return NULL działa na plikach
- */
-function pageChangeOrder($get_a, $get_b) {
-    $path = '../pages';
-    if(isset($get_a) && isset($get_b)) {
-        $get_b = $get_b.'.php';
-        if(is_file($path.'/'.$get_b)) {
-            $page = fileGetData($path.'/'.$get_b);
-
-            $page['title'] = $page['title'];
-            $page['content'] = $page['content'];
-
-            if ($get_a=='up') {
-                if ($page['order'] != 1) {
-                    if (page_order('SEARCH',$page['order']-1)) {
-                        $search_page_dir = $path.'/'.page_order('SEARCH',$page['order']-1);
-                        $search_page = fileGetData($search_page_dir);
-                        $search_page['title'] = $search_page['title'];
-                        $search_page['content'] = $search_page['content'];
-                        $search_page['order'] = $page['order'];
-                        file_put_contents($search_page_dir, serialize($search_page));
-                    }
-                    $page['order'] = $page['order'] - 1;
-                    file_put_contents($path.'/'.$get_b, serialize($page));
-                }
-            }elseif ($get_a=='down') {
-                if ($page['order'] != page_order('MIN_MAX','MAX')) {
-                    if (page_order('SEARCH',$page['order']+1)) {
-                        $search_page_dir = $path.'/'.page_order('SEARCH',$page['order']+1);
-
-                        $search_page = fileGetData($search_page_dir);
-                        $search_page['title'] = $search_page['title'];
-                        $search_page['content'] = $search_page['content'];
-                        $search_page['order'] = $page['order'];
-                        file_put_contents($search_page_dir, serialize($search_page));
-                    }
-                    $page['order'] = $page['order'] + 1;
-                    file_put_contents($path.'/'.$get_b, serialize($page));
-                }
-            }
-        }
-    }
-}
-
-/**
- * Dodanie nowej podstrony<br> nowy plik w PAGES
- *
- * @param $post - 'add_page'|null - nie istotne
- * @param array $_POST[title|file|content]
- * @return chmod($path.'/'.$file.'.php',0777);<br>header('Location: index.php?go=pages');
- */
-function pageAdd($post) {
-    $path = '../pages';
-    if(isset($post)) {
-        if (empty($_POST['title']) || empty($_POST['file']) || empty($_POST['content'])){
-            error('Wypełnij wszystkie pola!');
-        } else {
-            $save_array = array();
-            $save_array['title'] = $_POST['title'];
-            $save_array['content'] = addslashes($_POST['content']);
-            $save_array['f-cja']= is_numeric(@$_POST['option'])?$_POST['option']:null;
-            $save_array['order'] = page_order('MIN_MAX', 'MAX') + 1;
-            $file = preg_replace('#[^a-zA-Z0-9_-]#', '_', strip_tags(strtolower($_POST['file'])));
-
-            fileSaveData($path, $file, $save_array );
-        }
-    }
-}
-
-/**
- * Edycja podstrony
- *
- * @link admin/pages/pages.php
- * @class
- * @param   $post = edit_page|null  - nie istotne
- * @internal
- * @return adres URL strony np.http://localhost/lekkicms/
- */
-function pageEdit($post) {
-    $path = '../pages';
-    if(isset($post)) {
-        if (empty($_POST['title']) || empty($_POST['file']) || empty($_POST['content']) ){
-            error('Nie możesz zostawić pustych pól!');
-        } else {
-            $file = str_replace(" ",'_',$_POST['file']);
-            if(file_exists($path.'/'.$_GET['file'].'.php')) {
-                $page = fileGetData($path.'/'.$_GET['file'].'.php');
-                $page['title'] = $_POST['title'];
-                $page['content'] = deHtml(stripslashes($_POST['content']));
-                $page['f-cja'] = intval($_POST['f-cja']);
-                $page['order'] = $page['order'];
-
-                fileSaveData($path, $file , $page );
-            } else {
-                error('Taka podstrona nie istnieje.');
-            }
-        }
-    }
-}
-
-/**
- * Linki zalezne od operacji w Panel Administratora - Pages<br>
- * nowy|powrut
- *
- * @param $get => @$_GET['feature']
- * @return echo string link
- */
-function pageLinks($get=null) {
-    if (!isset($get)){
-        echo '<a href="?go=pages&feature=new">Utwórz nową</a>';
-    } else{
-        echo '<a href="?go=pages">&laquo; Powrót</a>';
-    }
-}
-
 /*** SZABLON *****************************************************************/
 /******* GENEROWANIE FORMULARZY *************/
 
 /**
- * Do tworzenia FORMULARZY
+ *  Do Tworzenia Inputów dla Form <br>
+ * <b>$prefix <br>&lt;input type="" name="" value=""
+ * placeholder="" maxlength=""
+ * id="" class="" style=""
+ * spec &gt;<br> $sufix </b>
  *
- * @param array $input_array[type|value|name|  placeholder|maxlength|id|class|style|     prefix|sufix]
- * @param string $ramka - tekst w obramuwce do form
- */
-function form($input_array, $ramka=null) {
-    $inputs['FORM']='';
-    if (isset($input_array[0]) ){
-        foreach($input_array as $input){
-            $inputs['FORM'].=input( $input );
-        }
-    } elseif (isset($input_array['type']) ){
-        $inputs['FORM'].=input($input_array);
-    } else {
-        error('Nie stworzony input, $array nie zawiara danych');
-    }
-
-    if ($inputs['FORM']!=''){
-        return swapString(
-            '<form action="" method="post">'.
-            (!is_null($ramka)?'
-        <fieldset>
-            <legend>'.$ramka.'</legend>
-                {{FORM}}
-        </fieldset>'
-                :
-                '{{FORM}}').
-            '</form>',
-            $inputs);
-    }
-}
-
-/**
- *  Do Tworzenia Inputów dla Form
  * @author KES
- * @param array $array [type|value|name| placeholder|maxlength|  id|class|style|prefix|sufix]
- * @param string $type [button|checkbox|file|hidden|image|password|radio|reset|submit|text]
- * @param string|array $value vartość pola, tablica tworzy kilka inputów
- * @param string $name nazwa pola łapana przez $_POST,
+ * @param array $array<b>[type|value|name| placeholder|maxlength|  id|class|style|prefix|sufix]</b>
+ * @param _
+ * @param string $prefix $array<b>[$prefix]</b>=  przedrostek &lt;div&gt;
+ * @param string $sufix $array<b>[$sufix]</b>= zarostek|domknięcie &lt;/div&gt;
+ * @param _
  *
- * @param string $placeholder' tekst widoczny w pustym polu tekstowym
- * @param int $maxlength maxymalna ilosc znaków
+ * @param string $type $array<b>[type]</b>= [button|checkbox|file|hidden|image|password|radio|reset|submit|text]
+ * @param string|array $value $array<b>[type]</b>= vartość pola, tablica tworzy kilka inputów
+ * @param string $name $array<b>[$name]</b>= nazwa pola łapana przez $_POST,
+ * @param _
  *
- * @param string $id identyfikator dla JavaSkryptu|jQuery
- * @param string $class NameClass stylów CSS
- * @param string $style wyjątkowe cechy wyglądu
- * @param string $prefix przedrostek &lt;div&gt;
- * @param string $sufix zarostek|domknięcie &lt;/div&gt;
- * @param string $spec - zaznaczenie chenchet|selected|
+ * @param string $id $array<b>[$id]</b>= identyfikator dla JavaSkryptu|jQuery
+ * @param string $class $array<b>[$class]</b>= NameClass stylów CSS
+ * @param string $style $array<b>[$style]</b>= wyjątkowe cechy wyglądu
+ * @param string $spec  $array<b>[$spec]</b>= zaznaczenie chenchet|selected|
+ * @param _
+ *
+ * @param string $placeholder' $array<b>[$placeholder]</b>= tekst widoczny w pustym polu tekstowym
+ * @param int $maxlength $array<b>[$maxlength]</b>= maxymalna ilosc znaków
+ * @param string $onclick =
  */
 function input($array) {
     if ($array['type']=='select') {
@@ -735,10 +546,11 @@ function input($array) {
     }
     unset($array['spec']);
 
-    $prefix = isset($array['prefix'])?$array['prefix']:'';   unset($array['prefix']);
+    $prefix = isset($array['legend'])?'<legend>'.$array['legend'].'</legend>':'';   unset($array['legend']);
+    $prefix .= isset($array['prefix'])?$array['prefix']:'';   unset($array['prefix']);
     $sufix  = isset($array['sufix'])?$array['sufix']:'';    unset($array['sufix']);
 
-    return $prefix. swapString($STR_ARRAY, array('STR_ARRAY' => element($array),'SPEC'=>$SPEC ) ). $sufix;
+    return $prefix. stringSwap($STR_ARRAY, array('STR_ARRAY' => element($array),'SPEC'=>$SPEC ) ). $sufix;
 
 }
 
@@ -762,45 +574,99 @@ function element($array, $prefix='="', $sufix='"') {
 }
 
 /**
- * Ladowanie pliku do edycji
+ * Do tworzenia FORMULARZY
  *
- * @link  admin/pages/theme.php
- * @class files_list(katalog)
- * @param $get - nazwa pliku
- * @internal
- * @return echo echo <textarea + <input
- * /
-function load_file($get) {
-$config = getData('../inc/config.php');
-if(isset($get) && is_file('../themes/'.$config['theme'].'/'.$get)) {
-echo '<textarea name="content">'.htmlspecialchars(file_get_contents('../themes/'.$config['theme'].'/'.$get)).'</textarea>';
-echo '<input type="hidden" name="file" value="'.$get.'">';
-} else {
-$array = files_list('../themes/'.$config['theme']);
-echo '<textarea name="content">'.htmlspecialchars(file_get_contents('../themes/'.$config['theme'].'/'.$array[0])).'</textarea>';
-echo '<input type="hidden" name="file" value="'.$array[0].'">';
+ * @param array $input_array[type|value|name|  placeholder|maxlength|id|class|style|     prefix|sufix]
+ * @param string $ramka - tekst w obramuwce do form
+ */
+function form($input_array, $ramka=null) {
+    $inputs['FORM']='';
+    if (isset($input_array[0]) ){
+        foreach($input_array as $input){
+            $inputs['FORM'].=input( $input );
+        }
+    } elseif (isset($input_array['type']) ){
+        $inputs['FORM'].=input($input_array);
+    } else {
+        error('Nie stworzony input, $array nie zawiara danych');
+    }
+
+    if ($inputs['FORM']!=''){
+        return stringSwap(
+            '<form action="" method="post">'.
+            (!is_null($ramka)?'
+        <fieldset>
+            <legend>'.$ramka.'</legend>
+                {{FORM}}
+        </fieldset>'
+                :
+                '{{FORM}}').
+            '</form>',
+            $inputs);
+    }
 }
-} //END load_file();
 
 /**
- * Zapisanie edytowanego pliku
- *
- * @link  admin/pages/theme.php
- * @class
- * @param $post - POST sygnał zapisania
- * @internal
- * @return plik działania na plikach
- * /
-function save_file($post) {
-$config = getData('../inc/config.php');
-if(isset($post)) {
-if(file_put_contents('../themes/'.$config['theme'].'/'.$_POST['file'], htmlspecialchars_decode($_POST['content'])))
-success('Plik został pomyślnie zaktualizowany.');
-else
-error('Nie udało się zapisać zmian. Sprawdź czy plik posiada odpowiednie uprawnienia.');
-}
-} //END save_file()
+ * @param array $array =
+ * [ <b>thead</b> :array | <b>tbody</b> :array | <b>id</b> :string | <b>style</b> :string | <b>class</b> :string ]
+ * @return string tablica;
+ */
+function table($array) {
+    if(is_array($array) ) {
+        if(isset($array['thead'])){
+          $thead =  '<thead>'.tableGenerator($array['thead']).'</thead>';
+        }
+        if(isset($array['tbody'])) {
+            $tbody = '<tbody>'.tableGenerator($array['tbody']).'</tbody>';
+        }
+        if(isset($array['id']) || isset($array['style']) || isset($array['class']) ){
 
+            return '<table'.
+            (isset($array['id'])?' id="'.$array['id'].'"':'').
+            (isset($array['style'])?' style="'.$array['style'].'"':'').
+            (isset($array['class'])?' class="'.$array['id'].'"':'') .   '>'.
+            $thead.
+            $tbody.
+            '</table>';
+        }
+
+    }
+}
+
+/**
+ * @param array $array = (array = tr (td1,[...] tdn), array2 = tr2(tdn), array n => (td) )
+ * @param $_
+ * @param $array + [ id | style | class ]
+ * @return string
+ */
+function tableGenerator($array) {
+    if(is_array($array) ){
+        $is_tr = true;
+        if(isset($array['id']) || isset($array['style']) || isset($array['class'])){
+          $id=  (isset($array['id'])?' id="'.$array['id'].'"':'').
+            (isset($array['style'])?' style="'.$array['style'].'"':'').
+            (isset($array['class'])?' class="'.$array['class'].'"':'');
+            unset($array['id']);
+            unset($array['style']);
+            unset($array['class']);
+        }
+
+        foreach($array as $element => $val){
+            if(is_array($val)){
+                $is_tr = false;
+                $str .= tableGenerator($val);
+            }elseif(!is_numeric($element)){
+                $str .= '<td id="'.$element.'">'. $val.'</td>';
+            } else {
+                $str .= '<td>'. $val.'</td>';
+            }
+        }
+        if($is_tr){
+            $str = '<tr'.(isset($id)?$id:'').'>'.$str.'</tr>';
+        }
+        return $str;
+    }
+}
 /*** USTAWIENIA **************************************************************/
 
 /**
