@@ -6,7 +6,7 @@ require_once('../inc/functions_admin.php');
 //Funkcja logowania
 function login($post) {
     if(isset($post)) {
-        $config = fileGetData('../inc/.admin.php');
+        $config = fileLoadData('../inc/.admin.php');
         if(md5($post) == $config['password']) {
             $_SESSION['user'] = 1;
                         // zmiana Hasła
