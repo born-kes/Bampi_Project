@@ -1,0 +1,60 @@
+#panel_left{
+    border-radius:10px;
+    background: #223344;
+    border-style: double;
+    padding: 10px;
+    width: 200px;
+    height: 100%;
+    position: fixed;
+    left: 0px;
+}
+#panel_right{
+    border-radius:10px;
+    background: #223344;
+    border-style: double;
+    padding: 10px;
+    width: 200px;
+    height: 100%;
+
+    position: fixed;
+    right: 0px;
+}
+ul#main_menu
+{
+    list-style: none;
+}
+
+#main_menu a
+{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+#main_menu a:hover
+{
+    text-decoration: underline;
+}
+.slide_button
+{
+    display: block;
+    height: 100%;
+    text-indent: -9999px;
+    width: 24px;
+    right: -4px;
+
+    position: absolute;
+    top: 0px;
+}
+#panel_right .slide_button
+{
+    left:  -4px;
+}
+
+.zamknij
+{
+    background-position: -20px 0px;
+}
+
+a:focus {
+    outline:none; //usuwanie niebieskiej obwódki w FF
+}
