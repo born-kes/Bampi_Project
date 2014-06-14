@@ -1,0 +1,25 @@
+/* Globalne Manu Gurne */
+#div_Global_Menu{
+    z-index: 9999;
+    top:-18px;
+    width: 720px;
+    width: -moz-max-content;
+    font-size: inherit;
+    border: 1px solid #403D32;
+    background: none repeat scroll 0 0 #403D32;
+    padding: 0;
+    position: absolute;
+}
+#div_Global_Menu ul{
+    display: block;
+    list-style-type: none;
+}
+#div_Global_Menu div{
+    display: none;
+}
+#div_Global_Menu .ui-state-active {
+    background: none repeat scroll 0 0 #403D32;
+}
+#div_Global_Menu div{
+    color: #cacaca;
+}
