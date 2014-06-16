@@ -36,7 +36,7 @@ function fileLoad($path_file, $unserialize = true) {
             return $inc[$path_file];
         }
     }
-  //  echo " plik '$path_file' nie istnieje";
+    //  echo " plik '$path_file' nie istnieje";
 }
 
 
@@ -66,69 +66,77 @@ function stringSwap($string, $array, $separator = '') {
 /**
  * Łączy tablice ze sobą
  *
- * @param array $array_global - do tego dodawany jest ten drugi
- * @param array $array_conect - ten jest dodawany do array_global
+ * @param array $arrayGlobal - do tego dodawany jest ten drugi
+ * @param array $arrayConect - ten jest dodawany do arrayGlobal
  */
-function array_conect($array_global, $array_conect){
-    if(is_array($array_global) && is_array($array_conect)){
-        foreach($array_conect as $key => $value){
-            $array_global[$key].= ' '.$value;
+function arrayConect(&$arrayGlobal, $arrayConect){
+    if(is_array($arrayGlobal) && is_array($arrayConect)){
+        foreach($arrayConect as $key => $value){
+            $arrayGlobal[$key].= ' '.$value;
         }
     }
-    return $array_global;
+    // return $arrayGlobal;
 }
 
+/**
+ * @param $get = nazwa pliku pobierana z $_GET[page]
+ */
 function temple($get){
-    global $config, $TEMPLE;
+    global $config, $TempleBloki, $Temple;
     if(!isset($config))
-    $config = fileLoad('inc/config.php');
+        $config = fileLoad('inc/config.php');
     $Temple = fileLoad('themes/'.$config['theme'].'/template.html', false);
 
-    if(isset($get) && !is_null($get) ) {
-        $page =  fileLoad("pages/$get.php");
+    if(isset($get['page']) && !is_null($get['page']) ) {
+        $page =  fileLoad("pages/".$get['page'].".php");
     }
     if(is_null($page) ) {
         $page = fileLoad('pages/home.php');
     }
 
-    $TempleBlok = fileLoad('themes/'.$config['theme'].'/block.php');
-    $TempleBlok = array_conect($TempleBlok, $page);
-
-    $TEMPLE = array('theme'=>$Temple,'bloki'=> $TempleBlok);
+    $TempleBloki = fileLoad('themes/'.$config['theme'].'/block.php');
+    arrayConect($TempleBloki, $page);
 }
-/*
- * $Hook = array(
- *   'loading'=>'',
- *   'loading_go'=>'',
- *   'loading_validacja'=>'',
- *   'loadink_fin'=>'',
- *
- *   'weryfikation'=>'',
- *   'weryfikation_go'=>'',
- *   'weryfikation_validacja'=>'',
- *   'weryfikation_fin'=>'',
- *
- *   'conection'=>'',
- *   'conection_go'=>'',
- *   'conection_validacja'=>'',
- *   'conection_fin'=>'',
- *
- *   'final'=>'',
- *   'final_go'=>'',
- *   'final_validacja'=>'',
- *   'final_fin'=>'',
-);*/
-$Hook = fileLoad('inc/.hook.php');
-//$Hook['loading'][]=
-$TEMPLE = temple(@$_GET['page']);
 
-$TEMPLE['bloki'] = array_conect($Temple['bloki'], $config);
+function moduleInclude($name){
+    if(file_exists("module/$name")){
+        global $TempleBloki;
+        if(file_exists("module/$name/$name.php")){
+            include("module/$name/$name.php");
+        }else {
+            $TempleBloki['body'].=fileLoad("module/$name/$name.html", false);
 
-$STRONA =  stringSwap($TEMPLE['theme'], $TEMPLE['bloki']);
+            $TempleBloki['js'].=fileLoad("module/$name/$name.js", false);
 
-function Loading(){
-    global $Hook,$TEMPLE;
-    foreach($Hook as $hak => $function){
-        $function($TEMPLE['bloki']);
+            $TempleBloki['css'].=fileLoad("module/$name/$name.css", false);
+        }
+    }
+    if(isset($_POST) && count($_POST)>0){
+        // print_r($_POST);echo '<br>';
+        moduleInclude('logowanie');
     }
 }
+    $Hook = array( // pobieranie danyc
+        'temple'=>'_GET',
+        'arrayConect'=>array('TempleBloki', 'config'),
+    );
+//$Hook = fileLoad('inc/.hook.php');
+//print_r($Hook);
+
+
+//$TEMPLE['bloki'] =
+
+
+//$STRONA =  stringSwap($TEMPLE['theme'], $TEMPLE['bloki']);
+    /*
+    if(is_array($Hook) )
+        foreach($Hook as $hak => $value){
+            if(!is_null($value) )
+                if( function_exists($hak) ){
+                    if(is_array($value)){
+                        $hak($$value[0], $$value[1]);
+                    } else {
+                        $hak($$value);
+                    }
+                }
+        }*/
