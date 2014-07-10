@@ -2,24 +2,31 @@
 	SetOutputFilter DEFLATE
 </IfModule>
 
+
  php_flag magic_quotes_gpc off
 
- RewriteEngine on
-#rder allow,deny
-#deny from all
+Options +FollowSymLinks
 
 ErrorDocument 403 /index.php
 ErrorDocument 404 /index.php
 
+DirectoryIndex index.php index.html index.htm
 
-RewriteRule .*admin(.*)\.php?$    admin/index.php?page=$1 [QSA,L]
+<IfModule mod_rewrite.c>
+  RewriteEngine on
 
-RewriteRule ^([\w]*)([/])?([\w]*)?^(css|gif|jpg|js) index.php?page=$1&plik=$3 [QSA]
-RewriteRule \.(html|htm|php|json)?$ index.php?typ=$1 [QSA,L]
-#RewriteRule ^(.*)\.php?$  index.php?typ=php&q=$1 [QSA,L]
-#RewriteRule ^(.*)\.js?$   index.php?typ=js&q=$1
-#RewriteRule ^(.*)\.json?$ index.php?typ=json&q=$1 [QSA,L]
-#RewriteRule ^([^.]*)\/(.*)\.^(css|gif|jpg|js)?$    index.php?subdomena=$1&page=$2 [QSA,L]
-#RewriteRule ^([^.]*)^(admin)\.?$  index.php?typ=html&page=$1 [QSA,L]
+  RewriteRule "(^|/)\." - [F]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_URI} !=/favicon.ico
 
 
+
+    <FilesMatch "(\.[css|gif|jpg|js|png]{1})$">
+       RewriteRule ^(.*)\.(css|gif|jpg|js|png[^html|^htm|^php|^json]*)$ $1\.$2 [QSA,L]
+    </FilesMatch>
+
+       RewriteRule ^(.*)\.(html|htm|php|json[^css|^gif|^jpg|^js|^png]*)$ index.php?page=$1&typ=$2 [QSA,L]
+
+</IfModule>
