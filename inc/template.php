@@ -175,7 +175,8 @@ class templateMenager
     }
 
     protected function install($nr)
-    {ksort($this->box[ $this->tags[$nr] ]);
+    {
+        ksort($this->box[ $this->tags[$nr] ]);
         $str='';
         foreach($this->box[ $this->tags[$nr] ] as $key)
         {
