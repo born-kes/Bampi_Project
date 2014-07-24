@@ -35,7 +35,6 @@ $(function(){
     color: #cacaca;
 }
 </style>
-
 	<div id="div_Global_Menu">
         <ul id="Global_Menu">
             <li class="hidde">
@@ -62,9 +61,6 @@ $(function(){
 			<li>
                 <a href="#Global_request">$_REQUEST</a>
             </li>
-			<li>
-                <a href="#Global_config">$Config</a>
-            </li>
         </ul>
         <div id="Global_post"><?php echo echo_r($_POST); ?></div>
         <div id="Global_get"><?php echo echo_r($_GET); ?></div>
@@ -73,6 +69,5 @@ $(function(){
         <div id="Global_files"><?php echo echo_r($_FILES); ?></div>
         <div id="Global_server"><?php echo echo_r($_SERVER); ?></div>
         <div id="Global_request"><?php echo echo_r($_REQUEST); ?></div>
-        <div id="Global_config"><?php echo echo_r(fileLoadData('../inc/config.php')); ?></div>
 	</div>
 

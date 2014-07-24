@@ -1,11 +1,10 @@
 /**
- * Created by Monika Lukasz on 14.06.14.
- * $microTimeStart => microTimeStart
+ * $microTimeStart => microTimeStart => {{time}}
  */
 $(function(){
     $.ajax('?go=ajax').done(function(a,b){
         $('#licznik_end').text(function(){
-            return ( a- microTimeStart .toFixed(6) ) + ' s';
+            return ( a- {{time}} .toFixed(6) ) + ' s';
         });
     });
 });

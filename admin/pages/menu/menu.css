@@ -1,0 +1,24 @@
+.m-ul { min-height: 10px; }
+.re{ background-color: #fffdec; }
+.m-ul li{   clear: both;}
+#menu .m-ul ul.re li{ display: inline-block; }
+#menu li {
+    display: inline-flex;
+    padding: 10px;
+    -moz-box-shadow: 10;
+}
+#menu ul ul:nth-child(0){
+    display: inline-flex;
+    padding: 10px;
+}
+.m-ul .przenies {
+    float: left;
+    cursor: move;
+}
+.m-ul .edit {
+    float: left;
+    cursor: pointer;
+}
+.m-ul .el {
+    float: left;
+}

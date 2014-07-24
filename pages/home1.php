@@ -1,1 +1,1 @@
-a:4:{s:5:"title";s:4:"home";s:7:"content";s:27:"dom słodki dom strona home";s:5:"f-cja";i:0;s:5:"order";i:1;}
+a:11:{s:8:"keywords";s:0:"";s:10:"page_title";s:0:"";s:11:"description";s:0:"";s:5:"title";s:10:"homeopatia";s:3:"css";s:0:"";s:4:"head";s:0:"";s:4:"body";s:0:"";s:4:"menu";s:0:"";s:7:"content";s:27:"dom słodki dom strona home";s:6:"footer";s:0:"";s:2:"js";s:0:"";}

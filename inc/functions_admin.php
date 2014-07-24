@@ -1,6 +1,6 @@
 <?php
-
-/** * FUNKCJE PODSTAWOWE ******************************************************
+/**
+ * FUNKCJE PODSTAWOWE
  * SŁOWNICZEK
  * cat  - Katalog
  * path - Ścierzka
@@ -12,244 +12,6 @@
  * Count- Count(array) - suma
  */
 $inc;
-/*** FUNKCJE NA Katalogach *******************************************************/
-
-/**
- * Do Pobierania listy Katalogów
- *
- * @param $path - Katalogo do przeszukania
- * @return array array lista katalogow
- */
-function catList($path) {
-    $array = '';
-    $dir = opendir($path);
-
-    while ($file = readdir($dir)) {
-        if (is_dir($path.'/'.$file) && $file[0] != ".") {
-            $array[] = $file;
-        }
-    }
-    return $array;
-}
-
-/**
- * Do sprawdzania indexów katalogów
- *
- * @param $path - Katalogo do przeszukania
- * @param string|int $nr_str - albo numer indexu albo nazwa
- * @return string|int zwraca : nr indexu albo nazwa pliku
- */
-function cat_Index($path, $nr_str){
-    $list = catList($path);
-
-    if (is_numeric($nr_str)) {
-        return isset ($list[$nr_str]) ? $list[$nr_str] : '' ;
-    }
-
-    foreach ($list as $key => $val) {
-        if ($val == $nr_str)
-            return $key;
-    }
-}
-
-/*** FUNKCJE NA PLIKACH *******************************************************/
-/*admin
- page_delete($plik, $path = '../pages')
- */
-
-/**
- * Do Pobierania listy Plikow
- *
- * @param $path - scieszka do katalogu
- * @return array array lista katalogow
- */
-function fileList($path) {
-    $dir = opendir($path);
-
-    while ($file = readdir($dir)) {
-        if (is_file($path.'/'.$file) && $file[0] != ".") {
-            $array[] = $file;
-        }
-    }
-    return $array;
-}
-
-/**
- * Do sprawdzenia ile jest plików w katalogu
- *
- * @param string $path - Katalog
- * @return int int $count
- */
-function fileCount($path = '..\pages') {
-    $dir = @opendir($path);
-    $count = 0;
-
-    while ($file = @readdir($dir)) {
-        if (is_file($path.'/'.$file) && $file[0] != ".") {
-            $count = $count + 1;
-        }
-    }
-    return $count;
-}
-
-/**
- * Pobieranie pliku do Edytowania
- * znaki zakodowane htmlspecialchars
- *
- * @param $path - scieszka katalogu
- * @param $file - nazwa pliku {<b>rozszerzenie wymagane</b>} *.php,*.html,*.css
- * @return string htmlspecialchars($string)
- */
-function fileLoad($path, $file) {
-    if (is_file($path.$file) ) {
-        return file_get_contents($path.$file);
-    } else {
-        error('Podany plik nie istnieje.');
-    }
-}
-
-/**
- * Pobranie Array z pliku ,
- * zapisanego w postaci tabeli asocjacyjnej
- *
- * @param $path - pełna nazwa pliku np{'../pages/'.$_GET['file'].'.php'}
- * @return array|void - unserialize($plik)<br> - header('Location: index.php');
- */
-function fileLoadData($path) {
-    global  $inc;
-    if (! is_null($inc[$path]) ) {
-        return $inc[$path];
-    } elseif (file_exists($path)) {
-        if( file_exists($path) ) {
-            $inc[$path] = unserialize(file_get_contents($path));
-            return $inc[$path];
-        }
-    }
-}
-
-/**
- * Zmienia nazwe pliku
- *
- * @param $path - pełna scieszka do pliku
- * @param $file - $_GET[file].'php'
- * @param $nev_file - nowa nazwa pliku
- * @return bool
- */
-function fileReName($path, $file, $nev_file) {
-    if($file === $nev_file) {
-        return FALSE;
-    }
-    if (is_file($path.$file) ) {
-        if (file_exists($path.$nev_file) ) {
-            error('Nie mogę zmienić nazwy. Taki Plik już istnieje.');
-            return FALSE;
-        }
-        if(rename($path.$file, $path.$nev_file)) {
-            success('Nazwa została zmieniona.');
-        } else {
-            error('Nazwa nie została zmieniona.');
-        }
-    }
-}
-
-/**
- * Zapisywanie pliku
- *
- * @param $path - scieszka dostępu
- * @param $file - nazwa pliku {<b>rozszerzenie wymagane</b>} *.php,*.html,*.css
- * @param $path_file - scieszka + nazwa pliku + rozszerzenie *.php,*.html,*.css
- * @param $save_content - deHtml(), serialize()- tresc html deHtml przed zapisem
- */
-function fileSave($path_file, $save_content) {
-    $new = file_exists($path_file);
-    if (isset($path_file) && isset($save_content) ) {
-        if(file_put_contents($path_file, $save_content) ) {
-            if(!$new) {
-                chmod($path_file,0777);
-            }
-            success('Plik został pomyślnie zaktualizowany.');
-        } else {
-            error('Nie udało się zapisać zmian. Sprawdź czy plik posiada odpowiednie uprawnienia.');
-        }
-    }
-}
-
-/**
- * Zapisuje informacji Array do pliku
- * w postaci serializowanej tabeli asocjacyjnej
- *
- * @param $path - scieszka dostępu
- * @param $file - nazwa pliku {bez <b>PHP</b> na końcu}
- * @param $save_array - tabela do zapisania
- * @param $_GET $_GET['file'] - istnieje jesli plik jest edytowany
- * @return void
- */
-function fileSaveData($path, $file, $save_array ,$new_file=null) {
-
-    if (isset($file) || file_exists($path. $file)) {
-        // zmiana nazwy
-        if (isset($_GET['file']) && $_GET['file'].'php' != $file) {
-            fileReName($path, $_GET['file'].'php', $file);
-        }
-        fileSave($path. $file, serialize($save_array) );
-
-    } elseif (!file_exists($path.$file) ) {
-        // Tworze nowy plik
-        fileSave($path. $file, serialize($save_array) );
-            header('Location: index.php?go='.autPhp($file) );
-    } else {
-        error('Podstrona o takim adresie już istnieje! i nie moge jej stworzyć ani zaktualizować.');
-    }
-}
-
-/**
- * Do usuwania Plików
- *
- * @param string $plik - nazwa pliku {bez <b>PHP</b> na końcu}
- * @param string $path - nazwa katalogu
- */
-function fileDelete($plik, $path = '../pages') {
-
-    if(isset($plik)) {
-        $plik .='.php';
-        if(is_file($path.'/'.$plik)) {
-            if(unlink($path.'/'.$plik))
-                success('Wybrana podstrona została usunięta.');
-            else
-                error('Nie udało się usunąć podstrony. Sprawdź uprawnienia pliku.');
-        }
-    }
-} //END page_delete();
-
-/**
- * Podłączenie wybranego Pliku
- * <br><br>
- * include("$path/$go.php"||"$path/pages.php");
- *
- * @param $path - Katalog
- * @param $plik = _GET['go'] -[opcjonalny] nazwa pliku {bez <b>PHP</b> na końcu}
- */
-function fileInclude($path, $plik=NULL) {
-    if (fileCount($path)>0) {
-        if (!is_null($plik) || isset($_GET['go']) ) {
-
-            if(is_null($plik) && isset($_GET['go']) )
-                $plik = $_GET['go'];
-
-            if (is_file("$path/$plik.php") ) {
-                include("$path/$plik.php");
-            } else {
-                error("<b>Taka podstrona nie istnieje</b>");
-                getMsg();
-            }
-        } else {
-            include("$path/pages.php");
-        }
-    } else {
-        error('<b>Ten Katalog jest pusty</b>');
-        getMsg();
-    }
-}
 
 /**** MENU  ********************************************************************/
 /**
@@ -385,6 +147,7 @@ function getMsg() {
  * @return 1) session_destroy(); header('Location: login.php'); <br> 2) brak reakcji
  */
 function verifyLogin() {
+
     if (! isset($_SESSION['user']) ){
         $_SESSION['user'] = 0;
     }
@@ -415,54 +178,6 @@ function verifyLogin() {
         header('Location: login.php');
     }
 }*/
-
-/*** PODSTRONY **************************************************************/
-
-function stringSwapArray($string, $separator , $array) {
-    $end_String='';
-    if(is_array($array) ){
-        if(is_array($separator)) {
-            foreach($array as $element => $val){
-                if(is_array($val)&& count($val)>1 ){
-                    $end_String .=stringSwapArray($string, $separator , $val);
-                }else{
-                    $end_String .= str_replace($separator[1], $val,
-                        str_replace($separator[0], $element, $string)
-                    );
-                }
-            }
-        } else {
-            foreach($array as $element){
-                $end_String .= str_replace($separator, $element, $string);
-            }
-        }
-
-        return $end_String;
-    }
-
-}
-
-/**
- * Podmiana fragmentów tekstu,
- * wstawian wartości z tablicy do stringu <i>{{$config}}</i>
- *
- * @param string $string = ciąg znaków - kod strony
- * @param array $array = tablica asocjacyjna
- * @param string $separator = [opcionalny] przedrostek np.<b>{{page:config}}</b>
- * @return string Przetworzony z Tagami
- */
-function stringSwap($string, $array, $separator = '') {
-
-    foreach ($array as $name => $value) {
-        if (is_array($value) ) {
-            $string = stringSwap($string, $value, $name.':');
-        }
-        if (strpos($string, "{{".$separator.$name."}}") ) {
-            $string = str_replace("{{".$separator.$name."}}", $value, $string);
-        }
-    }
-    return $string;
-}
 
 /*** SZABLON *****************************************************************/
 /******* GENEROWANIE FORMULARZY *************/
@@ -520,31 +235,31 @@ function input($array) {
     $SPEC='';
 
     if ($array['type']=='textarea') {
-        $STR_ARRAY = "<".$array['type']."{{STR_ARRAY}}>"
+        $STR_ARRAY = "<".$array['type']." {{STR_ARRAY}}>"
             .htmlspecialchars($array['value'])."</".$array['type'].">";
         unset($array['value']);
 
     } elseif ($array['type']=='select') {
-        $STR_ARRAY = "<".$array['type']."{{STR_ARRAY}}>".$array['value']."</".$array['type'].">";
+        $STR_ARRAY = "<".$array['type']." {{STR_ARRAY}}>".$array['value']."</".$array['type'].">";
         unset($array['value']);
 
     } elseif ($array['type']=='option') {   // print_r($array);
-        list($array['value'], $val)=each($array['value']);
-        $STR_ARRAY = "<".$array['type']."{{STR_ARRAY}}{{SPEC}}>$val</".$array['type'].">";
+        list($array['value'], $val) = each($array['value']);
+        $STR_ARRAY = "<".$array['type']." {{STR_ARRAY}}{{SPEC}}>$val</".$array['type'].">";
 
     } else {
-        $STR_ARRAY= '<input{{STR_ARRAY}}{{SPEC}}/>';
+        $STR_ARRAY= '<input {{STR_ARRAY}}{{SPEC}}/>';
     }
 
     if ( isset($array['spec']) && isset($array['value']) && $array['spec']===$array['value']) {
         switch ( $array['type'] ) {
             case 'radio':
             case 'checkbox': $SPEC=' checked';  break;
-            case 'option': $SPEC=' selected';  break;
+            case 'option': $SPEC=' selected'; break;
         }
-
     }
-    unset($array['spec']);
+    if ($array['type']=='option'){unset($array['type']); }
+        unset($array['spec']);
 
     $prefix = isset($array['legend'])?'<legend>'.$array['legend'].'</legend>':'';   unset($array['legend']);
     $prefix .= isset($array['prefix'])?$array['prefix']:'';   unset($array['prefix']);
@@ -554,6 +269,53 @@ function input($array) {
 
 }
 
+function stringSwapArray($string, $separator , $array) {
+    $end_String='';
+    if(is_array($array) ){
+        if(is_array($separator)) {
+            foreach($array as $element => $val){
+                if(is_array($val)&& count($val)>1 ){
+                    $end_String .= stringSwapArray($string, $separator , $val);
+                }else{
+                    $end_String .= str_replace($separator[1], $val,
+                        str_replace($separator[0], $element, $string)
+                    );
+                }
+            }
+        } else {
+            foreach($array as $element){
+                $end_String .= str_replace($separator, $element, $string);
+            }
+        }
+
+        return $end_String;
+    }
+
+}
+
+/**
+ * Podmiana fragmentów tekstu,
+ * wstawian wartości z tablicy do stringu <i>{{$config}}</i>
+ *
+ * @param string $string = ciąg znaków - kod strony
+ * @param array $array = tablica asocjacyjna
+ * @param string $separator = [opcionalny] przedrostek np.<b>{{page:config}}</b>
+ * @return string Przetworzony z Tagami
+ */
+function stringSwap($string, $array, $separator = '') {
+    if(is_array($array)) {
+        foreach ($array as $name => $value) {
+            if (is_array($value) ) {
+                $string = stringSwap($string, $value, $name.':');
+            }
+            if (strpos($string, "{{".$separator.$name."}}") ) {
+                $string = str_replace("{{".$separator.$name."}}", trim($value), trim($string) );
+            }
+        }
+    }
+    return $string;
+}
+/*
 /**
  * Spłaszcza Array. Tworzy ciąg znaków z tablicy.
  *
@@ -758,21 +520,16 @@ function echo_r($array) {
 }
 
 /**
- * Dekoduje znaki na HTML
+ * Łączy tablice ze sobą
  *
- * @param $str - zakodowany ciąg
- * @return string Ciąg HTML
+ * @param array $arrayGlobal - do tego dodawany jest ten drugi
+ * @param array $arrayConect - ten jest dodawany do arrayGlobal
  */
-function deHtml($str) {
-    return htmlspecialchars_decode($str);
-}
-
-/**
- * Koduje znaki HTML
- *
- * @param $str  -   ciąg HTML
- * @return string - Zakodowany ciąg np do educji
- */
-function enHtml($str) {
-    return htmlspecialchars($str);
+function arrayConect(&$arrayGlobal, $arrayConect=null){
+    if(is_array($arrayGlobal) && is_array($arrayConect)){
+        foreach($arrayConect as $key => $value){
+            @$arrayGlobal[$key].= ' '.$value;
+        }
+    }
+    // return $arrayGlobal;
 }

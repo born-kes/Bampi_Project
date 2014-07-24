@@ -1,13 +1,22 @@
-<?php $microTimeStart = microtime(true);//  header("Location: ./admin/");
-    ob_start();	session_start();	error_reporting(E_ALL ^ E_NOTICE);
+<?php ob_start();
+$microTimeStart = microtime(true);//  header("Location: ./admin/");
+session_start();
+error_reporting(E_ALL ^ E_NOTICE);
+//require_once('inc/functions.php');
+//require_once('inc/functions_admin.php');
+require_once('inc/medoo.php');
+require_once('inc/fileMenager.php');
+require_once('inc/template.php');
 
-$typ=(isset($_GET['typ'])?$_GET['typ']:'html');
-require_once('inc/functions.php');
-print_r($_GET);
-$Temple = temple(@$_GET['page']);
+$url = (is_null(@$_GET['page'])?'home':$_GET['page']).'.php';
 
-$Temple['blok'] = array_conect($Temple['blok'], $config);
-
-echo stringSwap($Temple['theme'], $Temple['blok']);
+$file = new fileMenager();
+$tpl = new templateMenager(
+    array(
+        array( 'menu'=>$file->load('cache/menu.html' )->data() ),
+        //'config'=>$file->load('inc/config.php' )->data(),
+        'page'=>$file->load("pages/$url" )->data()
+    )
+);
 
     ob_end_flush();

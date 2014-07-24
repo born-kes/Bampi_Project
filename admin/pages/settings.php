@@ -15,7 +15,7 @@ function save_settings($post) {
 }
 
 	save_settings(@$_POST['submit']);
-    $config = fileGetData('../inc/config.php');
+   // $config = fileLoadData('../inc/config.php');
 	getMsg();
 ?>
 		<div class="box">

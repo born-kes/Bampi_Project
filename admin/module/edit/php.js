@@ -55,7 +55,7 @@
     var cssMode = CodeMirror.getMode(config, "css");
     var phpMode = CodeMirror.getMode(config, phpConfig);
 
-    function dispatch(stream, state) { // TODO open PHP inside text/css
+    function dispatch(stream, state) { // TOD O open PHP inside text/css
       var isPHP = state.mode == "php";
       if (stream.sol() && state.pending != '"') state.pending = null;
       if (state.curMode == htmlMode) {

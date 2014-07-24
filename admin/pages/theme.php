@@ -1,6 +1,6 @@
 <?php
 
-	$config = fileGetData('../inc/config.php');
+	$config = fileLoadData('../inc/config.php');
 	//save_file(@$_POST['submit']);
 
 $get = (isset($_GET['file'])?$_GET['file']:fileList('../themes/'.$config['theme']) ) ;
@@ -8,7 +8,7 @@ if(is_array($get))$get=$get[0];
 $form[]=array(
     'type'=>'textarea',
     'name'=>'content',
-    'value'=>htmlspecialchars_decode( fileLoad('../themes/'.$config['theme'].'/',$get) )
+    'value'=>htmlspecialchars_decode( fileLoad('../themes/'.$config['theme'].'/'.$get, false) )
 );
 $form[]= array(
     'type'=>'hidden',

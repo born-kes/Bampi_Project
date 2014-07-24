@@ -1,1 +1,1 @@
-a:6:{i:0;s:8:"subpage2";i:1;s:5:"home1";i:2;s:4:"home";i:3;s:7:"Kontact";i:4;s:18:"strona_dla_seweryn";i:5;s:7:"subpage";}
+a:7:{i:0;s:8:"subpage2";i:1;s:5:"home1";i:2;s:4:"home";i:3;s:7:"Kontact";i:4;s:18:"strona_dla_seweryn";i:5;s:7:"subpage";i:6;s:9:"logowanie";}

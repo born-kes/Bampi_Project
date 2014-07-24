@@ -220,7 +220,7 @@ table.new_page tbody tr td:nth-child(3) {
 	font-size: 12px;
 }
 table.new_page input[type="text"], table.new_page input[type="password"] {
-	width: 60%;
+	/*width: 60%;*/
 	background: #fff;
 	border: 1px solid #ddd;
 	font-size: 12px;
