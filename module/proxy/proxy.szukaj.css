@@ -1,0 +1,331 @@
+#body{
+    background: none repeat scroll 0 0 #f9f7ed;
+    margin-top: 20px;
+}
+header,ul, .js_sidebar, footer, #fb_widget, dd, dt
+,
+.category-item-box-actions,
+.category-item-box-review
+{display:none;}
+header#header{
+    display:block;
+}
+/* Tablica exel */
+
+#content td{
+    padding: 4px;
+}
+.category-item-box{
+    border-top: medium ridge currentcolor;
+    float: left;
+}
+.category-item-box strong:first-of-type,
+.category-item-box div:first-of-type,
+.category-item-box p:first-of-type{
+    margin: 4px;
+    float: left;
+}
+/*td div.h{
+    display: none;
+    font-size: 90%;
+    position: absolute;
+    right: 5px;
+    top: 2px;
+    z-index: 999;
+}
+td div.h{
+    background: url("gear-select.png") no-repeat scroll 0 0 transparent;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 4px 4px;
+   *//* display: none;*//*
+    height: 18px;
+    margin: 0;
+    outline: medium none;
+    overflow: hidden;
+    padding: 0 2px;
+    text-indent: 34px;
+    width: 28px;
+}
+td:hover div.h {
+    display: block;
+}
+div.h:hover {
+    background: url("gear-select.png") no-repeat scroll 0 -20px transparent;
+}
+*/
+#table_ td{
+    line-height: 1.5;
+    height: 16px;
+    margin: 5px;
+    padding: 5px;
+
+}
+input {
+    margin: 0;
+    padding: 3px 0px;
+    border: 1px solid #c9c9c9;
+    /*font-size: 11px;*/
+    background-color: #c9c9c9;
+}
+.zl:before {
+    color: #9DA0A4;
+    content: "zł";
+    padding: 0px 4px;
+    float: right;
+}
+.euro:before {
+    color: #9DA0A4;
+    content: "€";
+    padding: 0px 4px;
+    float: right;
+}
+/* POLE dodaj nowy */
+td#nowy{
+    cursor: pointer;
+    background-color: #44c0f0;
+    height: 55px;
+}
+#dialog{
+
+}
+label.zl:before{
+    padding: 0 9px 0 0;
+    position: relative;
+    top: 28px;
+}
+.top0:before {
+    color: #9DA0A4;
+    content: "TOP 1";
+    padding: 0px 4px;
+    float: left;
+}
+.top1:before {
+    color: #9DA0A4;
+    content: "TOP 2";
+    padding: 0px 4px;
+    float: left;
+}
+.top2:before {
+    color: #9DA0A4;
+    content: "TOP 3";
+    padding: 0px 4px;
+    float: left;
+}
+.top3:before {
+    color: #9DA0A4;
+    content: "TOP 4";
+    padding: 0px 4px;
+    float: left;
+}
+.top4:before {
+    color: #9DA0A4;
+    content: "TOP 5";
+    padding: 0px 4px;
+    float: left;
+}
+.top5:before {
+    color: #9DA0A4;
+    content: "TOP 6";
+    padding: 0px 4px;
+    float: left;
+}
+.table_top div{
+    border: 1px solid rosybrown;
+}
+#body_s.zasysacz tr.n0{
+    background-color: red;
+}
+#body_s.zasysacz tr.n1,#body_s.zasysacz tr.n2{
+    background-color: green;
+}
+#body_s.zasysacz tr.n3,#body_s.zasysacz tr.n4{
+    background-color: #ffff00;
+}
+#body_s.zasysacz tr.n5,#body_s.zasysacz tr.n6,{
+    background-color: pink;
+}
+
+.table_top span{
+    float: right;
+}
+.table_top span, img.av
+{
+    color: #FF7A03;
+    font-family: "ProximaNovaBold",Helvetica,Arial,sans-serif;
+    font-weight: normal;
+}
+
+/* CENEO CSS ################################################# */
+.cat-prod-row-foto a {
+    display: block;
+    height: 200px;
+    line-height: 200px;
+    overflow: hidden;
+    text-align: center;
+}
+a {
+    color: #444444;
+    text-decoration: none;
+    transition: color 0.3s ease 0s;
+}
+.cat-prod-row {
+    cursor: pointer;
+}
+body {
+    color: #444444;
+    font-family: "ProximaNovaRegular",Helvetica,Arial,sans-serif;
+    font-size: 1.4rem;
+    font-style: normal;
+    line-height: 1.5;
+}
+html {
+    font-size: 62.5%;
+}
+.cat-prod-row-desc {
+    -moz-box-sizing: border-box;
+    border-right: 1px solid #D1D1D1;
+    float: left;
+    height: 100%;
+    margin-right: 1.05263%;
+    padding-right: 10px;
+    width: 49.4737%;
+}
+.cat-prod-row-desc .cat-prod-row-name {
+    display: block;
+    font-family: "ProximaNovaRegular",Helvetica,Arial,sans-serif;
+    font-size: 1.8rem;
+    font-style: normal;
+    margin-bottom: 0.3em;
+    max-height: 3em;
+    overflow: hidden;
+}
+strong {
+    font-family: "ProximaNovaBold",Helvetica,Arial,sans-serif;
+    font-weight: normal;
+}
+
+.prod-review {
+    clear: both;
+    margin: 0.3em 0;
+}
+p, pre {
+    margin: 1em 0;
+}
+
+ol, ul {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+.cat-prod-row-category {
+    margin: 0;
+}
+.ac_results li, .ac_phrase_in_cat, .section-title--oneline, .dropdown-wrapper .dropdown-toggle, .bid-offer__name, .product-content .param-name, .product-content .families-dropdown .dropdown-menu .family-name, .product-promo-box, .page-tab-title, .feature, .cat-offers__store, .cat-prod-row-params > li, .cat-prod-row-category, .grid-item__name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.cat-prod-row-price .price, .cat-prod-row-price .header-basket .basket-price strong, .header-basket .basket-price .cat-prod-row-price strong, .cat-prod-row-price .basket-preview-prod-price strong, .basket-preview-prod-price .cat-prod-row-price strong, .cat-prod-row-price .box .box-prod-price strong, .box .box-prod-price .cat-prod-row-price strong, .cat-prod-row-price .box-vert .product-price strong, .box-vert .product-price .cat-prod-row-price strong, .cat-prod-row-price .add-to-basket-popup .prod-attrs .prod-price, .add-to-basket-popup .prod-attrs .cat-prod-row-price .prod-price, .cat-prod-row-price .product-offers .product-price strong, .product-offers .product-price .cat-prod-row-price strong, .cat-prod-row-price .basket-store-summary strong, .basket-store-summary .cat-prod-row-price strong, .cat-prod-row-price .basket-order-summary strong, .basket-order-summary .cat-prod-row-price strong, .cat-prod-row-price .store-order-summary .store-order-value strong, .store-order-summary .store-order-value .cat-prod-row-price strong {
+    font-size: 2.4rem;
+    line-height: 1;
+}
+.price, .header-basket .basket-price strong, .basket-preview-prod-price strong, .box .box-prod-price strong, .box-vert .product-price strong, .add-to-basket-popup .prod-attrs .prod-price, .product-offers .product-price strong, .basket-store-summary strong, .basket-order-summary strong, .store-order-summary .store-order-value strong {
+    color: #FF7A03;
+    font-family: "ProximaNovaBold",Helvetica,Arial,sans-serif;
+    font-weight: normal;
+}
+.expand-option {
+    margin-top: 5px;
+}
+.cat-prod-row-price {
+    float: right;
+    margin-right: 0;
+    padding-top: 0.25em;
+    width: 24.2105%;
+}
+.cat-prod-row-foto {
+    float: left;
+    margin-bottom: -0.45em;
+    margin-right: 1.05263%;
+    margin-top: -0.45em;
+    width: 24.2105%;
+}
+.cat-prod-row-body {
+    -moz-box-sizing: border-box;
+    height: 200px;
+    overflow: hidden;
+    padding-bottom: 0.45em;
+    padding-top: 0.45em;
+}
+html, button, input, select, textarea {
+    font-family: sans-serif;
+}
+
+.cf:before, .nav-tabs:before, .points-granted:before, .lp-section:before, .base-form .row:before, .clipboard-list-header:before, .premiere-showcase:before, .premiere-variant:before, .nps-scale:before, .home-top-row:before, .home-full-width:before, .cat-sub:before, .cat-sub .sub-categories-wide ul:before, .cat-sub .popular-categories ul:before, .box-row:before, .box-vert:before, .home-ads-row:before, .adult-zone:before, .active-filters:before, .otherSize:before, .bid-row:before, .bid-offer__details:before, .popular-categories-horizontal:before, .category-map:before, .category-goto:before, .product-top:before, .product-content .thumbs-list:before, .add-to-basket-popup .prod-top:before, .add-to-basket-popup .actions:before, .page-tabs:before, .offer-details:before, .product-full-description:before, .full-description:before, .pok-info:before, .basket-store:before, .checkout-steps ol:before, .checkout-nav:before, .checkout-user-data:before, .checkout-delivery-address:before, .checkout-delivery-address .delivery-address:before, .feature-controls:before, .feature-list:before, .product-review:before, .product-review-comment-toolbar:before, .store-top:before, .store-data:before, .store-stats > header:before, .store-review-highlights:before, .store-review:before, .howto:before, .category-list-nav:before, .category-list-footer:before, .category-list-body:before, .cat-prod-row .cat-offers__item > a:before, .cat-prod-row:before, .grid-block:before, .grid-row:before, .countdown .timer:before, .deal-more-info:before, .account-data:before, .login-way:before, .orders-nav:before, .order-list .suborder-summary:before, .fashion-subnav ul:before, .fashion-secondary-header:before, .store-zones:before, .store-zones .zones:before, .zone-hero:before, .lp-offers:before, .lt-ie8 .tyres-filter-results:before, .cf:after, .nav-tabs:after, .points-granted:after, .lp-section:after, .base-form .row:after, .clipboard-list-header:after, .premiere-showcase:after, .premiere-variant:after, .nps-scale:after, .home-top-row:after, .home-full-width:after, .cat-sub:after, .cat-sub .sub-categories-wide ul:after, .cat-sub .popular-categories ul:after, .box-row:after, .box-vert:after, .home-ads-row:after, .adult-zone:after, .active-filters:after, .otherSize:after, .bid-row:after, .bid-offer__details:after, .popular-categories-horizontal:after, .category-map:after, .category-goto:after, .product-top:after, .product-content .thumbs-list:after, .add-to-basket-popup .prod-top:after, .add-to-basket-popup .actions:after, .page-tabs:after, .offer-details:after, .product-full-description:after, .full-description:after, .pok-info:after, .basket-store:after, .checkout-steps ol:after, .checkout-nav:after, .checkout-user-data:after, .checkout-delivery-address:after, .checkout-delivery-address .delivery-address:after, .feature-controls:after, .feature-list:after, .product-review:after, .product-review-comment-toolbar:after, .store-top:after, .store-data:after, .store-stats > header:after, .store-review-highlights:after, .store-review:after, .howto:after, .category-list-nav:after, .category-list-footer:after, .category-list-body:after, .cat-prod-row .cat-offers__item > a:after, .cat-prod-row:after, .grid-block:after, .grid-row:after, .countdown .timer:after, .deal-more-info:after, .account-data:after, .login-way:after, .orders-nav:after, .order-list .suborder-summary:after, .fashion-subnav ul:after, .fashion-secondary-header:after, .store-zones:after, .store-zones .zones:after, .zone-hero:after, .lp-offers:after, .lt-ie8 .tyres-filter-results:after {
+    content: "";
+    display: table;
+}
+.cf:after, .nav-tabs:after, .points-granted:after, .lp-section:after, .base-form .row:after, .clipboard-list-header:after, .premiere-showcase:after, .premiere-variant:after, .nps-scale:after, .home-top-row:after, .home-full-width:after, .cat-sub:after, .cat-sub .sub-categories-wide ul:after, .cat-sub .popular-categories ul:after, .box-row:after, .box-vert:after, .home-ads-row:after, .adult-zone:after, .active-filters:after, .otherSize:after, .bid-row:after, .bid-offer__details:after, .popular-categories-horizontal:after, .category-map:after, .category-goto:after, .product-top:after, .product-content .thumbs-list:after, .add-to-basket-popup .prod-top:after, .add-to-basket-popup .actions:after, .page-tabs:after, .offer-details:after, .product-full-description:after, .full-description:after, .pok-info:after, .basket-store:after, .checkout-steps ol:after, .checkout-nav:after, .checkout-user-data:after, .checkout-delivery-address:after, .checkout-delivery-address .delivery-address:after, .feature-controls:after, .feature-list:after, .product-review:after, .product-review-comment-toolbar:after, .store-top:after, .store-data:after, .store-stats > header:after, .store-review-highlights:after, .store-review:after, .howto:after, .category-list-nav:after, .category-list-footer:after, .category-list-body:after, .cat-prod-row .cat-offers__item > a:after, .cat-prod-row:after, .grid-block:after, .grid-row:after, .countdown .timer:after, .deal-more-info:after, .account-data:after, .login-way:after, .orders-nav:after, .order-list .suborder-summary:after, .fashion-subnav ul:after, .fashion-secondary-header:after, .store-zones:after, .store-zones .zones:after, .zone-hero:after, .lp-offers:after, .lt-ie8 .tyres-filter-results:after {
+    clear: both;
+}
+.cf:before, .nav-tabs:before, .points-granted:before, .lp-section:before, .base-form .row:before, .clipboard-list-header:before, .premiere-showcase:before, .premiere-variant:before, .nps-scale:before, .home-top-row:before, .home-full-width:before, .cat-sub:before, .cat-sub .sub-categories-wide ul:before, .cat-sub .popular-categories ul:before, .box-row:before, .box-vert:before, .home-ads-row:before, .adult-zone:before, .active-filters:before, .otherSize:before, .bid-row:before, .bid-offer__details:before, .popular-categories-horizontal:before, .category-map:before, .category-goto:before, .product-top:before, .product-content .thumbs-list:before, .add-to-basket-popup .prod-top:before, .add-to-basket-popup .actions:before, .page-tabs:before, .offer-details:before, .product-full-description:before, .full-description:before, .pok-info:before, .basket-store:before, .checkout-steps ol:before, .checkout-nav:before, .checkout-user-data:before, .checkout-delivery-address:before, .checkout-delivery-address .delivery-address:before, .feature-controls:before, .feature-list:before, .product-review:before, .product-review-comment-toolbar:before, .store-top:before, .store-data:before, .store-stats > header:before, .store-review-highlights:before, .store-review:before, .howto:before, .category-list-nav:before, .category-list-footer:before, .category-list-body:before, .cat-prod-row .cat-offers__item > a:before, .cat-prod-row:before, .grid-block:before, .grid-row:before, .countdown .timer:before, .deal-more-info:before, .account-data:before, .login-way:before, .orders-nav:before, .order-list .suborder-summary:before, .fashion-subnav ul:before, .fashion-secondary-header:before, .store-zones:before, .store-zones .zones:before, .zone-hero:before, .lp-offers:before, .lt-ie8 .tyres-filter-results:before, .cf:after, .nav-tabs:after, .points-granted:after, .lp-section:after, .base-form .row:after, .clipboard-list-header:after, .premiere-showcase:after, .premiere-variant:after, .nps-scale:after, .home-top-row:after, .home-full-width:after, .cat-sub:after, .cat-sub .sub-categories-wide ul:after, .cat-sub .popular-categories ul:after, .box-row:after, .box-vert:after, .home-ads-row:after, .adult-zone:after, .active-filters:after, .otherSize:after, .bid-row:after, .bid-offer__details:after, .popular-categories-horizontal:after, .category-map:after, .category-goto:after, .product-top:after, .product-content .thumbs-list:after, .add-to-basket-popup .prod-top:after, .add-to-basket-popup .actions:after, .page-tabs:after, .offer-details:after, .product-full-description:after, .full-description:after, .pok-info:after, .basket-store:after, .checkout-steps ol:after, .checkout-nav:after, .checkout-user-data:after, .checkout-delivery-address:after, .checkout-delivery-address .delivery-address:after, .feature-controls:after, .feature-list:after, .product-review:after, .product-review-comment-toolbar:after, .store-top:after, .store-data:after, .store-stats > header:after, .store-review-highlights:after, .store-review:after, .howto:after, .category-list-nav:after, .category-list-footer:after, .category-list-body:after, .cat-prod-row .cat-offers__item > a:after, .cat-prod-row:after, .grid-block:after, .grid-row:after, .countdown .timer:after, .deal-more-info:after, .account-data:after, .login-way:after, .orders-nav:after, .order-list .suborder-summary:after, .fashion-subnav ul:after, .fashion-secondary-header:after, .store-zones:after, .store-zones .zones:after, .zone-hero:after, .lp-offers:after, .lt-ie8 .tyres-filter-results:after {
+    content: "";
+    display: table;
+}
+.cat-prod-row {
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #D1D1D1;
+    cursor: pointer;
+    position: relative;
+}
+.home-left-content, .site-left-content {
+    float: right;
+    margin-right: 0;
+    width: 100%;
+}
+.cat-prod-row-foto img {
+    max-height: 90%;
+    max-width: 90%;
+}
+img {
+    max-height: 100%;
+    max-width: 100%;
+    vertical-align: middle;
+}
+img {
+    border: 0 none;
+}
+.cat-prod-row-foto a {
+    line-height: 200px;
+    text-align: center;
+}
+.wrapper:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+.wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1190px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 950px;
+    min-width: 560px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.cat-prod-row:hover {
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+    transition: all 0.2s ease-in-out 0s;
+}
+.category-list-nav, .site-left-content nav{
+    border-bottom: 3px solid #D1D1D1;
+    padding: 10px 0;
+}
+
+
