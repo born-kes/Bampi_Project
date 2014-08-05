@@ -40,7 +40,7 @@ window.top.document.wstawiacz = function(odp){
     if( odp.top <= max_top ){
         var tr = $('#body_s tr:eq('+odp.nr+')');
         var string = '<div>{{nr}}</div><div>{{c_info}}</div>';
-        
+
         string = string.replace('{{nr}}', odp.nr);
         string = string.replace('{{id}}', odp.id);
         string = string.replace('{{top}}', odp.top);
