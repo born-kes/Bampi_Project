@@ -73,6 +73,7 @@ $table = $this->load('cache/table.html' )->data();
 
     $this->loadInclude("module/sql/sql.php");
 
+
 $fixed_thead = swap( '<div>{{Field}}</div>'."\n" ,  sql('thead') ,'class_dla_thead');
 $thead = swap( '<td class="{{Type}}">{{Field}}</td>'."\n" ,  sql('thead') ,'class_dla_thead');
 $tbody = swap( '<td >{{{{Field}}}}</td>'."\n" ,  sql('thead'));
@@ -93,12 +94,12 @@ if(is_null($table))
 }
 else
 {
-    return array(
+    $table_a= array(
         'content'=>$table,
         'title'=> 'tabela produktów',
-        'js'=> $_table['js'],
-        'css'=> $_table['css'].'
-        /* colResizable */
+       // 'js'=> $_table['js'],
+        'css'=> '
+        /* colResizable in Table.php */
 .dotted, .CRG{
     background-image: url("j/colResizable/dotted.png");
     background-repeat: repeat-y;
@@ -131,5 +132,10 @@ else
            // '<script type="application/javascript" src="j/sort/jquery-latest.js" ></script>'.
             '<script type="application/javascript" src="j/sort/jquery.tablesorter.min.js" ></script>'
     );
+
+   arrayConect($_table , $table_a );
+
+    arrayConect($_table , $this->loadInclude("module/zasysanie/zasysanie.php") );
+    return  $_table;
 }
 
