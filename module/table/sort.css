@@ -1,0 +1,35 @@
+table.table thead tr td, table.table tfoot tr td {
+    /* background-color: #e6EEEE;
+     border: 1px solid #FFF;*/
+    font-size: 8pt;
+    padding-right: 35px;
+    padding-left: 3px;
+}
+/* SORT */
+/* tables */
+
+
+table.table thead tr .header {
+    background-image: url(i/sort/bg.gif);
+    background-repeat: no-repeat;
+    background-position: center right;
+    cursor: pointer;
+}
+table.table tbody td {
+    color: #3D3D3D;
+    padding: 4px;
+    background-color: #FFF;
+    vertical-align: top;
+}
+table.table tbody tr.odd td {
+    background-color:#F0F0F6;
+}
+table.table thead tr .headerSortUp {
+    background-image: url(i/sort/asc.gif);
+}
+table.table thead tr .headerSortDown {
+    background-image: url(i/sort/desc.gif);
+}
+table.table thead tr .headerSortDown, table.table thead tr .headerSortUp {
+    background-color: #8dbdd8;
+}

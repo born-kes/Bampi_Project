@@ -1,0 +1,49 @@
+/* table/table.css */
+
+@import url("i/jquery-ui.min.css");
+thead.f-nav{ position: fixed; top: 0;}
+#edit_div thead.f-nav{ position: relative; top: 0;}
+#table_s.f-nav{ margin-top: 30px;}
+
+table,input,textarea{
+    background: #D7D7D7;
+}
+td,th{ cursor: auto;
+   border-bottom:  1px groove;
+    position: relative;
+}
+td{
+   border-left:  1px groove;
+}
+thead.ui-widget-header{
+    border: 0px;
+    z-index: 9;
+}
+
+#table_s.table td, #table_s.table th {
+    overflow: inherit;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+table.table {
+    font-family:arial;
+    background-color: #CDCDCD;
+    font-size: 8pt;
+    width: 100%;
+    text-align: center;
+    table-layout: fixed;
+}
+.table tr.activ,.table tr.activ th,.table tr.activ td{
+    border: 1px solid #abb835;
+    color: #4c3000;
+    font-weight: bold;
+    background-color: #5c8c02;
+}
+#content{
+    background:none;
+    padding-bottom:200px
+}
+.ui-button-text-only{
+    cursor: pointer;
+}
+/* END table/table.css */
