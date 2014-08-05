@@ -1,10 +1,11 @@
 <?php  //  $this->file('edyt.js')->data();
-$_table['html'] = $this->file('zasysacz.html')->data();
-$_table['js'] = '';
-$_table['css'] = '';
+$_table['content'] = $this->file('zasysanie.html')->data();
+$_table['js'] = $this->file('zasysanie.js')->data();
+$_table['css'] = '#zasysanie_b{position:fixed; top:0;z-index: 4}';
 
-return array(
-    'content'=>$_table,
+return $_table;
+    array(
+    'content'=>$_table['html'],
     'title'=> '',
     'js'=> '',
     'css'=> '',
