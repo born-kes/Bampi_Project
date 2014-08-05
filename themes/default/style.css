@@ -13,7 +13,6 @@ body {
 	background: #36393D;
 	margin: 0;
 	padding: 0;
-    color: yellowgreen;
 }
 
 a { color: #0066cc; text-decoration: none;}
@@ -69,8 +68,8 @@ body {
 }
 
 #content {
-	float: right;
-	width: 480px;
+    /*	float: right;
+    	width: 480px;*/
 	background: #F9F7ED;
 	margin-top: 20px;
 }
@@ -85,7 +84,7 @@ body {
 }
 
 #content p { padding: 0 10px 10px 10px; color: #232323;}
-#content ul { padding: 0 20px 10px 30px; }
+/*#content ul { padding: 0 20px 10px 30px; }*/
 
 #sidebar {
 	float: left;
