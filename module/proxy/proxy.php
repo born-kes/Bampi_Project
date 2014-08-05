@@ -93,7 +93,8 @@ if(!empty($_GET['ceneo']) )
         $page['css']=$this->file('proxy.produkt.css')  ->data();
         $page['js'] =$this->file('proxy.produkt.js')  ->data().
             // nr ? co to było ? ilosc produktów ?
-            '    var nr = '.(isset($_GET['nr'])?$_GET['nr']:0).';';
+            '    var nr_ = '.(is_numeric($_GET['nr'])?$_GET['nr']:0).';
+    var id_ ='.(is_numeric($_GET['nr'])?$_GET['ceneo']:0).';';
     }
     else
     {
