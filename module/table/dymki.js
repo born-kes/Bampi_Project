@@ -2,14 +2,14 @@
 
 $().ready(function(){
 
-    $('#table_s thead td:gt(1)').append(function(){
+    $('#table_s thead td:gt(1)').append(function(){return ''+
         '<div class="contextual-links-wrapper contextual-links-processed">' +
         '<a href="#" class="contextual-links-trigger">Konfiguruj</a>' +
         '<ul class="contextual-links" style="display: none;">' +
         '<li class="node-hide-all first"><a href="">Zmień szerokość</a></li>' +
         '<li class="node-hide-all first"><a href="">Ukryj na Stałe</a></li>' +
         '<li class="node-hide last"><a href="">Ukryj</a></li>' +
-        '</ul></div>'});
+        '</ul></div>';});
 
 
     $('#body_s th:even').append(function(){return ''+
@@ -20,28 +20,32 @@ $().ready(function(){
             '<li class="node-cenneo last"><a href="">Sprawdz Cenneo</a></li>' +
             '<li class="node-edit first"><a href="">Edutuj wiersz</a></li>' +
             '<li class="node-delete first" style="margin-top:10px"><a href="">Usuń wiersz</a></li>' +
-            '</ul></div>'})
+            '</ul></div>';})
         .each(function(nr){ //alert($('.node-cenneo',this).html());
 
             $('.node-cenneo a' , this).click(function(){
 
                 var id = $('#body_s tr:eq(' + nr + ')').attr('dir');
 
-                if( $('#content iframe').length > 0 )
+                if( $('#content #iframe').length > 0 )
                 {
-                    if($('#content iframe').attr('src')!='proxy.html?ceneo='+ id)
-                        $('#content iframe').attr('src','proxy.html?ceneo='+ id);
+                    if($('#content #iframe').attr('src')!='proxy.html?ceneo='+ id)
+                        $('#content #iframe').attr('src','proxy.html?ceneo='+ id);
                 }
                 else
                 {
-                    $('#content').append('<iframe src="proxy.html?ceneo='+ id +'" style="display:none" title="Podgląd z Ceneo" />');
+                    $('#content')
+                        .append('<iframe id="iframe"' +
+                            ' src="proxy.html?ceneo='+ id +'"' +
+                            ' style="display:none"' +
+                            ' title="Podgląd z Ceneo" />');
                 }
                 return false;
             });
 
             $('.node-cenneo.first a' , this).click(function(){
 
-                $('#content iframe').dialog({ width: 905,height:600,
+                $('#content #iframe').dialog({ width: 905,height:600,
                     show: {effect: "clip",duration: 1000},
                     hide: {effect:"clip", duration:300}
                 })
