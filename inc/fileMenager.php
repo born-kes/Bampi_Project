@@ -30,6 +30,8 @@ class fileMenager
      */
     protected $tree = array();
 
+
+
     /**
      * zwraca zebrane dane
      *
@@ -82,8 +84,8 @@ class fileMenager
 
         if ( isset($this->path) && is_file( $this->path ) )
         {
-            include( $this->path );
-            return true;
+            return include( $this->path );
+          //  return true;
         } else {
 //            error("<b>Taka podstrona nie istnieje</b>");
 //            getMsg();
@@ -269,7 +271,7 @@ class fileMenager
                 {
                     chmod($this->path,0777);
                 }
-                success('Plik został pomyślnie zaktualizowany.');
+             //   success('Plik został pomyślnie zaktualizowany.');
                 return true;
             }
             else

@@ -190,7 +190,7 @@ class templateMenager
                 }
             }
         }
-        if( ! is_null( $str ) ) return $str;
+        if( ! is_null( $str ) ){ return $str;}
         return $string;
     }
 
@@ -254,7 +254,7 @@ class templateMenager
         // generowanie tresci HTML
         if( is_object($html) )
         {
-            $html = $html();
+            $html = $html(); // TODO error dla array ?$this_db['html']=''; $this->load('cache/table.html' )->save($this_db);
         }
         elseif( is_array($html) && !is_null($box) )
         {

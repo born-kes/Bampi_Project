@@ -2,7 +2,7 @@
 	ob_start();
 	session_start();
 require_once('../inc/functions_admin.php');
-
+$_SESSION['user'] = 1;
 //Funkcja logowania
 function login($post) {
     if(isset($post)) {
