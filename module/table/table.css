@@ -1,7 +1,7 @@
 /* table/table.css */
 
 @import url("i/jquery-ui.min.css");
-thead.f-nav{ position: fixed; top: 0;}
+
 #edit_div thead.f-nav{ position: relative; top: 0;}
 #table_s.f-nav{ margin-top: 30px;}
 
@@ -25,6 +25,7 @@ thead.ui-widget-header{
     padding-left: 0 !important;
     padding-right: 0 !important;
 }
+.table_fi,
 table.table {
     font-family:arial;
     background-color: #CDCDCD;
@@ -47,3 +48,19 @@ table.table {
     cursor: pointer;
 }
 /* END table/table.css */
+.table_fi.f-nav{
+    display:table;
+}
+.table_fi{
+    display:none;
+}
+.table_fi.f-nav{
+    position: fixed;
+    top: 0;
+    z-index: 3;
+}
+.table_fi div{
+    display: table-cell;
+    border-left: 1px groove;
+
+}

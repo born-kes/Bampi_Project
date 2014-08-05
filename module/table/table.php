@@ -73,11 +73,13 @@ $table = $this->load('cache/table.html' )->data();
 
     $this->loadInclude("module/sql/sql.php");
 
+$fixed_thead = swap( '<div>{{Field}}</div>'."\n" ,  sql('thead') ,'class_dla_thead');
 $thead = swap( '<td class="{{Type}}">{{Field}}</td>'."\n" ,  sql('thead') ,'class_dla_thead');
 $tbody = swap( '<td >{{{{Field}}}}</td>'."\n" ,  sql('thead'));
 $table = swap(
     $_table['html'],
     array(
+        'fixed_thead' => $fixed_thead,
         'thead' => $thead,
         'tbody' => swap('<tr id="{{id}}" dir="{{kod_ceneo}}">'.$tbody.'</tr>', sql('tbody') ),
         'tfoot'=> '<tr id="tfoot"><th class="ui-widget ui-state-default ui-corner-all ui-button-text-only">Dodaj Nowy</th>'.td( sql('thead') ).'</tr>'
