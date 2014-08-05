@@ -10,12 +10,26 @@ require_once('inc/template.php');
 
 $url = (is_null(@$_GET['page'])?'home':$_GET['page']).'.php';
 
+
 $file = new fileMenager();
+
+if( is_file("module/".(@$_GET['page'])."/$url") )
+{
+    $page = $file->loadInclude("module/".(@$_GET['page'])."/$url");
+}
+else if( is_file("pages/$url") )
+{
+    $page = $file->load("pages/$url" )->data();
+}
+else
+{
+    $page = $file->load("pages/home.php" )->data();
+}
 $tpl = new templateMenager(
     array(
         array( 'menu'=>$file->load('cache/menu.html' )->data() ),
         //'config'=>$file->load('inc/config.php' )->data(),
-        'page'=>$file->load("pages/$url" )->data()
+        'page'=>$page
     )
 );
 
