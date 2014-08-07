@@ -1,9 +1,11 @@
 $().ready(function(){
 
+    $('#body_s').find('th:odd').prepend('<div style="padding: 5px" class="ol"><ol class="zasysanie"></ol></div>');
+
 $('#zasysanie_b')
     .addClass("ui-widget ui-state-default ui-corner-all ui-button-text-only")
     .click(function(){
-        var odp={
+        /*       var odp={
             nr : 0,
             id : $('#body_s tr:eq(0)').attr('dir'),
             top : 1,
@@ -24,23 +26,35 @@ $('#zasysanie_b')
         if(window.top.document.wstawiacz)
             window.top.document.wstawiacz(odp);
 
-/* To już działa  */ return;
+ To już działa  */// return;
+        var nr = (prompt("Od Którego zacząć", "1"))-1;
     $('#zasysanie_f').attr('src',
-            'proxy.html?ceneo='+$('#body_s tr:eq(0)').attr('dir')
-                +'&nr=0' );
+            'proxy.html?ceneo='+$('#body_s').find('tr:eq('+nr+')').attr('dir')
+                +'&nr='+nr );
+        return true;
   });
-$('#body_s tr').each(function(){
- //  alert( $(this).attr('dir') );
-});
 
 });
 var max_top = 5;
 //var szablon_top = <div></div>;
 window.top.document.wstawiacz = function(odp){
-    if( odp.top <= max_top ){
-        var tr = $('#body_s tr:eq('+odp.nr+')');
-        var string = '<div>{{nr}}</div><div>{{c_info}}</div>';
-
+    if( odp.top <= max_top){
+        var string = ''+
+            '<li>' +
+            '<div style="overflow: hidden;">' +
+           // '<div style="float:left;">{{c_info}}</div>' +
+            '<div style="float:left;">{{firma}}</div>' +
+            '<div style="float:right;">{{cena}}</div>' +
+            '</div>' +
+            '</li>';
+        if(odp.nr != -1){
+            var tr = $('#body_s').find('tr:eq(' + odp.nr +')');
+        }
+        else
+        {
+            var tr = $('#body_s').find('tr.activ');
+        }
+//alert(odp.info());
         string = string.replace('{{nr}}', odp.nr);
         string = string.replace('{{id}}', odp.id);
         string = string.replace('{{top}}', odp.top);
@@ -50,8 +64,24 @@ window.top.document.wstawiacz = function(odp){
         string = string.replace('{{img}}', odp.img);
         string = string.replace('{{firma}}', odp.firma);
 
+        tr.find('th:last ol:first').append(string);
+        if(!odp.next) return;
+    }
 
-        alert(string);
+    if(odp.nr != -1 && odp.nr != "undefined" && odp.next) {
+//alert( (odp.nr != -1) + "\n" + (odp.nr != "undefined") +"\n" + "\n\n" + odp.info());
+        if(odp.nr < $('#body_s').find('tr').length && odp.nr>-1){
+
+            var nr = (odp.nr+1);
+            $('#zasysanie_f').attr('src',
+                'proxy.html?ceneo='+$('#body_s').find('tr:eq('+nr+')').attr('dir')
+                    +'&nr='+nr );
+        }else{
+            $('#zasysanie_f').attr('src','');
+        }
+    }else{
+      //  alert( (odp.nr != -1) + "\n" + (odp.nr != "undefined") +"\n" + "\n\n" + odp.info());
+
 
     }
 };

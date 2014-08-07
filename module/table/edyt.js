@@ -2,12 +2,6 @@
 
 $().ready(function(){
 
-
-
-    $('#body_s tr').each(function(){
-        $('th:last',this).prepend('<div style="padding-right: 20px">TOP</div>');
-    });
-
 });
 function edit_tab(nr){
 

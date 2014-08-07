@@ -25,7 +25,10 @@ $().ready(function(){
 
     $('tr,td').mouseenter(function(){ var el = $(this);
         el.addClass("ui-state-default");
-        $('*',el).click(function(){$('*').removeClass("activ"); el.addClass("activ");})
+        $('*',el).click(function(){$('*').removeClass("activ");
+            el.addClass("activ");
+            return false;
+        })
     })
         .mouseleave(function(){$(this).removeClass("ui-state-default");});
 
@@ -35,7 +38,7 @@ $().ready(function(){
             if(! nav.hasClass('f-nav') ){
 
                 $('div', nav).each(function(a){
-                    $(this).width( $('#table_s thead td:eq('+a+')').width() );
+                    $(this).width( $('#table_s').find('thead td:eq('+a+')').width() );
                 });
                 nav.addClass("f-nav");
             }
@@ -48,11 +51,7 @@ $().ready(function(){
     });
 
 
-
-
-        {
             $("#table_s").tablesorter( {selectorHeaders:"thead td"} );
-        }
 });
 
 /* END table/table.js */
