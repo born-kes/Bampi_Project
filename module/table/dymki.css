@@ -16,7 +16,6 @@ tbody th{
 }
 .contextual-links-region-active {
     outline: #999 dashed 1px;
-
 }
 
 /**
@@ -65,10 +64,24 @@ div.contextual-links-active a.contextual-links-trigger {
     -webkit-border-bottom-right-radius: 0;
     border-radius: 4px 4px 0 0;
 }
+
+div.contextual-links-wrapper ul.contextual-links:hover,
+div.contextual-links-wrapper.contextual-links-active ul.contextual-links{
+    height: auto;
+    -webkit-transform: scaleY(1);
+    transform: scaleY(1);
+}
 div.contextual-links-wrapper ul.contextual-links {
+    -webkit-transform: scaleY(0);
+    -webkit-transform-origin: top;
+    -webkit-transition: transform 0.3s ease;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform .3s ease;
+
     background-color: #fff;
     border: 1px solid #ccc;
-    display: none;
+    display: block;
     margin: 0;
     padding: 0.25em 0;
     position: absolute;

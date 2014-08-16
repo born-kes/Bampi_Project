@@ -43,8 +43,8 @@ function get_web_page( $url, $post='category-id=&search-query=' ){
 //var_dump( get_web_page('http://www.ceneo.pl/search') );
 
 function filtr_proxy($str){
-    $body = false;
-    $page= array();
+    $war = $body = false;
+    $page= array('content'=>'');
 
     foreach($str as $wiersz){
         if(!$body && strpos($wiersz, '<body')!==false){
@@ -86,16 +86,17 @@ function filtr_proxy($str){
 
 if(!empty($_GET['ceneo']) )
 {
+    $page = array('title'=>'','menu'=>'','content'=>'');
     $page['title'].=$_GET['ceneo'];
     $page['menu'].='<h2>zaciągane z ceneo </h2>';
-    $page['content']='';
+
     if(is_numeric($_GET['ceneo']))
     {
         $url="http://www.ceneo.pl/".$_GET['ceneo'].";0280-0.htm";
         $page['css']=$this->file('proxy.produkt.css')  ->data();
         $page['js'] =$this->file('proxy.produkt.js')  ->data().
-            // nr - index tr tablicy
-            '    var nr_ = '.(is_numeric($_GET['nr'])?$_GET['nr']:-1).';
+            /* nr - index tr tablicy */
+            '    var nr_ = '.( ( isset($_GET['nr']) && is_numeric($_GET['nr']) )?$_GET['nr']:-1).';
     var id_ ='.(is_numeric($_GET['ceneo'])?$_GET['ceneo']:-1).';';
     }
     else
@@ -160,8 +161,12 @@ else if(isset($_GET['ceneo']) && $_GET['ceneo']==0){
     $page['js'] =$this->file('proxy.produkt.js')  ->data().
         '    var nr_ = '.(is_numeric($_GET['nr'])?$_GET['nr']:-1).';
     var id_ =0;';
-    return $page;
+
 }
-else
-    return array('content'=>'<a href="?ceneo=25200763;0280-0.htm">produkt</a><br>
-    <a href="?ceneo=;szukaj-'. urlencode($_GET['szukaj']).'">szukaj </a>');
+else{
+
+
+    $page = array('content'=>'<a href="?ceneo=25200763;0280-0.htm">produkt</a><br>
+    <a href="?ceneo=;szukaj-'. urlencode(@$_GET['szukaj']).'">szukaj </a>');
+}
+return $page;

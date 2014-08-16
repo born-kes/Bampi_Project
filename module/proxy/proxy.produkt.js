@@ -7,6 +7,11 @@ $().ready(function(){
         }
         else
         {
+            if($("td:eq(0) a:eq(0) img",$(this)).length>0){
+            var firma_ = $("td:eq(0) a:eq(0) img:eq(0)",$(this)).attr('alt');
+            }else if($("td:eq(0) a:eq(0) span",$(this)).length>0){
+                var firma_ = $("td:eq(0) a:eq(0) span:eq(0)",$(this)).text();
+            }
             var odp={
                 nr    : nr_,
                 id    : id_,
@@ -15,7 +20,7 @@ $().ready(function(){
                 c_info: $("td:eq(4) span:eq(0)",$(this)).text(),
                 name  : $("td:eq(3) .product-name a",$(this)).html(),
                 img   : $("td:eq(0) a:eq(0)",$(this)).html(),
-                firma : $("td:eq(0) a:eq(0) img:eq(0)",$(this)).attr('alt'),
+                firma : firma_ ,
                 info  : function(){
                     return ''+
                         'nr ='    +this.nr+     "\n"+

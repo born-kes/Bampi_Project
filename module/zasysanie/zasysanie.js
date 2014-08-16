@@ -38,14 +38,18 @@ $('#zasysanie_b')
 var max_top = 5;
 //var szablon_top = <div></div>;
 window.top.document.wstawiacz = function(odp){
+
+
     if( odp.top <= max_top){
         var string = ''+
-            '<li>' +
-            '<div style="overflow: hidden;">' +
-           // '<div style="float:left;">{{c_info}}</div>' +
-            '<div style="float:left;">{{firma}}</div>' +
-            '<div style="float:right;">{{cena}}</div>' +
-            '</div>' +
+            '<li style="overflow: hidden;">' +
+            //'<div class="row">' +
+            '<div style="width: 8px">{{top}}</div>' +
+            '<div>{{firma}}</div>' +
+            '<div>{{cena}}</div>' +
+            '<div>{{c_info}}</div>' +
+            '<div>{{name}}</div>' +
+           // '</div>' +
             '</li>';
         if(odp.nr != -1){
             var tr = $('#body_s').find('tr:eq(' + odp.nr +')');
@@ -54,6 +58,18 @@ window.top.document.wstawiacz = function(odp){
         {
             var tr = $('#body_s').find('tr.activ');
         }
+        if( odp.top ==1 && tr.find('th:last li').length > 0 ){
+            $('#body_s').find('tr.activ th:last li').remove();
+        }
+
+        if(odp.top < 5)
+        ajax('ajax.html?sql=update_ceny',
+                '&id='+tr.attr('id')+
+                '&top'+odp.top+'='+odp.firma+
+                '&top'+odp.top+'_cena='+odp.cena
+
+        );
+
 //alert(odp.info());
         string = string.replace('{{nr}}', odp.nr);
         string = string.replace('{{id}}', odp.id);
@@ -65,7 +81,18 @@ window.top.document.wstawiacz = function(odp){
         string = string.replace('{{firma}}', odp.firma);
 
         tr.find('th:last ol:first').append(string);
+
+        if(odp.firma=='Av World'){ tr.addClass('Av Av'+odp.top) }
+
         if(!odp.next) return;
+        if(!tr.hasClass('Av')) tr.addClass('Av Av0');
+
+        tr.find('th:last ol:first').css('min-width',function(){
+           var min = 0;
+            $(this).find('li:first div').each(function(){ min +=$(this).width();});
+            return min+'px';
+        })
+
     }
 
     if(odp.nr != -1 && odp.nr != "undefined" && odp.next) {

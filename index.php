@@ -1,10 +1,10 @@
 <?php ob_start();
 $microTimeStart = microtime(true);//  header("Location: ./admin/");
 session_start();
-error_reporting(E_ALL ^ E_NOTICE);
+//error_reporting(E_ALL ^ E_NOTICE);
+error_reporting(E_ALL);
 //require_once('inc/functions.php');
 require_once('inc/functions_admin.php');
-require_once('inc/medoo.php');
 require_once('inc/fileMenager.php');
 require_once('inc/template.php');
 

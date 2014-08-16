@@ -19,6 +19,10 @@ thead.ui-widget-header{
     border: 0px;
     z-index: 9;
 }
+#thead.ui-widget-header td.header{
+    padding: 4px;
+   /* overflow: hidden;*/
+}
 
 #table_s.table td, #table_s.table th {
     overflow: inherit;
@@ -47,21 +51,94 @@ table.table {
 .ui-button-text-only{
     cursor: pointer;
 }
-/* END table/table.css */
+
 .table_fi.f-nav{
-    display:table;
+    /*display:table;*/
+    display: flex;
+
 }
 .table_fi{
     display:none;
 }
+.table_fi.f-nav div{
+    padding-bottom: 4px;
+    padding-top: 4px;
+}
 .table_fi.f-nav{
     position: fixed;
     top: 0;
+    margin: -1px;
     z-index: 3;
     overflow: hidden;
+    height: 27px;
 }
 .table_fi div{
     display: table-cell;
     border-left: 1px groove;
-
+    overflow: hidden;
+    height: 27px;
 }
+.table_fi .CRG{
+    position: relative;
+    margin-left: 0px;
+    background-image:none;
+}
+/*.td1h .CRC > div.CRG:nth-of-type(1),*/
+
+.td1h div.CRC > div.CRG:nth-of-type(2),
+.td2h div.CRC > div.CRG:nth-of-type(3),
+.td3h div.CRC > div.CRG:nth-of-type(4),
+.td4h div.CRC > div.CRG:nth-of-type(5),
+.td5h div.CRC > div.CRG:nth-of-type(6),
+.td6h div.CRC > div.CRG:nth-of-type(7),
+.td7h div.CRC > div.CRG:nth-of-type(8),
+.td8h div.CRC > div.CRG:nth-of-type(9),
+.td9h div.CRC > div.CRG:nth-of-type(10),
+.td10h div.CRC > div.CRG:nth-of-type(11),
+.td11h div.CRC > div.CRG:nth-of-type(12),
+.td12h div.CRC > div.CRG:nth-of-type(13),
+
+.td1h tr td:nth-of-type(1),
+.td2h tr td:nth-of-type(2),
+.td3h tr td:nth-of-type(3),
+.td4h tr td:nth-of-type(4),
+.td5h tr td:nth-of-type(5),
+.td6h tr td:nth-of-type(6),
+.td7h tr td:nth-of-type(7),
+.td8h tr td:nth-of-type(8),
+.td9h tr td:nth-of-type(9),
+.td10h tr td:nth-of-type(10),
+.td11h tr td:nth-of-type(11),
+.td12h tr td:nth-of-type(12){
+    display:none;
+    overflow:hidden;
+}
+.table_fi div:first-of-type,
+table thead th:first-of-type{
+    width:38px;
+}
+
+.Av.Av1 th:last-child{
+    background-color: #009900;
+}
+.Av.Av2 th:last-child{
+    background-color: #faa732;
+}
+.Av.Av3 th:last-child{
+    background-color: #dda0dd;
+}
+.Av th:last-child,
+.Av.Av4 th:last-child{
+    background-color: #e9322d;
+}
+.argb {
+    color :#FFFF00;
+    color :#FFA0A0;
+}
+.zl:before {
+    color: #9da0a4;
+    content: "zł";
+    float: right;
+    padding: 0 4px;
+}
+/* END table/table.css */

@@ -3,6 +3,10 @@
 $().ready(function(){
 
 });
+/**
+ * Edytowanie wierszy
+ * @param int nr - nr wiersza tbody
+ */
 function edit_tab(nr){
 
     if( $('#content #edit_div').length == 0 ){
@@ -18,7 +22,7 @@ function edit_tab(nr){
         body.attr('valign','top')
         $('td' , body ).each(function(a){
 
-            var thead = $('#table_s thead td:eq('+(a+1)+')');
+            var thead = $('#thead td:eq('+(a+1)+')').clone(false);
 
             if(a==0)$(this).addClass('hide');
 
@@ -81,7 +85,7 @@ function edit_tab(nr){
 
         div.children('table').html( body );
         div.children('table').prepend(
-            $('#table_s thead')
+            $('#thead')
                 .clone(false)
                 .each(function(a){
                     td = $('td',this).attr("style", "");

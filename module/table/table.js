@@ -2,24 +2,21 @@
 
 $().ready(function(){
 
-    $('#content,.table_fi')
-        .css('width',$(window).width()-20)
+    $('#content,.table_fi') .css('width',$(window).width()-20)
     $('#body_s tr')
         .prepend(function(a){ return '<th>'+(a+1)+'</th>'; })
         .append('<th />');
-    $('#table_s thead tr')
-        .prepend('<td />')
-        .append('<td />');
+    $('#thead tr')
+        .prepend('<th>&nbsp;</th>') // dlaczego tu było td ?
+        .append('<th style="width:auto;" />');
     $('.table_fi')
-        .append('<div />')
-        .prepend('<div />');
+        .append('<div />');
+      //  .prepend('<div />');
 
     $('#table_s tr:first td , #table_s tr:eq(1) td,.table_fi div').each(function(){
         $(this).css('width',$(this).width());
     });
 
-
- /*   var nav = $('#table_s thead'); // Zastąpione do testów*/
     var nav = $('.table_fi');
     var t_s = $('#table_s');
 
@@ -27,7 +24,7 @@ $().ready(function(){
         el.addClass("ui-state-default");
         $('*',el).click(function(){$('*').removeClass("activ");
             el.addClass("activ");
-            return false;
+         //   return false;
         })
     })
         .mouseleave(function(){$(this).removeClass("ui-state-default");});
@@ -37,8 +34,8 @@ $().ready(function(){
         if ($(this).scrollTop() > 150) {
             if(! nav.hasClass('f-nav') ){
 
-                $('div', nav).each(function(a){
-                    $(this).width( $('#table_s').find('thead td:eq('+a+')').width() );
+                $('div:gt(0)', nav).each(function(a){
+                    $(this).width( $('#thead').find('td:eq('+(a)+')').width() );
                 });
                 nav.addClass("f-nav");
             }
@@ -50,8 +47,18 @@ $().ready(function(){
         }
     });
 
-
             $("#table_s").tablesorter( {selectorHeaders:"thead td"} );
+    /**
+     * Nadawanie Class zl dla kolumny Ceny
+     */
+    $('#thead tr td').each(function(nr){
+        if($(this).hasClass('cena')){
+            $('#body_s tr').each(function(){
+                $('td:eq('+nr+')',this).addClass('zl');
+            })
+        }
+
+    })
 });
 
 /* END table/table.js */

@@ -1,2 +1,54 @@
 <button id="zasysanie_b">Sprawdz cenny</button>
-<iframe id="zasysanie_f" width="1100" height="500"></iframe>
+<iframe id="zasysanie_f" style="display:none;"></iframe>
+        <style type="text/css">
+            #zasysanie_b{
+                position:fixed;
+                top:0;
+                z-index: 4;
+                -moz-max-content;
+                -webkit-margin-start;
+            }
+            .zasysanie{
+                display: block;
+                min-width: 1em;
+                /*background-color: #fff;*/
+                margin: 0;
+                padding-right: 2em;
+            }
+            th div.ol {
+                text-align: left;
+            }
+/*            ol div:first-of-type{
+                display: inline-block;
+                width: 100%;
+                *//* position: relative;
+                 top: 12px;*//*
+            }*/
+            ol.zasysanie{
+                width: 100%;
+                margin: 0;
+                padding: 4px;
+                display: table;
+            }
+            ol.zasysanie li{
+                /* display:block;
+
+                margin: 0;
+                 padding: 0;
+                 margin-left: 30px;
+                 width: 100%;
+
+                list-style-type: decimal;*/
+            }
+
+ol.zasysanie li{
+    display: table-row;
+}
+ol.zasysanie div{
+    display: table-cell;
+    white-space: nowrap;
+    border-right:1px solid #abb835;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+        </style>

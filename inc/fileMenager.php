@@ -65,11 +65,16 @@ class fileMenager
      * @param string $path scieszka drzewa katalogów
      * @return $this
      */
-    public function load($path)
+    public function load($path, $local = true)
     {
         $this->path = $path;
-        $this->catalog();
+
+        if($local)
+            $this->catalog();
         $this->file_name();
+
+        if($this->znacznik)
+            $this->path = $this->where.$this->whot;
         return $this;
     }
 
@@ -77,10 +82,10 @@ class fileMenager
      * include + test istnienia
      * @param string $path scieszka drzewa katalogów
      */
-    public function loadInclude($path=null)
+    public function loadInclude($path=null, $local = true)
     {
         if ( ! is_null($path) )
-            $this->load($path);
+            $this->load($path, $local);
 
         if ( isset($this->path) && is_file( $this->path ) )
         {
@@ -101,7 +106,7 @@ class fileMenager
     protected function catalog(){
         preg_match('/^((.|..)?[\w_\-]*\/)+/i', $this->path, $cat);
 
-        $this->where = $cat[0];
+        $this->where = isset($cat[0])?$cat[0]:'';
         $this->znacznik = false;
       //  $cat=explode('/' , $cat[0] );
       //  $this->tree = array($cat[0]=>array($cat[1]=>array($cat[2])));
@@ -189,11 +194,12 @@ class fileMenager
         if(!isset($this->whot) || ! is_file( $this->where . $this->whot) ) return null;
         $path = $this->where . $this->whot;
 
-        if ( is_null($this->tree[$path]) && file_exists($path) )
+        if ( (!isset($this->tree[$path]) || is_null( $this->tree[$path] ) )
+            && file_exists($path) )
         {
             $this->tree[$path] = file_get_contents($path);
 
-              if( unserialize($this->tree[$path]) )
+              if( @unserialize($this->tree[$path]) )
               {
                 $this->tree[$path] = unserialize($this->tree[$path]);
               }
@@ -272,6 +278,7 @@ class fileMenager
                     chmod($this->path,0777);
                 }
              //   success('Plik został pomyślnie zaktualizowany.');
+                unset($this->tree[$this->path]);
                 return true;
             }
             else

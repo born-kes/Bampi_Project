@@ -11,6 +11,7 @@
  * list - Array
  * Count- Count(array) - suma
  */
+define('BR', "\n<br>\n");
 $inc;
 
 /**** MENU  ********************************************************************/
@@ -403,6 +404,7 @@ function table($array) {
  */
 function tableGenerator($array) {
     if(is_array($array) ){
+        $str='';
         $is_tr = true;
         if(isset($array['id']) || isset($array['style']) || isset($array['class'])){
           $id=  (isset($array['id'])?' id="'.$array['id'].'"':'').
@@ -532,4 +534,113 @@ function arrayConect(&$arrayGlobal, $arrayConect=null){
         }
     }
     // return $arrayGlobal;
+}
+/**
+SORT_REGULAR - porównuj elementy normalnie (nie zmienia typów)  0
+SORT_NUMERIC - porównuj elementy jako liczby                    1
+SORT_STRING - porównuj elementy jako ciągi tekstowe             2
+ * Function                                                     3
+ * @param $effect TYPE_NAME
+ */
+function listEl($arra, $oper = SORT_NUMERIC, $effect=0)
+{
+    switch($oper)
+    {
+        case '0':
+            foreach($arra as $key => $val){
+            $new[]=$val;
+            }
+            return $new;
+            break;
+        case 1:
+            $new = array();
+            foreach($arra as $key => $val){
+                if(is_array($val[$effect]))
+                    $val[$effect] = listEl($val[$effect], $oper , $effect);
+                $new[]=$val[$effect];
+            }
+            return $new;
+            break;
+        case 2:
+            return 2;
+            break;
+
+        default:
+
+            if( is_string($oper) ){
+                $new = array();
+                foreach($arra as $key => $val){
+                    if(is_array($val[$oper]))
+                        $val[$oper] = listEl($val[$oper], $oper , $effect);
+                    $new[]=$val[$oper];
+                }
+                return $new;
+            }else
+            if(!is_numeric($effect) ){
+                if(function_exists($effect)){
+
+                    /** @var $effect TYPE_NAME nazwaFunkcji  */
+
+                   $new = @$effect($arra);
+                }
+            }
+            break;
+
+    }
+}
+function aut($str, $el = '.php'){
+    return str_replace($el,' ', $str );
+}
+
+function swap($strings, $array, $function=null)
+{
+    if( is_null($function) ){ // TODO dobry pomysł function do podmiany
+        $f_cja = function($a){return $a;};
+    }else if( is_array($function) ){
+        $f_cja = function($a , $function){
+            foreach($function as $name_function){
+                $a=$name_function(a);
+            }
+            return $a;
+        };
+    }else{
+        $f_cja = $function;
+    }
+    if( is_array($strings) )
+        $string = $strings[0];
+    else
+        $string = $strings;
+
+    if(is_array($array))
+    { $str=null;
+
+        foreach ($array as $key => $value)
+        {
+            if( is_array($strings) ){
+                $value = swap($strings[1], $value,$function);
+            }
+            if( is_array($value) ){
+                $str .= swap($string, $value,$function);
+            }
+
+
+            if ( strpos( $string , "{{".$key."}}" )==true )
+            {
+                $string = str_replace( "{{".$key."}}" , $f_cja($value,$function) , $string );
+            }
+            else if ( strpos( $string , "{{nr0}}" )==true &&  strpos( $string , "{{nr1}}" )==true )
+            {
+                $str1 = str_replace( "{{nr0}}" , $f_cja($value,$function) , $string );
+                $str .= str_replace( "{{nr1}}" ,  $f_cja($key,$function) , $str1 );
+            }
+            elseif ( strpos( $string , "{{nr0}}" )==true )
+            {
+                $str .= str_replace( "{{nr0}}" ,  $f_cja($value, $function) , $string );
+
+            }
+        }
+    }
+    if( !is_null($str) )
+        return $str;
+    return $string;
 }

@@ -146,7 +146,8 @@ class medoo
 	}
 
 	protected function column_quote($string)
-	{
+	{ if(substr($string,-1)=='*')
+        return '`' . str_replace('.', '`.', preg_replace('/(^#|\(JSON\))/', '', $string));
 		return '`' . str_replace('.', '`.`', preg_replace('/(^#|\(JSON\))/', '', $string)) . '`';
 	}
 
@@ -457,7 +458,7 @@ class medoo
 						{
 							preg_match($rsort, $column, $order_match);
 
-							array_push($stack, '"' . str_replace('.', '"."', $order_match[1]) . '"' . (isset($order_match[3]) ? ' ' . $order_match[3] : ''));
+							array_push($stack, '`' . str_replace('.', '`.`', $order_match[1]) . '`' . (isset($order_match[3]) ? ' ' . $order_match[3] : ''));
 						}
 
 						$where_clause .= ' ORDER BY ' . implode($stack, ',');
@@ -467,7 +468,7 @@ class medoo
 				{
 					preg_match($rsort, $where['ORDER'], $order_match);
 
-					$where_clause .= ' ORDER BY "' . str_replace('.', '"."', $order_match[1]) . '"' . (isset($order_match[3]) ? ' ' . $order_match[3] : '');
+					$where_clause .= ' ORDER BY `' . str_replace('.', '`.`', $order_match[1]) . '`' . (isset($order_match[3]) ? ' ' . $order_match[3] : '');
 				}
 
 				if (isset($where['HAVING']))
@@ -506,7 +507,7 @@ class medoo
 
 	protected function select_context($table, $join, &$columns = null, $where = null, $column_fn = null)
 	{
-		$table = '"' . $table . '"';
+		$table = '`' . $table . '`';
 		$join_key = is_array($join) ? array_keys($join) : null;
 
 		if (
@@ -539,16 +540,16 @@ class medoo
 						// For ['column1', 'column2']
 						if (isset($relation[0]))
 						{
-							$relation = 'USING ("' . implode($relation, '", "') . '")';
+							$relation = 'USING (`' . implode($relation, '`, `') . '`)';
 						}
 						// For ['column1' => 'column2']
 						else
 						{
-							$relation = 'ON ' . $table . '."' . key($relation) . '" = "' . $match[3] . '"."' . current($relation) . '"';
+							$relation = 'ON ' . $table . '.`' . key($relation) . '` = `' . $match[3] . '`.`' . current($relation) . '`';
 						}
 					}
 
-					$table_join[] = $join_array[ $match[2] ] . ' JOIN "' . $match[3] . '" ' . $relation;
+					$table_join[] = $join_array[ $match[2] ] . ' JOIN `' . $match[3] . '` ' . $relation;
 				}
 			}
 
@@ -681,7 +682,7 @@ class medoo
 				}
 			}
 
-			$this->exec('INSERT INTO "' . $table . '" (' . implode(', ', $columns) . ') VALUES (' . implode($values, ', ') . ')');
+			$this->exec('INSERT INTO `' . $table . '` (' . implode(', ', $columns) . ') VALUES (' . implode($values, ', ') . ')');
 
 			$lastId[] = $this->pdo->lastInsertId();
 		}

@@ -1,4 +1,13 @@
 <?php
+// ini_get('max_input_time'); maxymalny czas działania skryptu
+ini_set('include_path', ini_get('include_path').';../');
+
+ $meddo = $this->loadInclude('medoo.php',false);
+
+global $db,$Option;
+$Option = $this->file('db.php')->data();
+$db = new medoo($Option);
+
 function foreachAut($array, $nr=null){ //print_r($array);
     $new_Araay = array();
     foreach($array as $ar){
@@ -14,23 +23,44 @@ function foreachAut($array, $nr=null){ //print_r($array);
     }
     return $new_Araay;
 }
-
 function sql($get = null ){
+    global $db,$Option;
     if( is_null($get) && isset($_GET['sql']) )
         $get = $_GET['sql'];
 
     if(isset($get) && !is_null($get)){
-        $db = new medoo();
+
         switch($get)
         {
-            case 'thead':
-                return $sql_thead = $db->query("SHOW COLUMNS FROM produkty;")->fetchAll();
+            case 'csv':
+                return $sql_thead = $db->select('produkty',array('kod_produktu','nazwa','cena'),'ORDER BY `id` ASC');
 //                    return ( foreachAut($sql_thead, array(1,0) ) );
+
+                break;
+            case 'thead_all':
+                return $sql_thead = $db->query("SHOW COLUMNS FROM produkty;")->fetchAll();
+                break;
+            case 'thead':
+                return explode(',', $Option['Tabel'] );
+               /* Edytowalny w ustawieniach
+                *  return $sql_thead = $db->query("SHOW COLUMNS FROM produkty;")->fetchAll();*/
 
                 break;
             case 'tbody':
                 return $db->select('produkty','*','ORDER BY `id` ASC');
 
+                break;
+            case 'tbody_all':/* EXEL */
+                $list = explode(',', $Option['Exel'] );
+                $list = array_map(function($a){return 'produkty.'.$a;}, $list );
+                $list[]='sprzedaz.*';
+//print_r($list);
+                return $db->select('produkty',
+                array("[>]sprzedaz" => array("id" => "id") ),
+                    $list
+                    ,
+                    'ORDER BY `produkty`.`id` ASC');
+                //$db->last_query();
                 break;
             case 'dodaj':
 
@@ -42,8 +72,19 @@ function sql($get = null ){
                 }
                 else
                 {
-                    return $db->insert('produkty', $_POST );
+                    $max =  listEl( sql('thead_all'), 'Field' );
+                    arrayConect($max,$_POST);
+                    return $db->insert('produkty', $max );
                 }
+                break;
+            case 'update_ceny':
+                /*return*/ $db->insert('sprzedaz', $_POST );
+                var_dump($db->error());
+                //echo $db->last_query();
+                    /*return*/ $db->update('sprzedaz', $_POST , array('id'=>$_POST['id']) );
+                var_dump($db->error());
+
+
                 break;
             case 'usun':var_dump($_REQUEST);
                 if(isset($_POST['id']) && is_numeric($_POST['id']))
@@ -68,5 +109,32 @@ function class_dla_thead($val) {
     }
     return $val;
 }
+function sql_option($name){
+    global $Option;
+    if ( strpos( $Option['Tabel'] , $name )==true )
+    {
+        $Option['Tabel'] = str_replace( $name , '' , $Option['Tabel'] );
+        $Option['Tabel'] = str_replace(",," , ',' , $Option['Tabel'] );
+    }
+    else{
+        if($Option['Tabel']=='')
+            $Option['Tabel'] = $name;
+        else
+            $Option['Tabel'] .=','.$name;
+    }
+   // $Option['Tabel'];
+
+}
+
+$_table=array();
+
+if(isset($_GET['page']) && $_GET['page']== 'sql' ){
+    $_table = $this->loadInclude('ustawienia.php',false);
+}elseif(isset($_GET['page']) && $_GET['page']== 'table' ){
+    $_table =$Option['Tabel'];
+}elseif(isset($_GET['sql']) && $_GET['sql']=='hide'){
+    sql_option($_POST['id']);
+    $this->load('db.php',false)->save($Option);
+}
 //exit;
-return array('content'=>'jestem');
+return $_table;

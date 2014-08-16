@@ -9,59 +9,6 @@ $_table['css'] = $this->file('table.css')->data().
     $this->file('dymki.css')->data().
     $this->file('sort.css')->data();
 
-function swap($strings, $array, $function=null)
-{
-    if( is_null($function) ){ // TODO dobry pomysł function do podmiany
-        $f_cja = function($a){return $a;};
-    }else if( is_array($function) ){
-        $f_cja = function($a , $function){
-            foreach($function as $name_function){
-                $a=$name_function(a);
-            }
-            return $a;
-        };
-    }else{
-        $f_cja = $function;
-    }
-    if( is_array($strings) )
-        $string = $strings[0];
-    else
-        $string = $strings;
-
-    if(is_array($array))
-    { $str=null;
-
-        foreach ($array as $key => $value)
-        {
-            if( is_array($strings) ){
-                $value = swap($strings[1], $value,$function);
-            }
-            if( is_array($value) ){
-                $str .= swap($string, $value,$function);
-            }
-
-
-            if ( strpos( $string , "{{".$key."}}" )==true )
-            {
-                $string = str_replace( "{{".$key."}}" , $f_cja($value,$function) , $string );
-            }
-            else if ( strpos( $string , "{{nr0}}" )==true &&  strpos( $string , "{{nr1}}" )==true )
-            {
-                $str1 = str_replace( "{{nr0}}" , $f_cja($value,$function) , $string );
-                $str .= str_replace( "{{nr1}}" ,  $f_cja($key,$function) , $str1 );
-            }
-            elseif ( strpos( $string , "{{nr0}}" )==true )
-            {
-                $str .= str_replace( "{{nr0}}" ,  $f_cja($value,$function) , $string );
-
-            }
-        }
-    }
-    if( !is_null($str) )
-        return $str;
-    return $string;
-}
-
 function td($array){  if(!is_array($array)) return '';  $str=null;
     foreach($array as $el => $val){
     $str.='<td></td>';
@@ -71,12 +18,26 @@ function td($array){  if(!is_array($array)) return '';  $str=null;
 
 $table = $this->load('cache/table.html' )->data();
 
-    $this->loadInclude("module/sql/sql.php");
+   $ef= $this->loadInclude("module/sql/sql.php");
 
+$thead_sql = sql('thead_all');
+$thead_list = listEl($thead_sql,'Field');
+$ef = explode(',',$ef);
+foreach($ef as $key => $val){
+    unset( $thead_list[ array_search( $val, $thead_list ) ] );
+}
+$class_hidde='';
+foreach($thead_list as $key => $val){
+    $class_hidde.='td'.($key+1).'h ';
+}
+if($class_hidde!=''){
+    $_table['js'] .='$().ready(function(){$("#content").addClass("'.$class_hidde.'");});';
 
-$fixed_thead = swap( '<div>{{Field}}</div>'."\n" ,  sql('thead') ,'class_dla_thead');
-$thead = swap( '<td class="{{Type}}">{{Field}}</td>'."\n" ,  sql('thead') ,'class_dla_thead');
-$tbody = swap( '<td >{{{{Field}}}}</td>'."\n" ,  sql('thead'));
+}
+
+$fixed_thead = swap( '<div class="CRG">{{Field}}</div>'."\n" , $thead_sql  ,'class_dla_thead');
+$thead = swap( '<td class="{{Type}}">{{Field}}</td>'."\n" ,  $thead_sql ,'class_dla_thead');
+$tbody = swap( '<td >{{{{Field}}}}</td>'."\n" ,  $thead_sql );
 $table = swap(
     $_table['html'],
     array(
@@ -88,11 +49,8 @@ $table = swap(
 );
 
 
-if(is_null($table))
-{
- //$this->load('cache/table.html' )->save($_table['html']);
-}
-else
+
+if(true)
 {
     $table_a= array(
         'content'=>$table,
@@ -132,8 +90,12 @@ else
            // '<script type="application/javascript" src="j/sort/jquery-latest.js" ></script>'.
             '<script type="application/javascript" src="j/sort/jquery.tablesorter.min.js" ></script>'
     );
-
+    $_table['js'] = '  var data = '.json_encode( sql('tbody')).';';
+   //     json( );
    arrayConect($_table , $table_a );
+
+//$this->load('cache/table.html')->save($table_a['content']);
+
 
     arrayConect($_table , $this->loadInclude("module/zasysanie/zasysanie.php") );
     return  $_table;
