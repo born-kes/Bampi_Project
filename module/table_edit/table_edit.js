@@ -24,7 +24,7 @@ for (var i = 0; i < columns.length; i++) {
 }
 var grid,
     options = {
-  //  enableCellNavigation: true,
+    enableCellNavigation: false,
     enableColumnReorder: false
     },
     numberOfItems = 25000,
@@ -85,7 +85,14 @@ function getLength() {
 
 $(function () {
 
-    grid = new Slick.Grid("#myGrid", data, columns, options);
+    grid = new Slick.Grid("#myGrid", {getLength: getLength, getItem: getItem}, columns, options);
+    grid.onSort.subscribe(function (e, args) { alert('sort');
+        currentSortCol = args.sortCol;
+        isAsc = args.sortAsc;
+        grid.invalidateAllRows();
+        grid.render();
+    });
+
 
     var headerMenuPlugin = new Slick.Plugins.HeaderMenu({});
 
@@ -103,8 +110,6 @@ $(function () {
     headerMenuPlugin.onCommand.subscribe(function(e, args) {
        alert(e.items );
     });
-
-
-    grid.registerPlugin(headerMenuPlugin);
+  //  grid.registerPlugin(headerMenuPlugin);
 });
 
