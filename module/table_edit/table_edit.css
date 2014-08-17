@@ -217,3 +217,7 @@ input.editor-checkbox {
 .icon-help {
     background-image: url(j/SlickGrid/images/help.png);
 }
+.slick-cell.active {
+    border-color: gray;
+    border-style: solid;
+}

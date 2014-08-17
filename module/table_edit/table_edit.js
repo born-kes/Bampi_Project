@@ -24,7 +24,7 @@ for (var i = 0; i < columns.length; i++) {
 }
 var grid,
     options = {
-    enableCellNavigation: false,
+    enableCellNavigation: true,
     enableColumnReorder: false
     },
     numberOfItems = 25000,
