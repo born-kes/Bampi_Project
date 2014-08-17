@@ -1,44 +1,219 @@
-.ui-tooltip, .arrow:after {
-    background: black;
-    border: 2px solid white;
+* {
+    font-family: arial;
+    font-size: 8pt;
 }
-.ui-tooltip {
-    padding: 10px 20px;
-    color: white;
-    border-radius: 20px;
-    font: bold 14px "Helvetica Neue", Sans-Serif;
-    text-transform: uppercase;
-    box-shadow: 0 0 7px black;
+body {
+    background: none repeat scroll 0 0 beige;
+    margin: 8px;
+    padding: 0;
 }
-.arrow {
-    width: 70px;
-    height: 16px;
-    overflow: hidden;
+h2 {
+    border-bottom: 1px dotted gray;
+    font-size: 10pt;
+}
+ul {
+    cursor: default;
+    margin-left: 0;
+    padding: 0;
+}
+li {
+    background: url("j/SlickGrid/images/arrow_right_spearmint.png") no-repeat scroll left center rgba(0, 0, 0, 0);
+    list-style: none outside none;
+    margin: 0;
+    padding: 0 0 0 14px;
+}
+#myGrid {
+    background: none repeat scroll 0 0 white;
+    border: 1px solid gray;
+    outline: 0 none;
+}
+.grid-header {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: url("j/SlickGrid/images/header-bg.gif") repeat-x scroll center top rgba(0, 0, 0, 0);
+    border-color: -moz-use-text-color gray;
+    border-image: none;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    border-style: none solid;
+    border-width: 0 1px;
+    color: black;
+    height: 24px;
+    line-height: 24px;
+}
+.grid-header label {
+    display: inline-block;
+    font-weight: bold;
+    margin: auto auto auto 6px;
+}
+.grid-header .ui-icon {
+    background-color: transparent;
+    border-color: transparent;
+    margin: 4px 4px auto 6px;
+}
+.grid-header .ui-icon.ui-state-hover {
+    background-color: white;
+}
+.grid-header #txtSearch {
+    border: 1px solid silver;
+    margin: 0 4px;
+    padding: 2px;
+}
+.options-panel {
+    background: none repeat scroll 0 0 #f0f0f0;
+    border: 1px solid silver;
+    left: 650px;
+    margin-bottom: 20px;
+    padding: 4px;
     position: absolute;
-    left: 50%;
-    margin-left: -35px;
-    bottom: -16px;
+    top: 0;
+    width: 320px;
 }
-.arrow.top {
-    top: -16px;
-    bottom: auto;
+.slick-cell.task-name {
+    font-weight: bold;
+    text-align: right;
 }
-.arrow.left {
-    left: 20%;
+.slick-cell.task-percent {
+    text-align: right;
 }
-.arrow:after {
-    content: "";
+.slick-cell.cell-move-handle {
+    background: none repeat scroll 0 0 #efefef;
+    border-right: medium solid gray;
+    cursor: move;
+    font-weight: bold;
+    text-align: right;
+}
+.cell-move-handle:hover {
+    background: none repeat scroll 0 0 #b6b9bd;
+}
+.slick-row.selected .cell-move-handle {
+    background: none repeat scroll 0 0 #d5dc8d;
+}
+.slick-row .cell-actions {
+    text-align: left;
+}
+.slick-row.complete {
+    background-color: #dfd;
+    color: #555;
+}
+.percent-complete-bar {
+    display: inline-block;
+    height: 6px;
+}
+input.editor-text {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    height: 100%;
+    margin: 0;
+    outline: 0 none;
+    padding: 0;
+    width: 100%;
+}
+.ui-datepicker-trigger {
+    margin-top: 2px;
+    padding: 0;
+    vertical-align: top;
+}
+input.editor-percentcomplete {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    float: left;
+    height: 100%;
+    margin: 0;
+    outline: 0 none;
+    padding: 0;
+    width: 100%;
+}
+.editor-percentcomplete-picker {
+    background: url("j/SlickGrid/images/pencil.gif") no-repeat scroll center center rgba(0, 0, 0, 0);
+    display: inline-block;
+    float: right;
+    height: 100%;
+    overflow: visible;
+    position: relative;
+    width: 16px;
+    z-index: 1000;
+}
+.editor-percentcomplete-helper {
+    background: url("j/SlickGrid/images/editor-helper-bg.gif") no-repeat scroll left top rgba(0, 0, 0, 0);
+    border: 0 solid gray;
+    display: none;
+    height: 140px;
+    left: -9px;
+    overflow: visible;
+    padding-left: 9px;
     position: absolute;
-    left: 20px;
-    top: -20px;
-    width: 25px;
-    height: 25px;
-    box-shadow: 6px 5px 9px -9px black;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
+    top: -2px;
+    width: 120px;
 }
-.arrow.top:after {
-    bottom: -20px;
-    top: auto;
+.editor-percentcomplete-wrapper {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 beige;
+    border-color: gray gray gray -moz-use-text-color;
+    border-image: none;
+    border-style: solid solid solid none;
+    border-width: 1px 1px 1px 0;
+    height: 98px;
+    padding: 20px 8px;
+    width: 100%;
+}
+.editor-percentcomplete-buttons {
+    float: right;
+}
+.editor-percentcomplete-buttons button {
+    width: 80px;
+}
+.editor-percentcomplete-slider {
+    float: left;
+}
+.editor-percentcomplete-picker:hover .editor-percentcomplete-helper {
+    display: block;
+}
+.editor-percentcomplete-helper:hover {
+    display: block;
+}
+select.editor-yesno {
+    margin: 0;
+    vertical-align: middle;
+    width: 100%;
+}
+input.editor-checkbox {
+    border: 0 none;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/**
+* Style the drop-down menu here since the plugin stylesheet mostly contains structural CSS.
+*/
+.slick-header-menu {
+    border: 1px solid #718BB7;
+    background: #f0f0f0;
+    padding: 2px;
+    -moz-box-shadow: 2px 2px 2px silver;
+    -webkit-box-shadow: 2px 2px 2px silver;
+    min-width: 100px;
+    z-index: 20;
+}
+.slick-header-menuitem {
+    padding: 2px 4px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+.slick-header-menuitem:hover {
+    border-color: silver;
+    background: white;
+}
+.slick-header-menuitem-disabled {
+    border-color: transparent !important;
+    background: inherit !important;
+}
+.icon-help {
+    background-image: url(j/SlickGrid/images/help.png);
 }

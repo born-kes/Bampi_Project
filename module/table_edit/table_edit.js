@@ -1,79 +1,74 @@
-/**
- * Created by Monika Lukasz on 15.08.14.
- */
-$().ready(function(){
-/*    $( document ).tooltip({
-        position: {
-            my: "center bottom-20",
-            at: "center top",
-            using: function( position, feedback ) {
-                $( this ).css( position );
-                $( "<div>" )
-                    .addClass( "arrow" )
-                    .addClass( feedback.vertical )
-                    .addClass( feedback.horizontal )
-                    .appendTo( this );
-            }
+var grid;
+var columns = [
+    {id: "symbol", name: "Symbol", field: "kod_produktu"},
+    {id: "nazwa", name: "Nazwa Produktu", field: "nazwa"},
+    {id: "producent", name: "Producent", field: "producent"},
+    {id: "cena_k", name: "Cena Kupna", field: "cena_kupna"},
+    {id: "cena_stara", name: "Stara Cena", field: "cena_stara"},
+    {id: "notatka", name: "Notatka", field: "notatka"}
+];
+for (var i = 0; i < columns.length; i++) {
+    columns[i].header = {
+        menu: {
+            items: [
+                {
+                    iconImage: "j/SlickGrid/images/sort-asc.gif",
+                    title: "Sort Ascending",
+                    command: "sort-asc"
+                },
+                {
+                    iconImage: "j/SlickGrid/images/sort-desc.gif",
+                    title: "Sort Descending",
+                    command: "sort-desc"
+                },
+                {
+                    iconCssClass: "icon-help",
+                    title: "Help",
+                    command: "help"
+                }
+            ]
         }
-    });*/
-    var data = [];
-   /*     ["", "Kia", "Nissan", "Toyota", "Honda"],
-        ["2008", 10, 11, 12, 13],
-        ["2009", 20, 11, 14, 13],
-        ["2010", 30, 15, 12, 13]
-    ];
-    $('table tr').each(function(nr){
-        data[nr]=[]
-        $(this).find('td').each(function(v){
-            data[nr][v]=$(this).text();
+    };
+}
+var options = {
+  //  enableCellNavigation: true,
+    enableColumnReorder: false
+
+};
+
+$(function () {
+
+    var data_grid = [];
+    for (var i = 0; i < 500; i++) {
+        data_grid[i] = {
+ kod_produktu: "Task " + i,
+ nazwa: "5 days",
+ producent: Math.round(Math.random() * 100),
+ cena_kupna: "01/01/2009",
+ cena_stara: "01/05/2009",
+ notatka: (i % 5 == 0)
+        };
+    }
+    grid = new Slick.Grid("#myGrid", data_grid, columns, options);
+
+    var headerMenuPlugin = new Slick.Plugins.HeaderMenu({});
+
+    headerMenuPlugin.onBeforeMenuShow.subscribe(function(e, args) {
+        var menu = args.menu;
+
+        // We can add or modify the menu here, or cancel it by returning false.
+        var i = menu.items.length;
+        menu.items.push({
+            title: "Menu item " + i,
+            command: "item" + i
         });
-    });
-    alert(data);
-    $("#footer").handsontable({
-        data: data,
-        startRows: 6,
-        startCols: 8
     });
 
-    function bindDumpButton() {
-        $('body').on('click', 'button[name=dump]', function () {
-            var dump = $(this).data('dump');
-            var $container = $(dump);
-            console.log('data of ' + dump, $container.handsontable('getData'));
-        });
-    }
-    bindDumpButton();*/
-        function changeToTable(that) {
-            var tbl = $("table.fortune500");
-            tbl.css("display", "");
-            $("#grid_table").pqGrid("destroy");
-            $(that).val("Change Table to Grid");
-        }
-        function changeToGrid(that) {
-            var tbl = $("#table_s");
-            var obj = $.paramquery.tableToArray(tbl);
-            var newObj = {  width: 900, height: 460, sortIndx: 0,
-                hoverMode: 'cell' ,
-                selectionModel: { type: 'cell' },
-                editModel: { saveKey: '13' },
-                resizable: true,
-                columnBorders: true,
-                freezeCols: 2
-            };
-            newObj.dataModel = { data: obj.data, rPP: 20, paging: "local" };
-            newObj.colModel = obj.colModel;
-            $("#content").pqGrid(newObj);
-            $(that).val("Change Grid back to Table");
-            tbl.css("display", "none");
-        }
-        //toggle removed from $ 1.9
-  //      $("#pq-grid-table-btn").button().click(function () {
-            if ($("#table_s").hasClass('pq-grid')) {
-                changeToTable(this);
-            }
-            else{
-                changeToGrid(this);
-            }
- //       });
-       // var $grid = $("#footer").pqGrid(obj);
+    headerMenuPlugin.onCommand.subscribe(function(e, args) {
+       alert(e.items );
+    });
+
+
+    grid.registerPlugin(headerMenuPlugin);
 });
+
