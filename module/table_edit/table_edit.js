@@ -1,12 +1,4 @@
-var grid;
-var columns = [
-    {id: "symbol", name: "Symbol", field: "kod_produktu"},
-    {id: "nazwa", name: "Nazwa Produktu", field: "nazwa"},
-    {id: "producent", name: "Producent", field: "producent"},
-    {id: "cena_k", name: "Cena Kupna", field: "cena_kupna"},
-    {id: "cena_stara", name: "Stara Cena", field: "cena_stara"},
-    {id: "notatka", name: "Notatka", field: "notatka"}
-];
+
 for (var i = 0; i < columns.length; i++) {
     columns[i].header = {
         menu: {
@@ -30,26 +22,70 @@ for (var i = 0; i < columns.length; i++) {
         }
     };
 }
-var options = {
+var grid,
+    options = {
   //  enableCellNavigation: true,
     enableColumnReorder: false
+    },
+    numberOfItems = 25000,
+    items = [], indices,
+    isAsc = true,
+    currentSortCol = { id: "title" },
+    i;
 
-};
 
-$(function () {
-
-    var data_grid = [];
-    for (var i = 0; i < 500; i++) {
-        data_grid[i] = {
+ var data = [];
+ /* for (var i = 0; i < 500; i++) {
+ data[i] = {
  kod_produktu: "Task " + i,
  nazwa: "5 days",
  producent: Math.round(Math.random() * 100),
  cena_kupna: "01/01/2009",
  cena_stara: "01/05/2009",
  notatka: (i % 5 == 0)
-        };
+ };
+ }*/
+
+// Copies and shuffles the specified array and returns a new shuffled array.
+function randomize(items) {
+    var randomItems = $.extend(true, null, items), randomIndex, temp, index;
+    for (index = items.length; index-- > 0;) {
+        randomIndex = Math.round(Math.random() * items.length - 1);
+        if (randomIndex > -1) {
+            temp = randomItems[randomIndex];
+            randomItems[randomIndex] = randomItems[index];
+            randomItems[index] = temp;
+        }
     }
-    grid = new Slick.Grid("#myGrid", data_grid, columns, options);
+    return randomItems;
+}
+/// Build the items and indices.
+for (i = numberOfItems; i-- > 0;) {
+    items[i] = i;
+    data[i] = {
+        kod_produktu: "Task ".concat(i + 1)
+    };
+}
+indices = { title: items, nazwa: randomize(items), producent: randomize(items), cena_kupna: randomize(items) };
+// Assign values to the data.
+for (i = numberOfItems; i-- > 0;) {
+    data[indices.nazwa[i]].nazwa = "nazwa ".concat(i + 1);
+    data[indices.producent[i]].producent = "producent ".concat(i + 1);
+    data[indices.cena_kupna[i]].cena_kupna = "cena_kupna ".concat(i + 1);
+}
+
+// Define function used to get the data and sort it.
+function getItem(index) {
+    return isAsc ? data[indices[currentSortCol.id][index]] : data[indices[currentSortCol.id][(data.length - 1) - index]];
+}
+function getLength() {
+    return data.length;
+}
+
+
+$(function () {
+
+    grid = new Slick.Grid("#myGrid", data, columns, options);
 
     var headerMenuPlugin = new Slick.Plugins.HeaderMenu({});
 

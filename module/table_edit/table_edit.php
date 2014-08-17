@@ -23,6 +23,15 @@ $table['css'] =  $this->file('table_edit.css')->data();
 
 $ef= $this->loadInclude("module/sql/sql.php");
 
-//$table['js'] .= '  var data = '.json_encode( sql('tbody')).';';
+$table['js'] =''.
+ //   '  var data = '.json_encode( sql('tbody')).';'.
+'var columns = [
+    {id: "symbol", name: "Symbol", field: "kod_produktu"},
+    {id: "nazwa", name: "Nazwa Produktu", field: "nazwa"},
+    {id: "producent", name: "Producent", field: "producent"},
+    {id: "cena_k", name: "Cena Kupna", field: "cena_kupna"},
+    {id: "cena_stara", name: "Stara Cena", field: "cena_stara"},
+    {id: "notatka", name: "Notatka", field: "notatka"}
+];'. $table['js'] ;
 $table['content'] = '<div id="myGrid" style="width:100%;height:500px;"></div>';
 return $table;
