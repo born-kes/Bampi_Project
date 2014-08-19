@@ -87,15 +87,11 @@ if(true)
             '<script src="j/colResizable/colResizable-1.3.min.js" ></script>'.
 //            '<script src="j/colResizable/colResizable-1.3.source.js" ></script>'.
            // '<script type="application/javascript" src="j/jquery-1.10.2.min.js" ></script>'.
-           // '<script type="application/javascript" src="j/sort/jquery-latest.js" ></script>'.
+        //    '<script type="application/javascript" src="j/sort/jquery-latest.js" ></script>'.
             '<script type="application/javascript" src="j/sort/jquery.tablesorter.min.js" ></script>'
     );
-    $_table['js'] = '  var data = '.json_encode( sql('tbody')).';';
-   //     json( );
-   arrayConect($_table , $table_a );
 
-//$this->load('cache/table.html')->save($table_a['content']);
-
+    arrayConect($_table , $table_a );
 
     arrayConect($_table , $this->loadInclude("module/zasysanie/zasysanie.php") );
     return  $_table;

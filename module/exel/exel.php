@@ -36,11 +36,16 @@ $objPHPExcel->getProperties()->setCreator('Maarten Balliauw')
     ->setKeywords('office PHPExcel php')
     ->setCategory('Test result file');
 
+/**
+ * Dostęp do elementów
+ */
+$objWorksheet = $objPHPExcel->getActiveSheet();
+
 /* Juz niewiem :P */
 //$objPHPExcel->getActiveSheet()->getStyle('E1')->getFont()->setBold(true);
 
 /* zcalenie komurek */
-$objPHPExcel->getActiveSheet()->mergeCells('A1:N1');
+$objWorksheet->mergeCells('A1:N1');
 
 /* Kolor Tła */
 //$objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->getColor()->setARGB(PHPExcel_Style_Color::COLOR_WHITE);
@@ -60,7 +65,7 @@ $objPHPExcel->getActiveSheet()->getStyle('A1:E1')->getFill()->setFillType(PHPExc
 $objPHPExcel->getActiveSheet()->getStyle('A1:E1')->getFill()->getStartColor()->setARGB('FF808080');
 */
 /* Ramka i pogrubienie */
-$objPHPExcel->getActiveSheet()->getStyle('A1:O1')->applyFromArray(
+$objWorksheet->getStyle('A1:O1')->applyFromArray(
 		array(
 			'font'    => array(
 				'bold'      => true
@@ -86,71 +91,106 @@ $objPHPExcel->getActiveSheet()->getStyle('A1:O1')->applyFromArray(
 		)
 );
 
-$objPHPExcel->getActiveSheet()->getStyle('A2:O2')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-$objPHPExcel->getActiveSheet()->getStyle('A2:O2')->getFill()->getStartColor()->setARGB('FFFFFF00');
+$objWorksheet->getStyle('A2:O2')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+$objWorksheet->getStyle('A2:O2')->getFill()->getStartColor()->setARGB('FFFFFF00');
 $size = count($tbody)+2;/*($objPHPExcel->getActiveSheet()->getHighestRow())*/
-$objPHPExcel->getActiveSheet()->getStyle('A3:A'.$size)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-$objPHPExcel->getActiveSheet()->getStyle('A3:A'.$size)->getFill()->getStartColor()->setARGB('FFFFC000');
+$objWorksheet->getStyle('A3:A'.$size)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+$objWorksheet->getStyle('A3:A'.$size)->getFill()->getStartColor()->setARGB('FFFFC000');
 
-$objPHPExcel->getActiveSheet()->getStyle('D3:E'.$size)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-$objPHPExcel->getActiveSheet()->getStyle('D3:E'.$size)->getFill()->getStartColor()->setARGB('FFD7E4BC');
+$objWorksheet->getStyle('D3:E'.$size)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+$objWorksheet->getStyle('D3:E'.$size)->getFill()->getStartColor()->setARGB('FFD7E4BC');
 
-$objPHPExcel->getActiveSheet()->getStyle('H3:H'.$size)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-$objPHPExcel->getActiveSheet()->getStyle('H3:H'.$size)->getFill()->getStartColor()->setARGB('FFFAF8E3');
+$objWorksheet->getStyle('H3:H'.$size)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+$objWorksheet->getStyle('H3:H'.$size)->getFill()->getStartColor()->setARGB('FFFAF8E3');
 
 
 /* FILTR */
 
-$objPHPExcel->getActiveSheet()->setAutoFilter("C2:C".$size);
+$objWorksheet->setAutoFilter("C2:C".$size);
 
 /* ZWIJANIE kolumny i rozwijanie */
 
-$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setOutlineLevel(1)
+$objWorksheet->getColumnDimension('A')->setOutlineLevel(1)
     ->setVisible(false)
     ->setCollapsed(false);
 
 /* Szerokosci kolumn */
-$objPHPExcel->getActiveSheet()->getColumnDimension()->setAutoSize(true);
-$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(false)->setWidth(16);
-$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(33);
-$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+$objWorksheet->getColumnDimension()->setAutoSize(true)->setWidth(10);
+$objWorksheet->getColumnDimension('A')->setAutoSize(false)->setWidth(16);
+$objWorksheet->getColumnDimension('B')->setWidth(33);
+$objWorksheet->getColumnDimension('C')->setAutoSize(true);
+$objWorksheet->getColumnDimension('D')->setWidth(11);
+$objWorksheet->getColumnDimension('E')->setWidth(11);
+$objWorksheet->getColumnDimension('F')->setWidth(33);
+$objWorksheet->getColumnDimension('G')->setVisible(false);
+$objWorksheet->getColumnDimension('H')->setWidth(11);
+$objWorksheet->getColumnDimension('I')->setWidth(11);
+$objWorksheet->getColumnDimension('J')->setWidth(11);
+$objWorksheet->getColumnDimension('K')->setWidth(11);
+$objWorksheet->getColumnDimension('L')->setWidth(11);
+$objWorksheet->getColumnDimension('M')->setWidth(11);
+$objWorksheet->getColumnDimension('N')->setWidth(11);
+$objWorksheet->getColumnDimension('O')->setWidth(11);
 
 
 
 
-//$objPHPExcel->getActiveSheet()->freezePane('A3');
+//$objWorksheet->freezePane('A3');
 
-//$objPHPExcel->getActiveSheet()->getPageSetup()->setRowsToRepeatAtTopByStartAndEnd(1, 1);
+//$objWorksheet->getPageSetup()->setRowsToRepeatAtTopByStartAndEnd(1, 1);
 
 
 /* WSTAWIANIE DUZO TRESCI NP ARRAY */
-$objPHPExcel->getActiveSheet()->fromArray($thead, NULL, 'A2');
-$objPHPExcel->getActiveSheet()->fromArray($tbody, NULL, 'A3');
+$objWorksheet->fromArray($thead, NULL, 'A2');
+$objWorksheet->fromArray($tbody, NULL, 'A3');
 
 /* Formatowanie na procenty % */
-//$objPHPExcel->getActiveSheet()->getStyle('A1:A8')->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00);
+//$objWorksheet->getStyle('A1:A8')->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00);
 /* Formatowanie data PHPExcel_Shared_Date::PHPToExcel( gmmktime(0,0,0,date('m'),date('d'),date('Y')) */
-//$objPHPExcel->getActiveSheet()->getStyle('D1')->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_XLSX15);
+//$objWorksheet->getStyle('D1')->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_XLSX15);
 
 /* Formatowanie na Euro */
-//$objPHPExcel->getActiveSheet()->getStyle('E4:E13')->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_EUR_SIMPLE);
+//$objWorksheet->getStyle('E4:E13')->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_EUR_SIMPLE);
 
-$objPHPExcel->getActiveSheet()->getStyle('D2:E'.$size)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_PLN);
+$objWorksheet->getStyle('D2:E'.$size)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_PLN);
 
-$objPHPExcel->getActiveSheet()->getStyle('DH:O'.$size)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_PLN);
+$objWorksheet->getStyle('H3:O'.$size)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_PLN);
 
 /* Równaj do prawej */
-//$objPHPExcel->getActiveSheet()->getStyle('D13')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+//$objWorksheet->getStyle('D13')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 
 /* Generowanie przypisów - komentarzy
-$objCommentRichText = $objPHPExcel->getActiveSheet()->getComment('E11')->getText()->createTextRun('PHPExcel:');
+$objCommentRichText = $objWorksheet->getComment('E11')->getText()->createTextRun('PHPExcel:');
 $objCommentRichText->getFont()->setBold(true);
-$objPHPExcel->getActiveSheet()->getComment('E11')->getText()->createTextRun("\r\n");
+$objWorksheet->getComment('E11')->getText()->createTextRun("\r\n");
 //*/
 
+for($i=3;$i<$size;$i++){
+    if( $objWorksheet->getCell('H'.$i)->getValue() == 'Av World')
+    {
+    $objWorksheet->getStyle('H'.$i)->getFont()->getColor()->setARGB(PHPExcel_Style_Color::COLOR_DARKGREEN);
+    }
+    else
+    {$orange = 'FFFF8C00';
+        if(  $objWorksheet->getCell('J'.$i)->getValue() == 'Av World' ){
+            $objWorksheet->getStyle('J'.$i)->getFont()->getColor()->setARGB(PHPExcel_Style_Color::COLOR_ORANGE);
+        }
+        else if(  $objWorksheet->getCell('L'.$i)->getValue() == 'Av World' ){
+            $objWorksheet->getStyle('L'.$i)->getFont()->getColor()->setARGB(PHPExcel_Style_Color::COLOR_PING);
+        }
+        else if(  $objWorksheet->getCell('N'.$i)->getValue() == 'Av World' ){
+            $objWorksheet->getStyle('N'.$i)->getFont()->getColor()->setARGB(PHPExcel_Style_Color::COLOR_RED);
+        }
+
+
+        $objWorksheet->getStyle('H'.$i)->getFont()->getColor()->setARGB(PHPExcel_Style_Color::COLOR_RED);
+    }
+
+}
+
 /* Obliczenia */
-//$objPHPExcel->getActiveSheet()->setCellValue('B3', '=D5 & " " & D7');
-//$objPHPExcel->getActiveSheet()->setCellValue('B4', '=D5+D7');
+//$objWorksheet->setCellValue('B3', '=D5 & " " & D7');
+//$objWorksheet->setCellValue('B4', '=D5+D7');
 
 /* ZEROWANIE NA KONIEC? */
 $objPHPExcel->setActiveSheetIndex(0);

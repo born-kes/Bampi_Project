@@ -24,8 +24,12 @@ for (var i = 0; i < columns.length; i++) {
 }
 var grid,
     options = {
+        editable: true,
+        enableAddRow: true,
     enableCellNavigation: true,
-    enableColumnReorder: false
+    enableColumnReorder: false,
+        asyncEditorLoading: true,
+        autoEdit: true
     },
     numberOfItems = 25000,
     items = [], indices,

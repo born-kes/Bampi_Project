@@ -1,8 +1,9 @@
 <?php ob_start();
 $microTimeStart = microtime(true);//  header("Location: ./admin/");
 session_start();
-//error_reporting(E_ALL ^ E_NOTICE);
-error_reporting(E_ALL);
+error_reporting(E_ALL ^ E_NOTICE);
+ini_set('display_errors', 0);
+//error_reporting(E_ALL);
 //require_once('inc/functions.php');
 require_once('inc/functions_admin.php');
 require_once('inc/fileMenager.php');
@@ -10,9 +11,16 @@ require_once('inc/template.php');
 
 $url = (is_null(@$_GET['page'])?'home':$_GET['page']).'.php';
 
-
+$page=null;
 $file = new fileMenager();
+$config = $file->load("module/config/db.php")->data();
 
+if(!$config)
+{
+    $page = $file->loadInclude("module/config/config.php");
+
+}
+else
 if( is_file("module/".(@$_GET['page'])."/$url") )
 {
     $page = $file->loadInclude("module/".(@$_GET['page'])."/$url");

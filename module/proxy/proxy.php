@@ -109,7 +109,7 @@ if(!empty($_GET['ceneo']) )
 
     $page['head']='<script type="application/javascript" src="j/jquery-1.10.2.min.js" ></script>';
 
-    $str = gzfile($url);
+    $str = @gzfile($url);
 
     if(is_array($str) && count($str)>80){
         $page['content'] = filtr_proxy($str);
@@ -166,7 +166,10 @@ else if(isset($_GET['ceneo']) && $_GET['ceneo']==0){
 else{
 
 
-    $page = array('content'=>'<a href="?ceneo=25200763;0280-0.htm">produkt</a><br>
-    <a href="?ceneo=;szukaj-'. urlencode(@$_GET['szukaj']).'">szukaj </a>');
+    $page = array('content'=>'    <form method="GET" action="">
+    <fieldset name="test">
+        <label for="ceneo">Szukaj w Ceneo</label>
+        <input type="text" name="ceneo" id="ceneo" value="'.@$_GET['ceneo'].'" /><input type="submit" value="ok" />
+    </fieldset></form>');
 }
 return $page;

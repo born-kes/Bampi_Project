@@ -530,7 +530,11 @@ function echo_r($array) {
 function arrayConect(&$arrayGlobal, $arrayConect=null){
     if(is_array($arrayGlobal) && is_array($arrayConect)){
         foreach($arrayConect as $key => $value){
-            @$arrayGlobal[$key].= ' '.$value;
+            if(isset($arrayGlobal[$key]) && $arrayGlobal[$key]!=''){
+               $arrayGlobal[$key] .= ' '.$value;
+            }else{
+                $arrayGlobal[$key] = $value;
+            }
         }
     }
     // return $arrayGlobal;
@@ -543,7 +547,7 @@ SORT_STRING - porównuj elementy jako ciągi tekstowe             2
  * @param $effect TYPE_NAME
  */
 function listEl($arra, $oper = SORT_NUMERIC, $effect=0)
-{
+{ $new = null;
     switch($oper)
     {
         case '0':
@@ -580,8 +584,8 @@ function listEl($arra, $oper = SORT_NUMERIC, $effect=0)
                 if(function_exists($effect)){
 
                     /** @var $effect TYPE_NAME nazwaFunkcji  */
-
-                   $new = @$effect($arra);
+                    $new = @$effect($arra);
+                    return $new;
                 }
             }
             break;
@@ -593,7 +597,8 @@ function aut($str, $el = '.php'){
 }
 
 function swap($strings, $array, $function=null)
-{
+{ $str=null;
+
     if( is_null($function) ){ // TODO dobry pomysł function do podmiany
         $f_cja = function($a){return $a;};
     }else if( is_array($function) ){

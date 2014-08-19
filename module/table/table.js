@@ -10,8 +10,8 @@ $().ready(function(){
         .prepend('<th>&nbsp;</th>') // dlaczego tu było td ?
         .append('<th style="width:auto;" />');
     $('.table_fi')
-        .append('<div />');
-      //  .prepend('<div />');
+        .append('<div />')
+        .prepend('<span style="width: 38px;" />');
 
     $('#table_s tr:first td , #table_s tr:eq(1) td,.table_fi div').each(function(){
         $(this).css('width',$(this).width());

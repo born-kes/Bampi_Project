@@ -21,6 +21,7 @@ thead.ui-widget-header{
 }
 #thead.ui-widget-header td.header{
     padding: 4px;
+    background-position: left center;
    /* overflow: hidden;*/
 }
 

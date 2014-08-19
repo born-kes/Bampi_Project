@@ -1,0 +1,82 @@
+<script src="j/colResizable/jquery.js"></script>
+<script src="i/jquery-ui.min.js"></script>
+<h1>Ustawienia</h1>
+
+<form method="POST">
+    <fieldset name="test">
+        <div id="komunikat">{{komunikat}}</div>
+        <label for="database_name">Nazwa Bazy danych:</label>
+        <input type="text" name="database_name" id="database_name" value="{{database_name}}">
+        <br />
+        <style>
+            .Column_list .ui-selecting { background: #FECA40; }
+            .Column_list .ui-selected { background: #F39814; color: white; }
+            .Column_list { list-style-type: none; margin: 0; padding: 0; display: flex;}
+            .Column_list li { font-size: 14px; height: 18px; margin: 3px; padding: 2px; float: left;   background: #cccccc;}
+            #kolumny{padding:1em; padding-bottom:2em; }
+            #komunikat{color:red; }
+        </style>
+        <div id="kolumny">
+            <h1>Urzywaj Kolumn</h1>
+            <h2>Pola Widoczne w Tabeli Produktów:</h2>
+            <input type="hidden" name="Tabel" id="Tabel" value="{{Tabel}}" />
+            <script>
+                $(function() {
+                    $( "#Tabel_list" ).each(function() {
+                       var table_list = this;
+                        $('li',this).click(function(){
+                            $(this).toggleClass('ui-selected');
+                            var result = $( "#Tabel" ).val('');
+
+                            $( ".ui-selected", table_list).each(function() {
+                                var op = $(this).text();
+                                result.val(function(nr,el){
+                                    if(el=='')return op; return Array(el,op).join(',');});
+                            });
+                        });
+
+
+                    });
+                });
+            </script>
+            <ul id="Tabel_list" class="Column_list">
+                {{Tabel_list}}
+            </ul>
+            <hr />
+            <h3>W pliku Exel</h3>
+            <input type="hidden" name="Exel" id="Exel" value="{{Exel}}" />
+            <script>
+                $(function() {
+                    $( "#Exel_list" ).each(function() {
+                       var table_list = this;
+                        $('li',this).click(function(){
+                            $(this).toggleClass('ui-selected');
+                            var result = $( "#Exel" ).val('');
+
+                            $( ".ui-selected", table_list).each(function() {
+                                var op = $(this).text();
+                                result.val(function(nr,el){
+                                    if(el=='')return op; return Array(el,op).join(',');});
+                            });
+                        });
+
+
+                    });
+                });
+            </script>
+            <ul id="Exel_list" class="Column_list">
+                {{Column_list}}
+            </ul>
+        </div>
+        <input type="submit" name="clik" value="Zapisz">
+    </fieldset>
+</form><br>
+<a href="?import">Importuj Baze Danych</a>
+<br>
+<a href="?export">Exportuj Baze Danych</a>
+<script>
+    $(function() {
+        {{JS}}
+        $('#ss').find('td')
+    });
+</script>

@@ -26,9 +26,9 @@ $ef= $this->loadInclude("module/sql/sql.php");
 $table['js'] =''.
  //   '  var data = '.json_encode( sql('tbody')).';'.
 'var columns = [
-    {id: "symbol", name: "Symbol", field: "kod_produktu", sortable: true },
-    {id: "nazwa", name: "Nazwa Produktu", field: "nazwa", sortable: true },
-    {id: "producent", name: "Producent", field: "producent", sortable: true },
+    {id: "symbol", name: "Symbol", field: "kod_produktu", sortable: true, editor: Slick.Editors.Text },
+    {id: "nazwa", name: "Nazwa Produktu", field: "nazwa", sortable: true, editor: Slick.Editors.Text },
+    {id: "producent", name: "Producent", field: "producent", sortable: true, editor: Slick.Editors.Text },
     {id: "cena_k", name: "Cena Kupna", field: "cena_kupna", sortable: true },
     {id: "cena_stara", name: "Stara Cena", field: "cena_stara", sortable: true },
     {id: "notatka", name: "Notatka", field: "notatka"}

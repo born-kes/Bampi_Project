@@ -2,6 +2,7 @@
 /*!
  * Medoo database framework
  * http://medoo.in
+ * http://medoo.in/doc
  * Version 0.9.6
  * 
  * Copyright 2014, Angel Lai
@@ -11,6 +12,7 @@ class medoo
 {
 	protected $database_type = 'mysql';
 
+    public $conect = false;
 	// For MySQL, MariaDB, MSSQL, Sybase, PostgreSQL, Oracle
 	protected $server = 'localhost';
 
@@ -26,7 +28,7 @@ class medoo
 
 	protected $charset = 'utf8';
 
-	protected $database_name = 'grzes';
+	protected $database_name = 'grzes';//'avword';
 
 	protected $option = array();
 
@@ -52,7 +54,7 @@ class medoo
 			elseif (is_array($options))
 			{
 				foreach ($options as $option => $value)
-				{
+				{ //echo $value;
 					$this->$option = $value;
 				}
 			}
@@ -120,9 +122,11 @@ class medoo
 			{
 				$this->pdo->exec($value);	
 			}
+            $this->conect=true;
 		}
 		catch (PDOException $e) {
-			throw new Exception($e->getMessage());
+            $this->pdo= new Class_Null();
+		//	throw new Exception(  $e->getMessage() );
 		}
 	}
 
@@ -867,4 +871,3 @@ class medoo
 		return $output;
 	}
 }
-?>

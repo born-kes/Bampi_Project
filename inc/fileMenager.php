@@ -345,3 +345,9 @@ class fileMenager
     }
 
 }
+class Class_Null
+{
+    public function __call( $name , $pars ){
+        return $this;
+    }
+}

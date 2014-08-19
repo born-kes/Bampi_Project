@@ -10,7 +10,7 @@ $().ready(function(){
         '<div class="contextual-links-wrapper contextual-links-processed">' +
         '<a href="#" class="contextual-links-trigger">Konfiguruj</a>' +
         '<ul class="contextual-links" style="display: none;">' +
-        '<li class="node-colResizable"><a href="">Zmień szerokość</a></li>' +
+      //  '<li class="node-colResizable"><a href="">Zmień szerokość</a></li>' +
         '<li class="node-hide first"><a href="">Ukryj</a></li>' +
         '<li class="node-hide last"><a href="">Ukryj na Stałe</a></li>' +
         '</ul></div>';});

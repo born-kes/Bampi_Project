@@ -4,9 +4,9 @@ ini_set('include_path', ini_get('include_path').';../');
 
  $meddo = $this->loadInclude('medoo.php',false);
 
-global $db,$Option;
-$Option = $this->file('db.php')->data();
-$db = new medoo($Option);
+global $db,$config;
+
+$db = new medoo($config);
 
 function foreachAut($array, $nr=null){ //print_r($array);
     $new_Araay = array();
@@ -24,7 +24,7 @@ function foreachAut($array, $nr=null){ //print_r($array);
     return $new_Araay;
 }
 function sql($get = null ){
-    global $db,$Option;
+    global $db,$config;
     if( is_null($get) && isset($_GET['sql']) )
         $get = $_GET['sql'];
 
@@ -32,6 +32,11 @@ function sql($get = null ){
 
         switch($get)
         {
+
+            case 'medoo':
+                return $db;
+                break;
+
             case 'csv':
                 return $sql_thead = $db->select('produkty',array('kod_produktu','nazwa','cena'),'ORDER BY `id` ASC');
 //                    return ( foreachAut($sql_thead, array(1,0) ) );
@@ -41,7 +46,7 @@ function sql($get = null ){
                 return $sql_thead = $db->query("SHOW COLUMNS FROM produkty;")->fetchAll();
                 break;
             case 'thead':
-                return explode(',', $Option['Tabel'] );
+                return explode(',', $config['Tabel'] );
                /* Edytowalny w ustawieniach
                 *  return $sql_thead = $db->query("SHOW COLUMNS FROM produkty;")->fetchAll();*/
 
@@ -51,7 +56,7 @@ function sql($get = null ){
 
                 break;
             case 'tbody_all':/* EXEL */
-                $list = explode(',', $Option['Exel'] );
+                $list = explode(',', $config['Exel'] );
                 $list = array_map(function($a){return 'produkty.'.$a;}, $list );
                 $list[]='sprzedaz.*';
 //print_r($list);
@@ -110,31 +115,46 @@ function class_dla_thead($val) {
     return $val;
 }
 function sql_option($name){
-    global $Option;
-    if ( strpos( $Option['Tabel'] , $name )==true )
+    global $config;
+    if ( strpos( $config['Tabel'] , $name )==true )
     {
-        $Option['Tabel'] = str_replace( $name , '' , $Option['Tabel'] );
-        $Option['Tabel'] = str_replace(",," , ',' , $Option['Tabel'] );
+        $config['Tabel'] = str_replace( $name , '' , $config['Tabel'] );
+        $config['Tabel'] = str_replace(",," , ',' , $config['Tabel'] );
     }
     else{
-        if($Option['Tabel']=='')
-            $Option['Tabel'] = $name;
+        if($config['Tabel']=='')
+            $config['Tabel'] = $name;
         else
-            $Option['Tabel'] .=','.$name;
+            $config['Tabel'] .=','.$name;
     }
-   // $Option['Tabel'];
+   // $config['Tabel'];
 
 }
 
 $_table=array();
 
 if(isset($_GET['page']) && $_GET['page']== 'sql' ){
-    $_table = $this->loadInclude('ustawienia.php',false);
+    if(isset($_GET['import']) )
+    {
+            $_table = $this->loadInclude('import.php',false);
+    }
+    elseif(isset($_GET['export']) )
+    {
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Export_BD_'.( date("d_m") ).'.json"');
+        header('Cache-Control: max-age=0');
+      echo  json_encode( sql('tbody') );
+        exit;
+    }
+    else{
+     //   $_table = $this->loadInclude('module/config/config.php');
+    }
+
 }elseif(isset($_GET['page']) && $_GET['page']== 'table' ){
-    $_table =$Option['Tabel'];
+    $_table =$config['Tabel'];
 }elseif(isset($_GET['sql']) && $_GET['sql']=='hide'){
     sql_option($_POST['id']);
-    $this->load('db.php',false)->save($Option);
+    $this->load('db.php',false)->save($config);
 }
 //exit;
 return $_table;
