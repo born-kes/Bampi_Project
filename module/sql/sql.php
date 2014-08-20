@@ -77,9 +77,26 @@ function sql($get = null ){
                 }
                 else
                 {
-                    $max =  listEl( sql('thead_all'), 'Field' );
-                    arrayConect($max,$_POST);
-                    return $db->insert('produkty', $max );
+                    if(!isset($_POST['nazwa']) || trim($_POST['nazwa'])=='' )
+                        return '';
+
+                    unset($_POST['id']);
+                    $max =  array_flip(
+                        listEl( sql('thead_all'), 'Field' )
+                    );
+
+                    $max = array_map(function(){return '';},$max);
+                    arrayConect( $max, $_POST  );
+                     $ef = $db->insert('produkty', $max );
+                    if($ef){
+
+                        $ef = $db->select('produkty', 'id',array('AND'=> $_POST ));
+                        echo($ef[0]); return;
+                    }else{
+                        echo 'Wszystkie pola wymaganie';
+                    }
+
+                   // return '';
                 }
                 break;
             case 'update_ceny':
@@ -127,6 +144,7 @@ function sql_option($name){
         else
             $config['Tabel'] .=','.$name;
     }
+    fileMenager()->load('module/config/db.php')->save($config);
    // $config['Tabel'];
 
 }
@@ -140,7 +158,7 @@ if(isset($_GET['page']) && $_GET['page']== 'sql' ){
     }
     elseif(isset($_GET['export']) )
     {
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Type: application/json');
         header('Content-Disposition: attachment;filename="Export_BD_'.( date("d_m") ).'.json"');
         header('Cache-Control: max-age=0');
       echo  json_encode( sql('tbody') );
@@ -154,7 +172,7 @@ if(isset($_GET['page']) && $_GET['page']== 'sql' ){
     $_table =$config['Tabel'];
 }elseif(isset($_GET['sql']) && $_GET['sql']=='hide'){
     sql_option($_POST['id']);
-    $this->load('db.php',false)->save($config);
+
 }
 //exit;
 return $_table;

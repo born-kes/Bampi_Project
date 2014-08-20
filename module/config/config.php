@@ -7,9 +7,9 @@ if(!isset($config) || is_null($config) )
 $config = $this->file('db.php',false)->data();
 $_table['html']=$this->file('config.html',false)->data();
 
-if(isset($_POST['clik']) ){
+if(isset($_POST['database_name']) ){
     $config = $_POST;
-    unset($config['clik']);
+
     foreach($config as $key => $val){
        $config[$key]=trim($val);
     }
@@ -32,6 +32,39 @@ if( is_array( $config ) && isset($config['database_name'] ) && $db->conect )
     arrayConect($tagi, $config );
 
     $Tabel_sql = $db->query("SHOW COLUMNS FROM produkty");
+    if(!$Tabel_sql){
+        $db->query("
+CREATE TABLE IF NOT EXISTS `produkty` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `kod_produktu` varchar(255) NOT NULL,
+  `symbol` varchar(255) NOT NULL,
+  `kod_ceneo` int(11) unsigned NOT NULL,
+  `nazwa` varchar(255) DEFAULT NULL,
+  `producent` varchar(255) DEFAULT NULL,
+  `cena_kupna` float(8,2) unsigned DEFAULT NULL,
+  `cena_stara` float(8,2) unsigned DEFAULT NULL,
+  `cena` float(8,2) unsigned NOT NULL,
+  `notatka` varchar(255) NOT NULL COMMENT 'pisze bo moge',
+  PRIMARY KEY (`kod_produktu`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=238 ;
+
+CREATE TABLE IF NOT EXISTS `sprzedaz` (
+  `id` int(10) unsigned NOT NULL DEFAULT '0',
+  `top1` varchar(255) DEFAULT NULL,
+  `top1_cena` float(8,2) unsigned DEFAULT NULL,
+  `top2` varchar(255) DEFAULT NULL,
+  `top2_cena` float(8,2) unsigned DEFAULT NULL,
+  `top3` varchar(255) DEFAULT NULL,
+  `top3_cena` float(8,2) unsigned DEFAULT NULL,
+  `top4` varchar(255) DEFAULT NULL,
+  `top4_cena` float(8,2) unsigned DEFAULT NULL,
+  UNIQUE KEY `top_id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+");
+        $Tabel_sql = $db->query("SHOW COLUMNS FROM produkty");
+    }
 
  if($Tabel_sql){
 

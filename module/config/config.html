@@ -1,5 +1,7 @@
 <script src="j/colResizable/jquery.js"></script>
 <script src="i/jquery-ui.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
 <h1>Ustawienia</h1>
 
 <form method="POST">
@@ -9,15 +11,50 @@
         <input type="text" name="database_name" id="database_name" value="{{database_name}}">
         <br />
         <style>
-            .Column_list .ui-selecting { background: #FECA40; }
-            .Column_list .ui-selected { background: #F39814; color: white; }
-            .Column_list { list-style-type: none; margin: 0; padding: 0; display: flex;}
-            .Column_list li { font-size: 14px; height: 18px; margin: 3px; padding: 2px; float: left;   background: #cccccc;}
-            #kolumny{padding:1em; padding-bottom:2em; }
-            #komunikat{color:red; }
+            @import url("i/jquery-ui.min.css");
+            .Column_list .ui-selecting {
+                background: #FECA40;
+            }
+            .Column_list .ui-selected {
+                background: #F39814;
+                color: white;
+                border: 2px inset;
+            }
+            .Column_list {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+            }
+            .Column_list li {
+                font-size: 14px;
+                height: 18px;
+                margin: 3px;
+                padding: 2px;
+                float: left;
+                background: #cccccc;
+                cursor: pointer;
+                border: 2px outset #cccccc;
+            }
+            #kolumny{
+                padding:1em;
+                padding-bottom:2em;
+            }
+            #komunikat{
+                color:red;
+            }
+            .exp_inp{
+                padding: 2em;
+                text-align: center;
+            }
+            .exp_inp a{
+                text-align: center;
+
+                margin: 1em;
+            }
         </style>
         <div id="kolumny">
-            <h1>Urzywaj Kolumn</h1>
+            <h1>Używaj Kolumn Tabeli</h1>
             <h2>Pola Widoczne w Tabeli Produktów:</h2>
             <input type="hidden" name="Tabel" id="Tabel" value="{{Tabel}}" />
             <script>
@@ -68,12 +105,15 @@
                 {{Column_list}}
             </ul>
         </div>
-        <input type="submit" name="clik" value="Zapisz">
+        <button class="ui-widget ui-state-default ui-corner-all ui-button-text-only">Zapisz</button>
     </fieldset>
-</form><br>
-<a href="?import">Importuj Baze Danych</a>
-<br>
-<a href="?export">Exportuj Baze Danych</a>
+</form>
+        <div class="exp_inp">
+<a href="sql.html?import" title="Importuj Baze Danych">
+    <i class="fa fa-upload"></i>
+     Załaduj baze z pliku</a>
+&nbsp;
+<a href="sql.html?export" title="Exportuj Baze Danych"><i class="fa fa-download"></i> Pobierz kopię bazy </a></div>
 <script>
     $(function() {
         {{JS}}

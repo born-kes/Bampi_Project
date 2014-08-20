@@ -11,27 +11,25 @@ function edit_tab(nr){
 
     if( $('#content #edit_div').length == 0 ){
         var div = $('<form id="edit_form"><table id="edit_div" style="width: 100%;" class="ui-widget-content"></table></form>');
+
+
         if(nr!==undefined){
             var body = $('#body_s tr:eq(' + nr + ')')
                 .clone(false);
-        }else{
-            var body = $('tfoot tr:eq(0)')
-                .clone(false);
-        }
 
-        body.attr('valign','top')
+
+
+            body.attr('valign','top')
         $('td' , body ).each(function(a){
+            var thead_ = $('#thead td:eq('+(a)+')').clone(false);
+            if(a==0)
+                $(this).addClass('hide');
+            thead_.children().remove();
 
-            var thead = $('#thead td:eq('+(a+1)+')').clone(false);
-
-            if(a==0)$(this).addClass('hide');
-
-
-            thead.children().remove();
-            if( thead.hasClass('text') ){
+            if( thead_.hasClass('text') && false ){
                 $(this).html(
                     '<textarea ' +
-                        'name="' + thead.text()+'" '+
+                        'name="' + thead_.text()+'" '+
                         'class="ui-state-hover" ' +
                         'style="width: 200px;height:90px;padding-left:4px">'+
                         $(this).text()+
@@ -41,15 +39,51 @@ function edit_tab(nr){
                 $(this).html(
                     '<input ' +
                         'type="text" ' +
-                        'name="' + thead.text()+ '" '+
+                        'name="' + thead_.text()+ '" '+
                         'value="' + $(this).text()+ '" ' +
                         'class="ui-state-hover" ' +
                         'style="width: 90px;padding-left:4px" />'
                 )
             }
 
+
         });
-        $("textarea[name='nazwa']", body).change(function(){
+            thead = $('#thead')
+                .clone(false).each(function(a){
+                td = $('td',this).attr("style", "");
+                $('td:eq(0)',this).addClass('hide');
+
+                //    var hide = new Array(0,1);
+                //    for(var i in hide)$('td:eq('+i+')',this).addClass('hide');
+
+            })
+
+        }else{
+            var thead = $('<tr>'+
+                '<td>kod_produktu</td>'+
+                '<td>Nazwa</td>'+
+                '<td>kod_ceneo</td>'+'</tr>'
+                );
+
+            var body = $('<tr>' +
+                '<td><input ' +
+                'type="text" ' +
+                'name="kod_produktu" '+
+                'value="" ' +
+                'class="ui-state-hover" /></td>'+
+                '<td><input ' +
+                'type="text" ' +
+                'name="nazwa" '+
+                'value="" ' +
+                'class="ui-state-hover" /></td>'+
+                '<td><input type="text" name="kod_ceneo" />' +
+                '<input type="hidden" name="id" />' +
+                '</td>'+
+                '</tr>');
+
+        }
+
+        $("input[name='nazwa']", body).change(function(){
 
 
             var val= encodeURI( $(this).val() );
@@ -84,17 +118,7 @@ function edit_tab(nr){
         }
 
         div.children('table').html( body );
-        div.children('table').prepend(
-            $('#thead')
-                .clone(false)
-                .each(function(a){
-                    td = $('td',this).attr("style", "");
-
-                    var hide = new Array(0,1);
-                    for(var i in hide)$('td:eq('+i+')',this).addClass('hide');
-
-                })
-        );
+        div.children('table').prepend( thead );
 
         $('#content').append(div);
     }
@@ -110,18 +134,28 @@ function edit_tab(nr){
             "Zapisz produkt": function(){
 
                 var odp = ajax('ajax.html?sql=update', form.serialize() );
+                /** spłaszcza usuwając inputy **/
                 $('tr:odd td' , form).text(function(){
                     return $(this).children().val();
                 });
-                if( $('tr:odd', form ).attr('id') != 'tfoot')
+
+
+                if(
+                    $('tr:odd', form ).attr('id')!== null   &&
+                    $('tr:odd', form ).attr('id')!== 'undefined'     &&
+                    $('tr:odd', form ).attr('id')!== undefined
+                    )
                 {
                     $('#table_s #'+ $('tr:odd', form ).attr('id')+' td' )
                         .html(function(a){
                             return $('tr:odd td:eq('+a+')', form).html();
                         });
-                }else{
+                }
+                else
+                { window.location =  window.location;
+                /*
                     $('tr:odd th', form).removeClass().text('Nowy');
-                    $('#table_s').append( $('tr:odd', form ) );
+                    $('#table_s').append( $('tr:odd', form ) );*/
                 }
                 form.dialog( "close" );
             },
@@ -137,9 +171,11 @@ function edit_tab(nr){
 
 }
 function ajax(url, val ){
-    $.post( url , val )
+
+  return  $.post( url , val )
         .done(function(data) {
             return (data);
         });
+
 }
 /* END table/edit.js */

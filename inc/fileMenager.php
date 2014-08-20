@@ -345,6 +345,10 @@ class fileMenager
     }
 
 }
+function fileMenager(){
+    global $file;
+    return $file;
+}
 class Class_Null
 {
     public function __call( $name , $pars ){

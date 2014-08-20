@@ -142,4 +142,10 @@ table thead th:first-of-type{
     float: right;
     padding: 0 4px;
 }
+.ui-state-default td{
+    font-weight: normal;
+}
+ol li {
+    color: #000;
+}
 /* END table/table.css */

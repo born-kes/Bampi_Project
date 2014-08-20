@@ -1,1 +1,1 @@
-a:3:{s:13:"database_name";s:6:"avword";s:5:"Tabel";s:33:"symbol,nazwa,producent,cena_stara";s:4:"Exel";s:42:"kod_produktu,nazwa,cena_stara,cena,notatka";}
+a:3:{s:13:"database_name";s:6:"avword";s:5:"Tabel";s:42:"kod_produktu,nazwa,cena_stara,cena,notatka";s:4:"Exel";s:20:"kod_produktu,notatka";}

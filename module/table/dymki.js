@@ -8,9 +8,9 @@ $().ready(function(){
 //    :gt(1)
     $('#thead').find('td').append(function(){return ''+
         '<div class="contextual-links-wrapper contextual-links-processed">' +
-        '<a href="#" class="contextual-links-trigger">Konfiguruj</a>' +
+        '<a href="#" class="contextual-links-trigger conect-links">Konfiguruj</a>' +
         '<ul class="contextual-links" style="display: none;">' +
-      //  '<li class="node-colResizable"><a href="">Zmień szerokość</a></li>' +
+        '<li class="node-colResizable conect-links" style="display:none;"><a href="">Zmień szerokość</a></li>' +
         '<li class="node-hide first"><a href="">Ukryj</a></li>' +
         '<li class="node-hide last"><a href="">Ukryj na Stałe</a></li>' +
         '</ul></div>';});
@@ -20,7 +20,7 @@ $().ready(function(){
      */
     $('#body_s th:even').append(function(nr){return ''+
             '<div class="contextual-links-wrapper contextual-links-processed">' +
-            '<a href="#" class="contextual-links-trigger">Konfiguruj</a>' +
+            '<a href="#" class="contextual-links-trigger conect-links">Konfiguruj</a>' +
             '<ul class="contextual-links" style="display: none;">' +
             '<li style="margin-bottom:10px"><a class="conect-links" href="http://www.ceneo.pl/'+
         $('#body_s').find('tr:eq('+nr+')').attr('dir')+
@@ -98,11 +98,11 @@ $().ready(function(){
 
     $('#thead td,#body_s th:even')
         .each(function(){
-            $('a:eq(0)',this).click(function(){
+           $('a:eq(0)',this).click(function(){
                 $(this).next().toggle("slow");
                 return false;
             });
-           $('a:gt(0)',this).click(function(){
+           $('a:gt(.conect-links)',this).click(function(){
                 $(this).next().toggle("slow");
                 return false;
             });
@@ -133,12 +133,12 @@ $().ready(function(){
                 colResiza=true
             }
         });
-       $('.node-hide a', this).click(function(){
+        $('.node-hide a', this).click(function(){
                  $("table").colResizable({ disable : true });
             $('#content').addClass('td'+(nr+1)+'h');
         });
         $('.node-hide.last a', this).click(function(){
-               var el = $(this).parents('td').clone(false).children().remove().end().text();;
+               var el = $(this).parents('td').clone(false).children().remove().end().text();
 
 
             ajax('ajax.html?sql=hide','id='+el

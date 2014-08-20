@@ -30,10 +30,7 @@ $class_hidde='';
 foreach($thead_list as $key => $val){
     $class_hidde.='td'.($key+1).'h ';
 }
-if($class_hidde!=''){
-    $_table['js'] .='$().ready(function(){$("#content").addClass("'.$class_hidde.'");});';
 
-}
 
 $fixed_thead = swap( '<div class="CRG">{{Field}}</div>'."\n" , $thead_sql  ,'class_dla_thead');
 $thead = swap( '<td class="{{Type}}">{{Field}}</td>'."\n" ,  $thead_sql ,'class_dla_thead');
@@ -48,7 +45,10 @@ $table = swap(
     )
 );
 
+if($class_hidde!=''){
+    $_table['js'] .=' $("#content").addClass("'.$class_hidde.'"); ';
 
+}
 
 if(true)
 {
@@ -90,6 +90,7 @@ if(true)
         //    '<script type="application/javascript" src="j/sort/jquery-latest.js" ></script>'.
             '<script type="application/javascript" src="j/sort/jquery.tablesorter.min.js" ></script>'
     );
+
 
     arrayConect($_table , $table_a );
 
