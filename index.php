@@ -1,8 +1,8 @@
 <?php ob_start();
 $microTimeStart = microtime(true);//  header("Location: ./admin/");
 session_start();
-//error_reporting(E_ALL);
-//error_reporting(E_ALL ^ E_NOTICE);
+error_reporting(E_ALL);
+error_reporting(E_ALL ^ E_NOTICE);
 
 //ini_set('display_errors', 0);
 //ini_set('display_startup_errors', 0);

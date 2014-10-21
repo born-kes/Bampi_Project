@@ -1,0 +1,1 @@
+ALTER TABLE  `produkty` ADD  `min` FLOAT( 5, 2 ) NOT NULL DEFAULT '10.00';

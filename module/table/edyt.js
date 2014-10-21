@@ -3,6 +3,32 @@
 $().ready(function(){
 
 });
+function iframCeneo(el) {
+
+    var val= encodeURI( el.val() );
+    if( $('#content iframe').length > 0 )
+    {
+        if( $('#content iframe').attr('src') != 'proxy.html?ceneo='+ val )
+            $('#content iframe').attr('src' , 'proxy.html?ceneo='+ val);
+    }
+    else
+    {
+        $('#content').append('<iframe src="proxy.html?ceneo='+ val +
+            '" style="display:none" title="Podgląd z Ceneo" />');
+    }
+    var frame = $('#content iframe')
+
+    frame.dialog({
+        width: 905,
+        height:600,
+        show: {effect: "clip",duration: 1000},
+        hide: {effect:"clip", duration:300},
+        close: function() {
+            $('iframe').remove();
+        }
+    })
+        .css({ width: 880, height:600});
+}
 /**
  * Edytowanie wierszy
  * @param int nr - nr wiersza tbody
@@ -83,33 +109,8 @@ function edit_tab(nr){
 
         }
 
-        $("input[name='nazwa']", body).change(function(){
 
-
-            var val= encodeURI( $(this).val() );
-            if( $('#content iframe').length > 0 )
-            {
-                if( $('#content iframe').attr('src') != 'proxy.html?ceneo='+ val )
-                    $('#content iframe').attr('src' , 'proxy.html?ceneo='+ val);
-            }
-            else
-            {
-                $('#content').append('<iframe src="proxy.html?ceneo='+ val +
-                    '" style="display:none" title="Podgląd z Ceneo" />');
-            }
-            var frame = $('#content iframe')
-
-            frame.dialog({
-                width: 905,
-                height:600,
-                show: {effect: "clip",duration: 1000},
-                hide: {effect:"clip", duration:300},
-                close: function() {
-                    $('iframe').remove();
-                }
-            })
-                .css({ width: 880, height:600});
-        });
+        $("input[name='nazwa']", body).change(function(){iframCeneo( $(this) );});
 
         window.top.document.id_ceneo = function(a){
             $("#edit_div input[name='kod_ceneo']").val(a);
@@ -131,9 +132,10 @@ function edit_tab(nr){
         show: {effect: "clip",duration: 1000},
         hide: {effect:"clip", duration:300},
         buttons: {
+            "Sprawdz na Ceneo":function(){iframCeneo( $("input[name='nazwa']",body) );},
             "Zapisz produkt": function(){
 
-                var odp = ajax('ajax.html?sql=update', form.serialize() );
+                 ajax('ajax.html?sql=update', form.serialize() );
                 /** spłaszcza usuwając inputy **/
                 $('tr:odd td' , form).text(function(){
                     return $(this).children().val();
@@ -152,10 +154,25 @@ function edit_tab(nr){
                         });
                 }
                 else
-                { window.location =  window.location;
-                /*
-                    $('tr:odd th', form).removeClass().text('Nowy');
-                    $('#table_s').append( $('tr:odd', form ) );*/
+                {
+
+                    var urlClin = location.href.split('?');
+                    var nowy = $('#body_s').find('tr:eq(0)').clone();
+                    nowy.attr('dir', $('tr:odd td:eq(2)', form).text() )
+                        .attr('id',"DodanyNowy")
+                        .find('th,td').text('');
+                    nowy.find('th:eq(0)').text( $('#body_s').find('tr').length-1 );
+                    nowy.find('td:eq(1)').text( $('tr:odd td:eq(0)', form).text() );
+                    nowy.find('td:eq(4)').text( $('tr:odd td:eq(1)', form).text() );
+                    nowy.find('td:eq(3)').text( $('tr:odd td:eq(2)', form).text() );
+
+                    $('#body_s').append( nowy );
+                    setTimeout(function(){
+                        location.href = urlClin[0] + '?' +
+                            ($('tr:odd td:eq(1)', form).text()) +
+                            '#tfoot';
+                    },0);
+
                 }
                 form.dialog( "close" );
             },
@@ -170,11 +187,16 @@ function edit_tab(nr){
 
 
 }
-function ajax(url, val ){
 
-  return  $.post( url , val )
+function ajax(url, val, nowy ){
+
+    return  $.post( url , val )
         .done(function(data) {
-            return (data);
+            if(nowy!==undefined){
+                $('#DodanyNowy').attr('id',data);
+                var nr = $('#body_s').find('tr').length-1;
+                setTimeout(function(){edit_tab(nr);},400);
+            }
         });
 
 }

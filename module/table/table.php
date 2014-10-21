@@ -1,9 +1,15 @@
 <?php
+global $config;
+
 $_table['html'] = $this->file('table.html')->data();
 $_table['js'] = $this->file('table.js')->data().
     $this->file('dymki.js')->data().
     $this->file('colResizable.js')->data().
-    $this->file('edyt.js')->data();
+    $this->file('edyt.js')->data().'
+    var alternatiw="'.$config['alternatiw'].'";
+    ';
+
+
 
 $_table['css'] = $this->file('table.css')->data().
     $this->file('dymki.css')->data().
@@ -34,14 +40,14 @@ foreach($thead_list as $key => $val){
 
 $fixed_thead = swap( '<div class="CRG">{{Field}}</div>'."\n" , $thead_sql  ,'class_dla_thead');
 $thead = swap( '<td class="{{Type}}">{{Field}}</td>'."\n" ,  $thead_sql ,'class_dla_thead');
-$tbody = swap( '<td >{{{{Field}}}}</td>'."\n" ,  $thead_sql );
+$tbody = swap( '<td class="{{Field}}" >{{{{Field}}}}</td>'."\n" ,  $thead_sql );
 $table = swap(
     $_table['html'],
     array(
         'fixed_thead' => $fixed_thead,
         'thead' => $thead,
         'tbody' => swap('<tr id="{{id}}" dir="{{kod_ceneo}}">'.$tbody.'</tr>', sql('tbody') ),
-        'tfoot'=> '<tr id="tfoot"><th class="ui-widget ui-state-default ui-corner-all ui-button-text-only">Dodaj Nowy</th>'.td( sql('thead') ).'</tr>'
+        'tfoot'=> '<tr id="tfoot"><th class="ui-widget ui-state-default ui-corner-all ui-button-text-only" colspan="2">Dodaj Nowy</th>'.td( sql('thead') ).'</tr>'
     )
 );
 
@@ -82,9 +88,10 @@ if(true)
 @import url("i/jquery_ui.css");
         ',
         'head'=>''.
-            '<script src="j/colResizable/jquery.js" ></script>'.
-            '<script src="i/jquery-ui.min.js" ></script>'.
-            '<script src="j/colResizable/colResizable-1.3.min.js" ></script>'.
+            '<script src="j/colResizable/jquery.js" ></script>'."\n".
+            '<script src="i/jquery-ui.min.js" ></script>'."\n".
+            '<script src="j/colResizable/colResizable-1.3.min.js" ></script>'."\n".
+            '<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">'."\n".
 //            '<script src="j/colResizable/colResizable-1.3.source.js" ></script>'.
            // '<script type="application/javascript" src="j/jquery-1.10.2.min.js" ></script>'.
         //    '<script type="application/javascript" src="j/sort/jquery-latest.js" ></script>'.

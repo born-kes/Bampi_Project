@@ -1,5 +1,6 @@
 
 $().ready(function(){
+    $('img').error(function(){$(this).remove();});
     var max =$("div.site-full-width table.product-offers tr:even").length;
     $("div.site-full-width table.product-offers tr:even").each(function(top, el){
         if($("td:eq(4) a strong:eq(0)", $(this)).length==0 || max == top ){
@@ -52,7 +53,6 @@ $().ready(function(){
         window.top.document.wstawiacz( odp );
     }
 
-
-    if(window.parent.document.zasysacz)
-        window.parent.document.zasysacz(nr+1);
+    if(window.parent.document.zasysacz && nr_ > -1)
+       setTimeout(function(){ window.parent.document.zasysacz(nr_); },0);
 });

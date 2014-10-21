@@ -13,7 +13,7 @@ function get_web_page( $url, $post='category-id=&search-query=' ){
         CURLINFO_HEADER_OUT    => true,
         CURLOPT_SSL_VERIFYPEER => false,     // Disabled SSL Cert checks
         CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-        CURLOPT_COOKIE         => 'rc=igdamb4ThORF5UzypVHYFfZFDA5ZKaNGK1uVgq1QCemB03sbz6lxNEs/N7/eTpEUjcCoUAMtjYx7Tw5Izj0pAEjNYUZPLZ6xIYPJ+svlstc02RliKmqtDw==; domain=.ceneo.pl; expires=Tue, 28-Oct-2014 21:15:10 GMT; path=/ rc=igdamb4ThOQPy+qMidFn6X7jlbO5MX6uo58bz0nU8FMnILPtxD57aQH4Ra9MSjiSC4rQsiQxknkI4Enxw3Umoutip583XNQiAKBsaaURGjwuQX84wjxx6opRKRvev8978KtfGQ7rcJE0qmdTd4vVoyra6AzX7hVN; domain=.ceneo.pl; expires=Tue, 28-Oct-2014 21:15:10 GMT; path=/ pagination=30; expires=Fri, 31-Dec-9999 23:59:59 GMT; path=/ fs=et=635421831107771900&sg=8f9c598c-bced-48aa-9338-2ba0bf742d47&st=BenQ MW851UST; domain=.ceneo.pl; expires=Wed, 27-Aug-2014 20:15:10 GMT; path=/ sv2=83f1f022-b90c-4523-adcc-9da8e5bf9643; domain=.ceneo.pl; expires=Fri, 31-Dec-9999 23:59:59 GMT; path=/ userCeneo=ID=de976e60-afe3-45a1-8078-d103d69d060e&sp=7L0HYBxJliUmL23Ke39K9UrX4HShCIBgEyTYkEAQ7MGIzeaS7B1pRyMpqyqBymVWZV1mFkDM7Z28995777333nvvvfe6O51OJ/ff/z9cZmQBbPbOStrJniGAqsgfP358Hz8ifo1f89f4NX6N/5se/MTz6+GXX/t3+91+t9/w/wkAAP//&lvp=0,&lvpe=1&al=$$$&sc=1&mvv=0&nv=0; domain=.ceneo.pl; expires=Fri, 31-Dec-9999 23:59:59 GMT; path=/ cnicaf=; domain=.ceneo.pl; expires=Fri, 31-Dec-9999 23:59:59 GMT; path=/ st2=; domain=.ceneo.pl; expires=Sun, 27-Jul-2014 20:15:10 GMT; path=/'
+        CURLOPT_COOKIE         => '	userCeneo=ID=de976e60-afe3-45a1-8078-d103d69d060e&sp=7L0HYBxJliUmL23Ke39K9UrX4HShCIBgEyTYkEAQ7MGIzeaS7B1pRyMpqyqBymVWZV1mFkDM7Z28995777333nvvvfe6O51OJ/ff/z9cZmQBbPbOStrJniGAqsgfP358Hz8ifo1f89f4NX6N/5se/MTz6+GXX/t3+91+t9/w/wkAAP//&lvp=14219391,12460056,23322222,9052918,10169841,25200763,30024103,30180459,23517155,27781987,&lvpe=1&al=$$$&sc=1&mvv=0&nv=0; domain=.ceneo.pl; expires=Fri, 31-Dec-9999 23:59:59 GMT; path=/ rc=igdamb4ThOSOTvy0o77PSn7jlbO5MX6uyO5QEAo5klgGyhBJSGF16YRl6dOak95n/LgkXzBkHkERjGdXS3P7b/l/mNUwqMPq3i9+BYyxEmwtdw6t+6SLbbZYHGQ56n+hk7YMBsrJx+hmqc6kSRMF2h6dYmqtMG2J/LgkXzBkHkERjGdXS3P7b28PSUjz/+ppnVo8N7JubJt+45WzuTF+rm7KiZEI4IIr99UflbXwLfapgA+H9uis7vM9Ry+UpzGt4yrGfHORhxgfD0UVlVaLNk/2p3kH2rVfuYpKz1XdRAIgE9ZlDxqyYMhmfaS67DYDmm/mYsfBeKvR6CBnDNyU02NltytSC8HCeRDtCEkCTfY2fEfHGLNqImc0ejuGPlPMgfFSyoZg9dUFrFnwtBvIMnTelT8AvVkjTiKdQtiR1RbtAIgvbWifMJvtPK7sH4lp; domain=.ceneo.pl; expires=Fri, 12-Dec-2014 11:49:45 GMT; path=/ rc=igdamb4ThOSOTvy0o77PSn7jlbO5MX6uyO5QEAo5klgGyhBJSGF16YRl6dOak95n/LgkXzBkHkERjGdXS3P7b/l/mNUwqMPq3i9+BYyxEmwtdw6t+6SLbbZYHGQ56n+hk7YMBsrJx+hmqc6kSRMF2h6dYmqtMG2J/LgkXzBkHkERjGdXS3P7b28PSUjz/+ppnVo8N7JubJt+45WzuTF+rm7KiZEI4IIr99UflbXwLfapgA+H9uis7vM9Ry+UpzGt4yrGfHORhxgfD0UVlVaLNk/2p3kH2rVfuYpKz1XdRAIgE9ZlDxqyYMhmfaS67DYDmm/mYsfBeKvR6CBnDNyU02NltytSC8HCeRDtCEkCTfY2fEfHGLNqImc0ejuGPlPMgfFSyoZg9dUFrFnwtBvIMnTelT8AvVkjTiKdQtiR1RbtAIgvbWifMJvtPK7sH4lp; domain=.ceneo.pl; expires=Fri, 12-Dec-2014 11:49:45 GMT; path=/ svcc=d=2014-08-07 04:05:11&m=2014-09-12 12:49:46&c=1; domain=.ceneo.pl; expires=Fri, 31-Dec-9999 23:59:59 GMT; path=/ st2=; domain=.ceneo.pl; expires=Thu, 11-Sep-2014 10:49:46 GMT; path=/'
     ,
         CURLOPT_POST => true,
         CURLOPT_POSTFIELDS=>$post //'category-id=&search-query=BenQ+MW851UST'
@@ -45,7 +45,7 @@ function get_web_page( $url, $post='category-id=&search-query=' ){
 function filtr_proxy($str){
     $war = $body = false;
     $page= array('content'=>'');
-
+   // print_r($str);echo BR;
     foreach($str as $wiersz){
         if(!$body && strpos($wiersz, '<body')!==false){
             $body = true;
@@ -53,7 +53,7 @@ function filtr_proxy($str){
             if(strpos($wiersz, '</body')!==false){
                 $body = false;
             }else{
-                if(strpos($wiersz, '</script>')!==false){
+                if(strpos($wiersz, '/script')!==false){
                     $wiersz = '<!-- '.str_replace("</script>", '-->', $wiersz);
                     $war = true;
                 }
@@ -73,7 +73,11 @@ function filtr_proxy($str){
                     strpos($wiersz, '<script')!==false ||
                     strpos($wiersz, '</html') !==false ||
                     strpos($wiersz, '<iframe')!==false
-                ) $war = false;
+                ){
+                    $wiersz = '<!-- '.str_replace("<iframe", '-->', $wiersz);
+                    $wiersz = '<!-- '.str_replace("<script", '', $wiersz);
+                  //  $war = false;
+                }
 
                 // if($war) echo ($wiersz);
                 if($war)

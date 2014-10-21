@@ -3,13 +3,43 @@
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
 <h1>Ustawienia</h1>
-
+<div id="tabs">
+    <script>
+    $(function() {
+        $( "#tabs" ).tabs();//.addClass( "ui-tabs-vertical ui-helper-clearfix" );
+       // $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
+    });
+</script>
+    <style>
+        .ui-tabs-vertical { width: 55em; }
+        .ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; float: left; width: 12em; }
+        .ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
+        .ui-tabs-vertical .ui-tabs-nav li a { display:block; }
+        .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { padding-bottom: 0; padding-right: .1em; border-right-width: 1px; border-right-width: 1px; }
+        .ui-tabs-vertical .ui-tabs-panel { padding: 1em; float: right; width: 40em;}
+    </style>
+<ul>
+    <li><a href="#baza">Ustawienia Bazy Danych</a></li>
+    <li><a href="#kolumny">Ustawienia Kolumn Tabel</a></li>
+    <li><a href="#tabs-3">Ustawienia Dodatkowe</a></li>
+</ul>
 <form method="POST">
-    <fieldset name="test">
-        <div id="komunikat">{{komunikat}}</div>
-        <label for="database_name">Nazwa Bazy danych:</label>
-        <input type="text" name="database_name" id="database_name" value="{{database_name}}">
-        <br />
+    <fieldset name="config">
+        <div id="baza">
+            <div class="exp_inp">
+                <div id="komunikat">{{komunikat}}</div>
+                <i class="fa fa-database"></i>
+                <label for="database_name">Nazwa Bazy danych:</label>
+                <input type="text" name="database_name" id="database_name" value="{{database_name}}">
+            </div>
+
+        <div class="exp_inp">
+            <a href="sql.html?import" title="Importuj Baze Danych">
+                <i class="fa fa-upload"></i>
+                Załaduj baze z pliku</a>
+            &nbsp;
+            <a href="sql.html?export" title="Exportuj Baze Danych"><i class="fa fa-download"></i> Pobierz kopię bazy </a></div>
+        </div>
         <style>
             @import url("i/jquery-ui.min.css");
             .Column_list .ui-selecting {
@@ -51,6 +81,12 @@
                 text-align: center;
 
                 margin: 1em;
+            }
+            .exp_inp input{
+                padding: 1px;
+                text-align: center;
+                background: none repeat scroll 0 0 #f9f7ed;
+                border: 1px solid #0066cc;
             }
         </style>
         <div id="kolumny">
@@ -105,18 +141,17 @@
                 {{Column_list}}
             </ul>
         </div>
+        <div id="tabs-3">
+            <label for="alternatiw">Firma kontrolowana:</label>
+            <input name="alternatiw" id="alternatiw" value="{{alternatiw}}" type="text" />
+        </div>
         <button class="ui-widget ui-state-default ui-corner-all ui-button-text-only">Zapisz</button>
     </fieldset>
 </form>
-        <div class="exp_inp">
-<a href="sql.html?import" title="Importuj Baze Danych">
-    <i class="fa fa-upload"></i>
-     Załaduj baze z pliku</a>
-&nbsp;
-<a href="sql.html?export" title="Exportuj Baze Danych"><i class="fa fa-download"></i> Pobierz kopię bazy </a></div>
+</div>
 <script>
     $(function() {
         {{JS}}
-        $('#ss').find('td')
+       // $('#ss').find('td')
     });
 </script>

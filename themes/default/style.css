@@ -10,7 +10,7 @@ body {
 	font-family: "Trebuchet MS", sans-serif; 
 	line-height: 1.6;
 	font-size: 14px;
-	background: #36393D;
+	background: none repeat scroll 0 0 #eeeae2;
 	margin: 0;
 	padding: 0;
 }
@@ -27,16 +27,17 @@ h1 a { text-decoration: none; color: #F9F7ED; }
 h1 a:hover { border-bottom: 1px solid #F9F7ED; color: #F9F7ED; }
 
 body {
-	width: 730px;
+	width: 70%;
 	margin: 0px auto 20px;
 /*	background: #fff;
 	padding: 20px;*/
 }
 
 #header {
-	background: #2C2D2F;
-	height: 100px;
-	line-height: 100px;
+	background:  repeat scroll 0 0 #eeeae2;
+	/*
+    height: 100px;
+	line-height: 100px;*/
 }
 
 #menu {
@@ -71,7 +72,7 @@ body {
     /*	float: right;
     	width: 480px;*/
 	background: #F9F7ED;
-	margin-top: 20px;
+/*	margin-top: 20px;*/
 }
 #content h1 {
 	margin: 0;
@@ -128,3 +129,7 @@ body {
 #footer p { padding: 0; margin: 0; }
 #footer a { color: #fff; }
 #footer a:hover { text-decoration: underline; }
+
+fieldset{
+    border:0px;
+}
