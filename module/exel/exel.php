@@ -132,6 +132,7 @@ $objWorksheet->getStyle('H3:H'.$size)->getFill()->getStartColor()->setARGB('FFFA
 /* FILTR */
 if(alfabet( 'kod_produktu' )!==false){
 
+//    ukrywanie
     $objWorksheet->getColumnDimension(alfabet( 'kod_produktu' ))->setOutlineLevel(1)
         ->setVisible(false)
         ->setCollapsed(false);
