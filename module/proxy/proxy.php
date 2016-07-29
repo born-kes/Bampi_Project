@@ -43,7 +43,7 @@ function get_web_page( $url, $post='category-id=&search-query=' ){
 //var_dump( get_web_page('http://www.ceneo.pl/search') );
 
 function filtr_proxy($str){
-    $war = $body = false;
+    $war = true; $body = false;
     $page= array('content'=>'');
    // print_r($str);echo BR;
     foreach($str as $wiersz){

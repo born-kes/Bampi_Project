@@ -1,3 +1,4 @@
+var AV_MEDIA  = 'avworld.pl';
 $().ready(function(){
 
     $('#body_s').find('th:odd').prepend('<div style="padding: 5px" class="ol"><ol class="zasysanie"></ol></div>');
@@ -104,7 +105,7 @@ window.top.document.wstawiacz = function(odp){
 
         tr.find('th:last ol:first').append( wstawTekst(odp) );
 
-        if(odp.firma=='Av World'){
+        if(AV_MEDIA == odp.firma){
             tr.addClass('Av Av'+odp.top);
             cenoManiak[parseInt(tr.attr('id'))][0]= odp.top;
 

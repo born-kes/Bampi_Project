@@ -1,9 +1,11 @@
 
 $().ready(function(){
     $('img').error(function(){$(this).remove();});
-    var max =$("div.site-full-width table.product-offers tr:even").length;
-    $("div.site-full-width table.product-offers tr:even").each(function(top, el){
-        if($("td:eq(4) a strong:eq(0)", $(this)).length==0 || max == top ){
+    var max =$("table.product-offers tr:even").length;
+										  
+    $("table.product-offers tr:even").each(function(top, el){
+	
+        if($("td:eq(3) a span.value:eq(0)", $(this)).length==0 || max == top ){
             var odp={next:true , nr:nr_, info:function(){return "next\n max= "+max;} };
         }
         else
@@ -13,13 +15,18 @@ $().ready(function(){
             }else if($("td:eq(0) a:eq(0) span",$(this)).length>0){
                 var firma_ = $("td:eq(0) a:eq(0) span:eq(0)",$(this)).text();
             }
+			else
+			{ 
+			alert('Nieznany wyj¹tek, zapamiêtaj ten produkt i zg³oœæ do administratora');
+			}
+			
             var odp={
                 nr    : nr_,
                 id    : id_,
                 top   : top+1,
-                cena  : $("td:eq(4) a strong:eq(0)",$(this)).html(),
+                cena  : $("td:eq(4) a span.value:eq(0)",$(this)).text()+'.'+$("td:eq(4) a span.penny:eq(0)",$(this)).text(),
                 c_info: $("td:eq(4) span:eq(0)",$(this)).text(),
-                name  : $("td:eq(3) .product-name a",$(this)).html(),
+                name  : $("td:eq(3) .product-name a",$(this)).text(),
                 img   : $("td:eq(0) a:eq(0)",$(this)).html(),
                 firma : firma_ ,
                 info  : function(){

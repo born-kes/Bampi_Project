@@ -23,13 +23,13 @@ function foreachAut($array, $nr=null){ //print_r($array);
     }
     return $new_Araay;
 }
+
 function sql($get = null ){
     global $db,$config;
     if( is_null($get) && isset($_GET['sql']) )
         $get = $_GET['sql'];
 
     if(isset($get) && !is_null($get)){
-
         switch($get)
         {
 

@@ -15,12 +15,12 @@ if ($_FILES["file"]["error"] > 0) {
 } else {
     $myfile = file_get_contents($_FILES["file"]["tmp_name"]) ;
 
-    if(json_test($myfile)){
+    if(!json_test($myfile)){
         $json = json_decode($myfile,true);
 
         foreach($json as $key => $val){
             //  var_dump($val);
-            //     $db->insert('produkty', $val );
+                 $db->insert('produkty', $val );
         };
     }
     else
