@@ -1,33 +1,47 @@
+var tabela_firm = "table.product-offers tr:even",
+	komorka_z_cenom = 	 "td:eq(4) a span.value:eq(0)",
+	komorka_z_cenom_gr = "td:eq(4) a span.penny:eq(0)",
+	komorka_z_img = 	 "td:eq(0) a:eq(0)",
+	komorka_z_c_info 	="td:eq(3) span:eq(0)",
+	komorka_z_name 		="td:eq(2) .product-name a";
 
-$().ready(function(){
+
+$().ready(function(){ 
     $('img').error(function(){$(this).remove();});
-    var max =$("table.product-offers tr:even").length;
-										  
-    $("table.product-offers tr:even").each(function(top, el){
 	
-        if($("td:eq(3) a span.value:eq(0)", $(this)).length==0 || max == top ){
+    var max =$(tabela_firm).length;
+	
+console.log('tabela_firm ile jest firm (max)', $(tabela_firm).length);	
+									  
+    $(tabela_firm).each(function(top, el){
+	
+console.log('firma:', top);
+console.log('komorka_z_cenom:', $(komorka_z_cenom, $(this)).text() );
+
+	
+        if($(komorka_z_cenom, $(this)).length==0 || max == top ){
             var odp={next:true , nr:nr_, info:function(){return "next\n max= "+max;} };
         }
         else
         {
-            if($("td:eq(0) a:eq(0) img",$(this)).length>0){
-            var firma_ = $("td:eq(0) a:eq(0) img:eq(0)",$(this)).attr('alt');
-            }else if($("td:eq(0) a:eq(0) span",$(this)).length>0){
-                var firma_ = $("td:eq(0) a:eq(0) span:eq(0)",$(this)).text();
+            if($(komorka_z_img +" img", $(this)).length>0){
+            var firma_ = $(komorka_z_img +" img", $(this)).attr('alt');
+            }else if($(komorka_z_img +" span",$(this)).length>0){
+                var firma_ = $(komorka_z_img +" span:eq(0)",$(this)).text();
             }
 			else
 			{ 
-			alert('Nieznany wyj¹tek, zapamiêtaj ten produkt i zg³oœæ do administratora');
+			alert('Nieznany wyj¹tek, zapamiêtaj ten produkt i zg³osiæ do administratora'+"\n"+ id_ + ":" + $(komorka_z_name ,$(this)).text() );
 			}
 			
             var odp={
                 nr    : nr_,
                 id    : id_,
                 top   : top+1,
-                cena  : $("td:eq(4) a span.value:eq(0)",$(this)).text()+'.'+$("td:eq(4) a span.penny:eq(0)",$(this)).text(),
-                c_info: $("td:eq(4) span:eq(0)",$(this)).text(),
-                name  : $("td:eq(3) .product-name a",$(this)).text(),
-                img   : $("td:eq(0) a:eq(0)",$(this)).html(),
+                cena  : $(komorka_z_cenom ,$(this)).text() +'.'+ $(komorka_z_cenom_gr ,$(this)).text(),
+                c_info: $(komorka_z_c_info ,$(this)).text(),
+                name  : $(komorka_z_name ,$(this)).text(),
+                img   : $(komorka_z_img ,$(this)).html(),
                 firma : firma_ ,
                 info  : function(){
                     return ''+
@@ -45,6 +59,7 @@ $().ready(function(){
                 next: (max == top + 1)
 
             };
+			console.log(odp);
         }
 
         if(window.top.document.wstawiacz){
